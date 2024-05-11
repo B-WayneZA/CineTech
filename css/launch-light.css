@@ -1,0 +1,110 @@
+/*CineTech*/
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: repeating-linear-gradient(144deg, #050720, #5b42f3 30%, #af40ff, #00ddeb);
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative; /* Ensure relative position for absolute positioning of other elements */
+}
+
+.image-background {
+    background-image: url('/img/BackDrop.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+    filter: blur(5px); /* Apply blur to background image */
+}
+
+.container {
+    border: 10px insert white;
+    border-radius: 20px;
+    border-color: white;
+    position: relative;
+    width: 500px; /* Set width to create a square */
+    height: 350px; /* Set height to match the width */
+     /* Make container circular */
+    /* background-color: rgba(179, 180, 245, 0.397); */
+    padding: 2%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/*Info about the size and placing of the logo*/
+#logo {
+    width: 150px;
+    height: 150px; /* Ensure logo is square */
+    border-radius: 50%; /* Make logo circular */
+}
+
+nav {
+    display: flex; /* Use flexbox to arrange buttons horizontally */
+    justify-content: center; /* Center buttons horizontally */
+    margin-top: 20px; /* Add margin for spacing */
+}
+
+a {
+    text-decoration: none;
+    color: #f4f5fa;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 3px solid white;
+    border-radius: 15px;
+}
+
+.welcomeSaying {
+    text-align: center;
+    height: auto;
+    font-size: medium;
+    font-weight: lighter;
+    color: white;
+}
+
+nav a:hover {
+    background-color: #6f00ff;
+    color: white;
+}
+
+.active {
+    background-color: #050720;
+}
+
+.scroll-content {
+    height: 60vh;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #050720;
+    width: 100%;
+    max-width: 100%;
+}
+
+.main-info {
+    display: flex;
+    justify-content: space-between; /* Arrange containers with equal space between them */
+}
+
+.service-container {
+    flex: 1; /* Make each container take equal space */
+    background-color: #5b42f3; /* Add background color for visibility */
+    padding: 20px; /* Add padding for content spacing */
+    margin-right: 20px; /* Add margin between containers */
+    border-radius: 10px; /* Add border radius for container styling */
+    height: 500px;
+    justify-content: center;
+    margin-left: 2%;
+}
