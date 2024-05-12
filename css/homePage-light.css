@@ -1,0 +1,17 @@
+/* css for the header and logo */
+header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/*Info about the size and placing of the logo*/
+#logo {
+    width: 150px;
+    height: 150px; /* Ensure logo is square */
+    border-radius: 50%; /* Make logo circular */
+}
+
+.mainNav{
+    display: grid;
+    grid-column: auto auto auto auto;
+}

@@ -108,3 +108,143 @@ nav a:hover {
     justify-content: center;
     margin-left: 2%;
 }
+
+/* css for the frequently asked questions */
+@import url('https://fonts.googleapis.com/css?family=Hind:300,400&display=swap');
+
+/* Variables */
+:root {
+  --bg: #fff;
+  --text: #7288a2;
+  --white: #eceff5;
+  --lightgray: #e5e5e5;
+  --blue: #03b5d2;
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Hind', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  display: flex;
+  min-height: 100vh;
+}
+
+scroll-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container2 {
+    width: 50%; /* Adjust width as needed */
+    text-align: center;
+    margin-top: 50px; /* Adjust margin-top as needed */
+    margin-bottom: 15px; /* Add margin-bottom for spacing */
+    padding: 2%;
+    margin-left: 25%;
+}
+  
+  /* Accordion Styles */
+  .accordion .accordion-item {
+    border-bottom: 1px solid var(--lightgray);
+    margin-bottom: 20px; /* Add margin-bottom for spacing between accordion items */
+  }
+
+.accordion button {
+  position: relative;
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding: 1em 0;
+  color: var(--text);
+  font-size: 1.15rem;
+  font-weight: 400;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.accordion button:hover,
+.accordion button:focus {
+  cursor: pointer;
+  color: var(--blue);
+}
+
+.accordion .accordion-title {
+  padding: 1em 1.5em 1em 0;
+}
+
+.accordion .icon {
+  display: inline-block;
+  position: absolute;
+  top: 18px;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid;
+  border-radius: 22px;
+}
+
+.accordion .icon::before {
+  display: block;
+  position: absolute;
+  content: '';
+  top: 9px;
+  left: 5px;
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+}
+
+.accordion .icon::after {
+  display: block;
+  position: absolute;
+  content: '';
+  top: 5px;
+  left: 9px;
+  width: 2px;
+  height: 10px;
+  background: currentColor;
+}
+
+.accordion button[aria-expanded='true'] {
+  color: var(--blue);
+}
+
+.accordion button[aria-expanded='true'] .icon::after {
+  width: 0;
+}
+
+.accordion .accordion-content {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 200ms linear, max-height 200ms linear;
+}
+
+.accordion button[aria-expanded='true'] + .accordion-content {
+  opacity: 1;
+  max-height: 9em;
+  transition: all 200ms linear;
+}
+
+/* this is the css for the image next to the freq asked questions */
+/* Add this CSS for positioning the image container */
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
