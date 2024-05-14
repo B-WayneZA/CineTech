@@ -3,35 +3,384 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineTech</title>
     <link rel="stylesheet" href="/css/homePage-light.css" id="light-mode">
     <!-- <link rel="stylesheet" href="/css/homePage-dark.css" id="dark-mode"> -->
-    <link rel="icon" type="image/x-icon" href="/img/4.png">
+    <link rel="icon" href="/img/4.png" type="image/x-icon">
+    <!-- the icons used in the website -->
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <title>CineTech</title>
 </head>
 
 <body>
     <!--Header-->
-    <!-- This will be for the nav bar-->
-    <nav class="mainNav">
-        <div class="left">
-            <img id="logo" src="/img/4.png" alt="CineTech Logo">
-            <h1>CineTech.</h1>
+    <header>
+        <!-- convert this image to a webm so it actually plays  -->
+        <video src="/video/JohnWickTrailer.mp4" autoplay muted></video>
+        <nav>   
+        <div class="logo_ul">
+                <img src="/img/4.png" alt="">
+                <ul>
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Movies</a>
+                    </li>
+                    <li>
+                        <a href="#">Series</a>
+                    </li>
+                    <li>
+                        <a href="#">Recently Added</a>
+                    </li>
+                    <li>
+                        <a href="#">Browse By Language</a>
+                    </li>
+                    <li>
+                        <a href="#">My List</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="search_user">
+                <input type="text" placeholder="Search..." id="search_input">
+                <img src="/img/UserPFP.jpeg" alt="">
+                <div class="search">
+                    <!-- add more of these to test search feature -->
+                    <a href="#" class="card">
+                        <img src="/img/JohnWick.jpeg" alt="">
+                        <div class="cont">
+                            <h3>John Wick</h3>
+                            <p>Action, 2014, <span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>7.4</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <h1 id="title">John Wick 2014</h1>
+            <p>John Wick, a retired hitman, is forced to return to his old ways after a group of Russian gangsters steal his car and kill a puppy gifted to him by his late wife.</p>
+            <div class="details">
+                <h6>A CineTech Original</h6>
+                <h5 id="gen">Action, crime, Thriller</h5>
+                <h4>2014</h4>
+                <h3 id="rate"><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>7.4</h3>
+            </div>
+            <div class="btns">
+                <a href="#" id="play">Watch <i class="fa fa-play" aria-hidden="true"></i></a>
+                <a href="#" id="download_main"> <i class="fa fa-download" aria-hidden="true"></i></a>
+            </div>
         </div>
-        <div class="middle">
-                <div class="selector"></div>
-                <a href="/html/homePage.html" class="active"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
-                <a href="/agentsPage.html"><i class="fa fa-user" aria-hidden="true"></i>New Movies</a>
-                <a href="/favouritesPage.html"><i class="fa fa-heart" aria-hidden="true"></i>Genre</a>
-                <a href="/calculatorPage.html"><i class="fa fa-calculator" aria-hidden="true"></i>Browse by Language</a>
-                <a href="/calculatorPage.html"><i class="fa fa-calculator" aria-hidden="true"></i>Favourites</a>
-                <a href="/calculatorPage.html"><i class="fa fa-calculator" aria-hidden="true"></i>Notification</a>
-        </div>
-        <div class="right">
-            <img id="logo" src="/img/userIcon.png" alt="User Icon">
-            <h1>John Wick</h1>
-        </div>
-    </nav>
+        <section>
+            <h4>Popular</h4>
+            <div class="cards">
+                <!-- add more of these to check scroll featur -->
+                <a href="#" class="card">
+                    <img src="/img/JohnWick.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Dune.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Fall.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Howl.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Inception.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/LalaLand.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Sightless.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/StepItUp.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+            </div>
+        </section>    
+    </header>
+    <!-- this section is responsible for the rest of the page -->
+    <div class="recommended">
+        <section>
+            <h4>Recommended</h4>
+            <div class="cards">
+                <!-- add more of these to check scroll featur -->
+                <a href="#" class="card">
+                    <img src="/img/JohnWick.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Dune.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Fall.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Howl.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Inception.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/LalaLand.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/Sightless.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/StepItUp.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="card">
+                    <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="/img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+            </div>
+        </section> 
+    </div>
+    <!-- this is responsible for the rest of the movies/series at random -->
+    <div class="full-page">
+
+    </div>
+    <!-- this section is for the js of the page -->
+    <script src="/js/homePage.js"></script>
     <!--Footer-->
 </body>
 
