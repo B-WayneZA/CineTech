@@ -146,14 +146,14 @@ header nav .search_user .search {
 
 header nav .search_user .search::-webkit-scrollbar {
     width: 5px;
-    background: rgb(255, 255, 255, .3);
+    background: rgba(19, 17, 17, 0.3);
     border-radius: 5px;
     visibility: hidden;
 }
 
 header nav .search_user .search::-webkit-scrollbar-thumb {
     width: 5px;
-    background: rgb(255, 255, 255, .4);
+    background: rgba(22, 16, 16, 0.4);
     border-radius: 5px;
     visibility: hidden;
 }
@@ -216,8 +216,8 @@ header nav .search_user .search .card .cont p {
 }
 
 header nav .search_user .search .card .cont span {
-    background: yellow;
-    color: #000;
+    background: rgb(49, 11, 155);
+    color: #f8f7f7;
     padding: 0px 3px;
     margin: 0px 5px 0px 10px;
     font-weight: 500;
@@ -254,7 +254,7 @@ header .content .details h6 {
 }
 
 header .content .details h5 {
-    color: rgba(87, 50, 223);
+    color: rgb(41, 24, 102);
     font-size: 10px;
     margin-right: 10px;
 }
@@ -273,7 +273,7 @@ header .content .details h3 {
 }
 
 header .content .details h3 span {
-    background: yellow;
+    background: rgb(49, 11, 155);
     color: #000;
     padding: 0px 3px;
     margin: 0px 5px 0px 5px;
@@ -294,7 +294,7 @@ header .content .btns a {
     padding: 8px 12px;
     font-size: 15px;
     font-weight: 600;
-    background: linear-gradient(90deg, #5b42f3, #00ddeb);
+    background: linear-gradient(90deg, #21185c, #07646b);
     border-radius: 5px;
     color: #fff;
     margin-left: 10px;
@@ -422,7 +422,7 @@ header section .cards .card .rest_card .cont .sub h3 {
 }
 
 header section .cards .card .rest_card .cont .sub h3 span{
-    background: yellow;
+    background: rgb(49, 11, 155);
     color: #000;
     padding: 0px 3px;
     margin: 0px 5px 0px 10px;
@@ -547,7 +547,7 @@ header section .cards .card:hover .rest_card {
 .international section .cards::-webkit-scrollbar-thumb,
 .top-picks section .cards::-webkit-scrollbar-thumb{
     width: 5px;
-    background: rgba(102, 82, 214, 0.4);
+    background: rgba(37, 25, 104, 0.4);
     border-radius: 5px;
     visibility: visible;
 }
@@ -690,7 +690,7 @@ header section .cards .card:hover .rest_card {
 .latest-series section .cards .card .rest_card .cont .sub h3 span,
 .international section .cards .card .rest_card .cont .sub h3 span,
 .top-picks section .cards .card .rest_card .cont .sub h3 span{
-    background: yellow;
+    background: rgb(49, 11, 155);
     color: #000;
     padding: 0px 3px;
     margin: 0px 5px 0px 10px;
@@ -749,7 +749,7 @@ header .user-panel {
     right: -300px; /* Initially hidden */
     width: 300px;
     height: 100vh;
-    background-color: #fff;
+    background-color: #0f0c14;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
     z-index: 1000;
@@ -778,7 +778,7 @@ header .user-info h3 {
 }
 
 header .user-info p {
-    color: #888;
+    color: #b8b4b4;
 }
 
 /* Style user actions */
@@ -791,14 +791,14 @@ header .user-actions button {
     padding: 10px;
     margin-bottom: 10px;
     border: none;
-    background-color: #6a3ce7;
+    background-color: #6b43da;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 header .user-actions button:hover {
-    background-color: #4b2bc0;
+    background-color: #271569;
 }
 
 /* Style the switch */
