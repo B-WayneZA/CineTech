@@ -1,96 +1,552 @@
+@import url('https://fonts.googleapis.com/css2?familyPoppins:itl,wght@0,100;0,200;0');
+
 * {
-    margin: 0;
-    padding: 0;
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
 }
 
-/* Style the navigation bar */
-.mainNav {
-    background-color: #333;
+body {
+    width: 100%;
+    height: 100vh;
+    background: rgb(45, 45, 45);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+header {
+    position: relative; /* Change position to fixed */
+    top: 0; /* Position at the top of the viewport */
+    left: 0; /* Position at the left of the viewport */
+    width: 100%;
+    height: 100vh;
+    /* border: 1px solid #fff; */
+    /* border-radius: 0px;
     overflow: hidden;
+    box-shadow: 0px 10px 25px -8px #000; */
 }
 
-/* Style the middle section of the navigation bar */
-.middle {
-    float: left;
+header::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('/img/JohnWickVisual.jpeg')no-repeat center center/cover;
+    opacity: .6;
+    z-index: -1;
 }
 
-/* Style the links inside the navigation bar */
-.mainNav a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
+header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #000);
+    z-index: -1;
+}
+
+header video {
+    position: absolute;
+    width: 120%;
+    height: 190%;
+    top: -47%;
+    z-index: -1;
+}
+
+header nav {
+    width: 100%;
+    height: 10%;
+    /* border: 1px solid #fff; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 50px;
+}
+
+header nav .logo_ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header nav .logo_ul img {
+    width: 50px;
+    border-radius: 50%;
+    /* Make logo circular */
+}
+
+header nav .logo_ul ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+header nav .logo_ul ul li {
+    padding: 3px 15px;
+}
+
+header nav .logo_ul ul li a {
     text-decoration: none;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    transition: .3s linear;
 }
 
-/* Change color on hover */
-.mainNav a:hover {
-    background-color: #ddd;
-    color: black;
+header nav .logo_ul ul li a:hover {
+    color: rgb(255, 255, 255, .7);
 }
 
-/* Style the profile container */
-.profile-container {
-    float: right;
-    padding: 14px 16px;
+header nav .search_user {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Style the profile picture */
-.profile-picture {
-    width: 40px;
-    height: 40px;
+header nav .search_user input {
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background: rgb(255, 255, 255, .3);
+    color: #fff;
+    margin-right: 20px;
+}
+
+header nav .search_user input::placeholder {
+    color: #fff;
+}
+
+header nav .search_user img {
+    width: 23px;
+    height: 23px;
     border-radius: 50%;
 }
 
-/* Style the profile text */
-.profile-text {
-    color: white;
+header nav .search_user .search {
+    position: absolute;
+    width: 320px;
+    height: 190px;
+    /* border: 1px solid #fff; */
+    right: 0;
+    top: 40px;
+    z-index: 99999;
+    overflow-y: auto;
+}
+
+header nav .search_user .search::-webkit-scrollbar {
+    width: 5px;
+    background: rgb(255, 255, 255, .3);
+    border-radius: 5px;
+    visibility: hidden;
+}
+
+header nav .search_user .search::-webkit-scrollbar-thumb {
+    width: 5px;
+    background: rgb(255, 255, 255, .4);
+    border-radius: 5px;
+    visibility: hidden;
+}
+
+header nav .search_user .search:hover::-webkit-scrollbar {
+    visibility: visible;
+}
+
+header nav .search_user .search:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+header nav .search_user .search .card {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 3px 0px;
+    text-decoration: none;
+    display: none;
+}
+
+header nav .search_user .search .card::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255, .1);
+    backdrop-filter: blur(5px);
+    border-radius: 5px;
+    z-index: -1;
+}
+
+header nav .search_user .search .card img {
+    width: 28px;
+    height: 90%;
+    border-radius: 2px;
+    margin-left: 8px;
+}
+
+header nav .search_user .search .card .cont {
+    margin-left: 10px;
+    color: #fff;
+}
+
+header nav .search_user .search .card .cont h3 {
+    font-size: 15px;
+    line-height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 250px;
+}
+
+header nav .search_user .search .card .cont p {
+    font-size: 10px;
+    color: rgb(255, 255, 255, .8);
+}
+
+header nav .search_user .search .card .cont span {
+    background: yellow;
+    color: #000;
+    padding: 0px 3px;
+    margin: 0px 5px 0px 10px;
+    font-weight: 500;
+}
+
+header .content {
+    position: relative;
+    color: #fff;
+    margin-top: 50px;
+    padding-left: 50px;
+    margin-bottom: 50px;
+}
+
+header .content h1 {
+    font-size: 50px;
+}
+
+header .content p {
+    font-size: 11px;
+    width: 350px;
+    word-break: break-all;
+}
+
+header .content .details {
+    display: flex;
+    align-items: center ;
+    margin-top: 10px;
+}
+
+header .content .details h6 {
+    color: rgb(255, 255, 255, .8);
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+header .content .details h5 {
+    color: rgba(87, 50, 223);
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+header .content .details h4 {
+    color: #fff;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+header .content .details h3 {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+}
+
+header .content .details h3 span {
+    background: yellow;
+    color: #000;
+    padding: 0px 3px;
+    margin: 0px 5px 0px 5px;
+    font-weight: 500;
+}
+
+header .content .details h3 i{
     margin-right: 5px;
 }
 
-/* Style the dropdown links */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
+header .content .btns {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+header .content .btns a {
+    padding: 8px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #5b42f3, #00ddeb);
+    border-radius: 5px;
+    color: #fff;
+    margin-left: 10px;
     text-decoration: none;
-    display: block;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropbtn {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    font-size: 17px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Style the dropdown content */
-.dropdown-content {
-    display: none;
+/* ============================================================================= */
+/* this section is for popular row in the header div */
+header section {
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    
-
-   
+    width: 100%;
+    height: auto;
+    padding: 0px 50px;
+    bottom: -80px;
+    color: #fff;
+    margin-top: 50px;
 }
 
-.navbar bg-body-tertiary {
-    float: left;
-    margin-left: 100px; /* Add space between search bar and dropdown */
-    margin-right: auto; /* Shift the search bar to the far left */
+header section .cards{
+    position: relative;
+    width: 100%;
+    height: 200px;
+    /* border: 1px solid #fff; */
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+header section .cards::-webkit-scrollbar{
+    display: none;
+}
+
+header section .cards .card{
+    position: relative;
+    min-width: 130px;
+    height: 180px;
+    /* border: 1px solid #fff; */
+    border-radius: 8px;
+    margin-right: 10px;
+    background: #000;
+    transition: .3s linear;
+}
+
+header section .cards .card .poster{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+}
+
+header section .cards .card:hover {
+    min-width: 300px;
+    overflow: hidden;
+}
+
+header section .cards .card .rest_card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    left: 0;
+    top: 0;
+    z-index: 999999;
+    opacity: 0;
+    transition: .5s linear;
+}
+
+header section .cards .card .rest_card img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+header section .cards .card .rest_card::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #000);
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+header section .cards .card .rest_card .cont {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    left: 0;
+    color: #fff;
+    padding: 0px 20px;
+}
+
+header section .cards .card .rest_card .cont .sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header section .cards .card .rest_card .cont .sub p {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(255, 255, 255, .7);
+}
+
+header section .cards .card .rest_card .cont .sub h3 {
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+header section .cards .card .rest_card .cont .sub h3 span{
+    background: yellow;
+    color: #000;
+    padding: 0px 3px;
+    margin: 0px 5px 0px 10px;
+    font-weight: 500;
+    border-radius: 2px;
+}
+
+header section .cards .card .rest_card .cont .sub h3 i{
+    margin-right: 3px;
+}
+
+header section .cards .card:hover .rest_card {
+    opacity: 1;
+}
+
+/* ===================================================================================== */
+/* this section is the popular row in the decommended div */
+.recommended section {
+    position:absolute;
+    width: 100%;
+    height: auto;
+    padding: 0px 50px;
+    bottom: -350px;
+    left: 0px;
+    color: #fff;
+    margin-top: 50px;
+}
+
+.recommended section .cards{
+    position: relative;
+    width: 100%;
+    height: 200px;
+    /* border: 1px solid #fff; */
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.recommended section .cards::-webkit-scrollbar{
+    display: none;
+}
+
+.recommended section .cards .card{
+    position: relative;
+    min-width: 130px;
+    height: 180px;
+    /* border: 1px solid #fff; */
+    border-radius: 8px;
+    margin-right: 10px;
+    background: #000;
+    transition: .3s linear;
+}
+
+.recommended section .cards .card .poster{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+}
+
+.recommended section .cards .card:hover {
+    min-width: 300px;
+    overflow: hidden;
+}
+
+.recommended section .cards .card .rest_card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    left: 0;
+    top: 0;
+    z-index: 999999;
+    opacity: 0;
+    transition: .5s linear;
+}
+
+.recommended section .cards .card .rest_card img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+.recommended section .cards .card .rest_card::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #000);
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.recommended section .cards .card .rest_card .cont {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    left: 0;
+    color: #fff;
+    padding: 0px 20px;
+}
+
+.recommended section .cards .card .rest_card .cont .sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recommended section .cards .card .rest_card .cont .sub p {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(255, 255, 255, .7);
+}
+
+.recommended section .cards .card .rest_card .cont .sub h3 {
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.recommended section .cards .card .rest_card .cont .sub h3 span{
+    background: yellow;
+    color: #000;
+    padding: 0px 3px;
+    margin: 0px 5px 0px 10px;
+    font-weight: 500;
+    border-radius: 2px;
+}
+
+.recommended section .cards .card .rest_card .cont .sub h3 i{
+    margin-right: 3px;
+}
+
+.recommended section .cards .card:hover .rest_card {
+    opacity: 1;
 }
