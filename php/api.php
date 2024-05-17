@@ -206,8 +206,75 @@ class API
 
    }
 
-   public function getMovies($sort, $order, $search, $return) {
+   public function getMovies($sort, $order, $search, $return, $fuzzy) {
+      $table = $GLOBALS['connection'];
+      if($return === "['*']"){
+         $query = "SELECT * FROM films";
+      } else {
+         $query = "SELECT f.Title, g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, f.Country, f.Description, f.Runtime, f.Release_Year FROM Films f JOIN Genre g ON f.Genre_ID = g.Genre_ID JOIN Rating r ON f.Rating_ID = r.Rating_ID";
+      }
 
+      //add filters on table
+      if(isset($search) && is_array($search) && count($search) > 0) {
+         $filters = array();
+         foreach ($search as $column => $value) {
+            // Escape column and value to prevent SQL injection
+            $column = $GLOBALS['connection']->real_escape_string($column);
+            $value = $GLOBALS['connection']->real_escape_string($value);
+
+            if ($column === 'year') {
+               $year = (int) $value;
+               $filters[] = "Release_Year >= $year";
+            } else if ($column === 'rating') {
+               $rating = (int) $value;
+               $filters[] = "CineTech_Rating >= $rating";
+      
+            }
+             else {
+               // Add other filter conditions to the array
+               if($fuzzy === "true") {
+                  $filters[] = "$column LIKE '%$value%'";
+               } else {
+                  $filters[] = "$column = '$value'";
+               }
+            }
+         }
+
+         // Combine all filter conditions with 'AND' and append to the query
+         $query .= " WHERE " . implode(' AND ', $filters);
+      }
+
+      if(isset($sort)) {
+         $query .= ' ORDER BY '. $sort;
+      }
+
+      $stmt = $table->prepare($query);
+
+      // Execute the query
+      $stmt->execute();
+
+      // Get the result set
+      $result = $stmt->get_result();
+
+      // Check if any rows are returned
+      if ($result->num_rows > 0) {
+         $listings = array();
+         // Fetch rows and store in array
+         while ($row = $result->fetch_assoc()) {
+            foreach ($return as $column) {
+            
+               $listing[$column] = $row[$column];
+            }
+            $listings[] = (object) $listing;
+         }
+            // Add the listing to the array
+         
+         return $this->successResponse(time(), $listings);
+      } else {
+         // Return error response if no listings found
+         return $this->errorResponse( time(), "No movies found");
+      }
+   
    }
    public function getSeries($sort, $order, $search, $return) {
       $query = "SELECT ";
@@ -219,25 +286,25 @@ class API
           $query .= "*"; // Default to selecting all columns
       }
   
-      $query .= " FROM shows WHERE 1=1 ";
+      $query = "SELECT s.Name , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
   
       // Add search and filter conditions
       if (!empty($search)) {
           // Add conditions based on search parameters
-          if (isset($search['genre'])) {
-              $genres = implode("', '", $search['genre']);
-              $query .= "AND genre IN ('$genres') ";
-          }
-          // Add conditions for other search parameters (e.g., language, production_country, keyword)
-          // ...
+         if (isset($search['genre'])) {
+            $genres = $search['genre'];
+            $query .= " AND genre LIKE $genres ";
+         }
+          // Add conditions for other search parameters (e.g., language, production_country, keyword)  
       }
   
       // Add sorting and ordering
       if (!empty($sort)) {
-          $query .= "ORDER BY $sort ";
-          if (!empty($order)) {
-              $query .= "$order";
-          }
+         $query .= "ORDER BY $sort ";
+
+         if (!empty($order)) {
+            $query .= "$order";
+         }
       }
   
       // Prepare and execute the query using prepared statements
@@ -246,18 +313,52 @@ class API
       $result = $stmt->get_result();
   
       // Fetch results as an associative array
-      $series = [];
-      while ($row = $result->fetch_assoc()) {
-          $series[] = $row;
+      if ($result->num_rows > 0) {
+         $listings = array();
+         // Fetch rows and store in array
+         while ($row = $result->fetch_assoc()) {
+            foreach ($return as $column) {
+               $listing[$column] = $row[$column];
+            }
+            $listings[] = (object) $listing;
+         }
+            // Add the listing to the array
+         
+         return $this->successResponse(time(), $listings);
+      } else {
+         return $this->errorResponse(time(),"No shows found") ;
       }
-  
-      // Return JSON response with series data
-      return json_encode(["series" => $series]);
+   }
+   private function getRatingID() {
 
    }
 
-   public function addRatings() {
+   private function getCineTechRating() {
+      
+   }
+   public function addRatings($filmID, $showID, $rating) {
       //insert cintech rating
+      if(isset($filmID)) {
+         $query = "INSERT INTO CineTech_Film_Rating WHERE (Films_ID, Rating) VALUES (?,?)";
+         $stmt = $GLOBALS["connection"]->prepare($query);
+         $stmt->bind_param("id",$filmID, $rating);
+
+         if($stmt->execute()) {
+            return $this->successResponse(time(), "CineTech Rating added successfully");
+         } else {
+            return $this->errorResponse(time(), "Failed to add CineTech Rating");
+         }
+      } else {
+         $query = "INSERT INTO CineTech_Show_Rating WHERE (Show_ID, Rating) VALUES (?,?)";
+         $stmt = $GLOBALS["connection"]->prepare($query);
+         $stmt->bind_param("id",$showID, $rating);
+
+         if($stmt->execute()) {
+            return $this->successResponse(time(), "CineTech Rating added successfully");
+         } else {
+            return $this->errorResponse(time(), "Failed to add CineTech Rating ");
+         }
+      }
    }
    public function getAllFavourites($apikey) {//need to change SQL
       try {
@@ -289,19 +390,18 @@ class API
 
             // Fetch each favorite and extract listing information from the listings table
             while ($row = $result->fetch_assoc()) {
-               $listingID = $row["listingID"];
 
                // Query to fetch listing information from the listings table
-               $listingQuery = "SELECT id, title, location, price, images FROM listings WHERE id=?";
-               $listingStmt = $GLOBALS['connection']->prepare($listingQuery);
-               $listingStmt->bind_param('i', $listingID);
-               $listingStmt->execute();
-               $listingResult = $listingStmt->get_result();
+               $Query = "SELECT v.films_id , f.Title ,f.Country ,f.Description,f.Release_Year ,v.shows_id,s.Name,s.Seasons,s.Country,s.Release_Year FROM favourites v JOIN Films f ON f.Films_ID = v.films_id JOIN Shows s ON s.Show_id = v.shows_id WHERE user_id =?";
+               $Stmt = $GLOBALS['connection']->prepare($userID);
+               $Stmt->bind_param('i', $userID);
+               $Stmt->execute();
+               $Result = $Stmt->get_result();
 
                // Check if listing information is found
-               if ($listingResult->num_rows > 0) {
-                  $listingData = $listingResult->fetch_assoc();
-                  $favorites[] = $listingData;
+               if ($Result->num_rows > 0) {
+                  $Data = $Result->fetch_assoc();
+                  $favorites[] = $Data;
                }
             }
 
@@ -316,9 +416,6 @@ class API
          return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
       }
    }
-
-
-
 
    private function addFavourite($api, $listingid){///need to do
       try {
@@ -346,7 +443,7 @@ class API
 
          if ($listingResult->num_rows == 0) {
             // Handle case where listing ID does not exist
-            return $this->errorResponse("Listing not found for ID: " . $listingid, time());
+            return $this->errorResponse(time(), "Listing not found for ID: " . $listingid );
          }
 
          $listingData = $listingResult->fetch_assoc();
@@ -370,7 +467,28 @@ class API
          return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
       }
    }
+   private function delete($title, $type) {
+      if($type === "film") {
+         $stmt = $GLOBALS['connection']->prepare("DELETE FROM Films WHERE Title = ?");
+         $stmt->bind_param("s", $title);
+        
+         if($stmt->execute()) {
+            return $this->successResponse(time(), "Film deleted successfully.");
+         } else {
+            return $this->errorResponse(time(), $stmt->error);
+         }
+      } else {
+         $stmt = $GLOBALS['connection']->prepare("DELETE FROM Shows WHERE Name = ?");
+         $stmt->bind_param("s", $title);
+        
+         if($stmt->execute()) {
+            return $this->successResponse(time(), "Show deleted successfully.");
+         } else {
+            return $this->errorResponse(time(), $stmt->error);
+         }
 
+      }
+   }
    private function deleteFavourite($api, $filmID) {
       try {
          // Retrieve user ID based on API key
@@ -401,12 +519,11 @@ class API
          }
       } catch (Exception $e) {
          // Handle any exceptions thrown during SQL execution
-         return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
+         return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
       }
    }
 
-   private function checkCredentials($email, $password)
-   {
+   private function checkCredentials($email, $password) {
       if (empty($email) || empty($password)) {
          return "Email and password are required.";
       } else {
@@ -441,7 +558,7 @@ class API
 
    }
    private function getNewMovies() {
-
+      //get movies from this year
    }
 
    private function addMovie($title, $genre, $ratingArr, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL) {
@@ -451,15 +568,94 @@ class API
 
    }
 
-
    private function getRatingAvgFilm($filmId) {
+      $query = "SELECT r.CineTech_Rating,(SELECT AVG(CineTech_Rating) FROM Rating WHERE Rating_ID = f.Rating_ID) AS CineTech_R FROM Films f JOIN Rating r ON f.Rating_ID = r.Rating_ID WHERE f.Films_ID = ?";
+      $stmt = $GLOBALS['connection']->prepare($query);
+      $stmt->bind_param("i", $filmId);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
 
+      return $row;
    }
    private function getRatingAvgShow($showId) {
+      $query = "SELECT r.CineTech_Rating,(SELECT AVG(CineTech_Rating) FROM Rating WHERE Rating_ID = f.Rating_ID) AS CineTech_R FROM Films f JOIN Rating r ON f.Rating_ID = r.Rating_ID WHERE f.Films_ID = ?";
+      $stmt = $GLOBALS['connection']->prepare($query);
+      $stmt->bind_param("i", $showId);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+
+      return $row;
+   }
+
+   private function getUserID($apiKey) {
+      $query = "SELECT id FROM users WHERE api_key = ?";
+      $stmt = $GLOBALS['connection']->prepare($query);
+      $stmt->bind_param("s", $apiKey);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows == 0) {
+         // Handle case where API key does not correspond to any user
+         return $this->errorResponse(time(),"User not found for API key: " . $apiKey);
+      }
+      $row = $result->fetch_assoc();
+
+      return $row;
+   }
+   private function getUserIDusername($username) {
+      $query = "SELECT id FROM users WHERE username = ?";
+      $stmt = $GLOBALS['connection']->prepare($query);
+      $stmt->bind_param("s", $username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows == 0) {
+         // Handle case where API key does not correspond to any user
+         return $this->errorResponse(time(),"User not found for: " . $username);
+      }
+      $row = $result->fetch_assoc();
+
+      return $row;
+   }
+
+   private function shareMovie($apiKey, $username, $filmID) {
+
+      $userID = $this->getUserID($apiKey);
+      $receiverID = $this->getUserIDusername($username);
+
+      $query = "INSERT INTO Shared_movies WHERE (Receiver_ID, Sender_ID, Film_shared) VALUES (?,?,?)";
+      $stmt = $GLOBALS['connection']->prepare($query);
+      $stmt->bind_param("iii", $receiverID, $userID, $filmID);
+      $stmt->execute();
+
+      if($stmt->execute()) {
+         return $this->successResponse(time(), "Movie shared successfully");
+      } else {
+         return $this->errorResponse(time(), "Error sharing movie");
+      }
 
    }
-   private function handleReq()
-   {
+
+   private function shareShow($apiKey,$username, $showID) {
+      $userID = $this->getUserID($apiKey);
+      $receiverID = $this->getUserIDusername($username);
+
+      $query = "INSERT INTO Shared_shows WHERE (Reciever_ID, Sender_id, Show_ID) VALUES (?,?,?)";
+      $stmt = $GLOBALS['connection']->prepare($query);
+      $stmt->bind_param("iii", $receiverID, $userID, $showID);
+      $stmt->execute();
+
+      if($stmt->execute()) {
+         return $this->successResponse(time(), "Show shared successfully");
+      } else {
+         return $this->errorResponse(time(), "Error sharing movie");
+      }
+
+   }
+   private function editMovie() {
+
+   }
+   private function handleReq() {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          // Set the appropriate content type for JSON
          header('Content-Type: application/json');
