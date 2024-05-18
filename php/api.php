@@ -8,9 +8,7 @@ include 'config.php'; //include
 
 class API
 {
-
-   public static function instance()
-   {
+   public static function instance() {
       static $instance = null;
       if ($instance === null) $instance = new API();
       return $instance;
@@ -35,8 +33,7 @@ class API
    }
 
 
-   private function retSalt($email)
-   {
+   private function retSalt($email){
       $stmt = $GLOBALS['connection']->prepare("SELECT salt FROM users WHERE email= ?");
       $stmt->bind_param("s", $email);
       $stmt->execute();
@@ -45,8 +42,7 @@ class API
       return $result["salt"];
    }
 
-   private function getSalt()
-   {
+   private function getSalt(){
       //generate random string that will be used to on the password to add flavor
       //be above 10 characters
       //dynamic created
@@ -104,7 +100,7 @@ class API
       }
 
       // Check if user already exists
-      $stmt = $GLOBALS['connection']->prepare("SELECT id FROM users WHERE email = ?");
+      $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE email = ?");
       $stmt->bind_param("s", $email);
       $stmt->execute();
       $result = $stmt->get_result();
@@ -124,7 +120,7 @@ class API
 
       $apiKey = $this->getApiKey();
       // Insert user into database
-      $stmt = $GLOBALS['connection']->prepare("INSERT INTO users (name, surname, email, password,salt,apiKey, username) VALUES (?, ?, ?, ?, ?, ?, ?)");
+      $stmt = $GLOBALS['connection']->prepare("INSERT INTO users (name, surname, email, password,salt,apikey, username) VALUES (?, ?, ?, ?, ?, ?, ?)");
       $stmt->bind_param("sssssss", $name, $surname, $email, $hashed_password, $salt, $apiKey, $username);
 
       if ($stmt->execute()) {
@@ -142,7 +138,7 @@ class API
          return $this->errorResponse("Incorrect password", time());
       } else if ($this->checkCredentials($email, $pass)) {
          //create a new api key and save it
-         $stmt = $GLOBALS['connection']->prepare("SELECT id, apiKey FROM users WHERE email = ? AND password = ?");
+         $stmt = $GLOBALS['connection']->prepare("SELECT user_id, apiKey FROM users WHERE email = ? AND password = ?");
          $stmt->bind_param("ss", $email, $pass);
          $stmt->execute();
          $result = $stmt->get_result();
@@ -176,7 +172,7 @@ class API
    }
 
    public function deleteUser($apiKey) {
-      $stmt = $GLOBALS['connection']->prepare("SELECT id FROM users WHERE apikey=?");
+      $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE apikey=?");
       $stmt->bind_param("s", $apiKey);
       $stmt->execute();
       $result = $stmt->get_result();
@@ -194,7 +190,7 @@ class API
    }
 
    public function getUserRecommendations($apiKey) {
-      $stmt = $GLOBALS['connection']->prepare("SELECT id FROM users WHERE apikey = ?");
+      $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE apikey = ?");
       $stmt->bind_param("s", $apiKey);
       $stmt->execute();
       $result = $stmt->get_result();
@@ -206,7 +202,7 @@ class API
 
    }
 
-   public function getMovies($sort, $order, $search, $return, $fuzzy) {
+   public function getMovies($limit, $sort, $search, $return, $fuzzy) {
       $table = $GLOBALS['connection'];
       if($return === "['*']"){
          $query = "SELECT * FROM films";
@@ -247,6 +243,9 @@ class API
       if(isset($sort)) {
          $query .= ' ORDER BY '. $sort;
       }
+      if(isset($limit)) {
+         $query .= ' LIMIT '. $limit;
+      }
 
       $stmt = $table->prepare($query);
 
@@ -276,37 +275,44 @@ class API
       }
    
    }
-   public function getSeries($sort, $order, $search, $return) {
-      $query = "SELECT ";
-
-      // Add return columns to the query
-      if (!empty($return)) {
-          $query .= implode(", ", $return);
-      } else {
-          $query .= "*"; // Default to selecting all columns
-      }
-  
+   public function getSeries($limit, $sort, $search, $return, $fuzzy) {
       $query = "SELECT s.Name , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
   
       // Add search and filter conditions
-      if (!empty($search)) {
-          // Add conditions based on search parameters
-         if (isset($search['genre'])) {
-            $genres = $search['genre'];
-            $query .= " AND genre LIKE $genres ";
+      if(isset($search) && is_array($search) && count($search) > 0) {          // Add conditions based on search parameters
+         $filters = array();
+         foreach ($search as $column => $value) {
+            // Escape column and value to prevent SQL injection
+            $column = $GLOBALS['connection']->real_escape_string($column);
+            $value = $GLOBALS['connection']->real_escape_string($value);
+
+            if ($column === 'year') {
+               $year = (int) $value;
+               $filters[] = "Release_Year >= $year";
+            } else if ($column === 'rating') {
+               $rating = (int) $value;
+               $filters[] = "CineTech_Rating >= $rating";
+      
+            } else {
+               // Add other filter conditions to the array
+               if($fuzzy === "true") {
+                  $filters[] = "$column LIKE '%$value%'";
+               } else {
+                  $filters[] = "$column = '$value'";
+               }
+            }
+
+            $query .= " WHERE " . implode(' AND ', $filters);
          }
-          // Add conditions for other search parameters (e.g., language, production_country, keyword)  
       }
   
       // Add sorting and ordering
       if (!empty($sort)) {
          $query .= "ORDER BY $sort ";
-
-         if (!empty($order)) {
-            $query .= "$order";
-         }
       }
-  
+      if(isset($limit)) {
+         $query .= ' LIMIT '. $limit;
+      }
       // Prepare and execute the query using prepared statements
       $stmt = $GLOBALS["connection"]->prepare($query);
       $stmt->execute();
@@ -328,22 +334,36 @@ class API
       } else {
          return $this->errorResponse(time(),"No shows found") ;
       }
-   }
-   private function getRatingID() {
 
    }
+ 
 
-   private function getCineTechRating() {
-      
+   private function inputRatings() {
+      $query = "UPDATE Rating AS r
+      JOIN (
+          SELECT s.RatingID, AVG(cr.Rating) AS avg_rating
+          FROM CineTech_Show_Rating AS cr
+          JOIN Shows AS s ON cr.Show_ID = s.Show_id
+          GROUP BY s.`RatingID`
+      ) AS subquery ON r.Rating_ID = subquery.RatingID
+      SET r.CineTech_Rating = subquery.avg_rating";
+
+      $stmt = $GLOBALS["connection"]->prepare($query);
+      $stmt->execute();
+
+      $query = "UPDATE Rating AS r JOIN f.Rating_ID, (cr.Rating) AS avg_rating FROM CineTech_Film_Rating AS cr JOIN Films AS f ON cr.Films_ID = f.Films_ID GROUP BY f.Rating_ID ) AS subquery ON r.Rating_ID = subquery.Rating_ID r.CineTech_Rating = subquery.avg_rating";
+      $stmt = $GLOBALS["connection"]->prepare($query);
+      $stmt->execute();
    }
    public function addRatings($filmID, $showID, $rating) {
       //insert cintech rating
       if(isset($filmID)) {
          $query = "INSERT INTO CineTech_Film_Rating WHERE (Films_ID, Rating) VALUES (?,?)";
          $stmt = $GLOBALS["connection"]->prepare($query);
-         $stmt->bind_param("id",$filmID, $rating);
+         $stmt->bind_param("ii", $filmID, $rating);
 
          if($stmt->execute()) {
+            $this->inputRatings();
             return $this->successResponse(time(), "CineTech Rating added successfully");
          } else {
             return $this->errorResponse(time(), "Failed to add CineTech Rating");
@@ -351,9 +371,10 @@ class API
       } else {
          $query = "INSERT INTO CineTech_Show_Rating WHERE (Show_ID, Rating) VALUES (?,?)";
          $stmt = $GLOBALS["connection"]->prepare($query);
-         $stmt->bind_param("id",$showID, $rating);
+         $stmt->bind_param("ii",$showID, $rating);
 
          if($stmt->execute()) {
+            $this->inputRatings();
             return $this->successResponse(time(), "CineTech Rating added successfully");
          } else {
             return $this->errorResponse(time(), "Failed to add CineTech Rating ");
@@ -363,7 +384,7 @@ class API
    public function getAllFavourites($apikey) {//need to change SQL
       try {
          // Retrieve user ID based on API key
-         $uIDQuery = "SELECT id FROM users WHERE apiKey=?";
+         $uIDQuery = "SELECT user_id FROM users WHERE apikey=?";
          $uIDStmt = $GLOBALS['connection']->prepare($uIDQuery);
          $uIDStmt->bind_param('s', $apikey);
          $uIDStmt->execute();
@@ -393,7 +414,7 @@ class API
 
                // Query to fetch listing information from the listings table
                $Query = "SELECT v.films_id , f.Title ,f.Country ,f.Description,f.Release_Year ,v.shows_id,s.Name,s.Seasons,s.Country,s.Release_Year FROM favourites v JOIN Films f ON f.Films_ID = v.films_id JOIN Shows s ON s.Show_id = v.shows_id WHERE user_id =?";
-               $Stmt = $GLOBALS['connection']->prepare($userID);
+               $Stmt = $GLOBALS['connection']->prepare($Query);
                $Stmt->bind_param('i', $userID);
                $Stmt->execute();
                $Result = $Stmt->get_result();
@@ -417,10 +438,10 @@ class API
       }
    }
 
-   private function addFavourite($api, $listingid){///need to do
+   private function addFavourite($api, $filmID, $showID){///need to do
       try {
          // Retrieve user ID based on API key
-         $uIDQuery = "SELECT id FROM users WHERE apiKey=?";
+         $uIDQuery = "SELECT user_id FROM users WHERE apiKey=?";
          $uIDStmt = $GLOBALS['connection']->prepare($uIDQuery);
          $uIDStmt->bind_param('s', $api);
          $uIDStmt->execute();
@@ -428,47 +449,64 @@ class API
 
          if ($uIDResult->num_rows == 0) {
             // Handle case where API key does not correspond to any user
-            return $this->errorResponse("User not found for API key: " . $api, time());
+            return $this->errorResponse(time(), "User not found for API key: " . $api);
          }
 
          $userData = $uIDResult->fetch_assoc();
          $userID = $userData["id"];
 
-         // Retrieve listing information based on listing ID
-         $listingQuery = "SELECT title, price, location, images FROM listings WHERE id=?";
-         $listingStmt = $GLOBALS['connection']->prepare($listingQuery);
-         $listingStmt->bind_param('i', $listingid);
-         $listingStmt->execute();
-         $listingResult = $listingStmt->get_result();
+         $insertQuery = "INSERT INTO user_favorites_info (user_id, shows_id, films_id) VALUES (?, ?, ?)";
+         $insertStmt = $GLOBALS['connection']->prepare($insertQuery);
 
-         if ($listingResult->num_rows == 0) {
-            // Handle case where listing ID does not exist
-            return $this->errorResponse(time(), "Listing not found for ID: " . $listingid );
+         if(isset($filmID)) {
+            // Retrieve listing information based on listing ID
+            $listingQuery = "SELECT * FROM Films WHERE Films_ID=?";
+            $listingStmt = $GLOBALS['connection']->prepare($listingQuery);
+            $listingStmt->bind_param('i', $filmID);
+            $listingStmt->execute();
+            $listingResult = $listingStmt->get_result();
+
+            if ($listingResult->num_rows == 0) {
+               // Handle case where listing ID does not exist
+               return $this->errorResponse(time(), "Listing not found for ID: " . $filmID );
+            }
+
+            $Data = $listingResult->fetch_assoc();
+            $insertStmt->bind_param('iii', $userID, null, $filmID);
+
+         } else {
+            $listingQuery = "SELECT * FROM Shows WHERE Show_ID=?";
+            $listingStmt = $GLOBALS['connection']->prepare($listingQuery);
+            $listingStmt->bind_param('i', $showID);
+            $listingStmt->execute();
+            $listingResult = $listingStmt->get_result();
+
+            if ($listingResult->num_rows == 0) {
+               // Handle case where listing ID does not exist
+               return $this->errorResponse(time(), "Show not found for ID: " . $showID );
+            }
+
+            $Data = $listingResult->fetch_assoc();
+            $insertStmt->bind_param('iii', $userID, $showID, null);
          }
 
-         $listingData = $listingResult->fetch_assoc();
-         
-
          // Insert favorite into database
-         $insertQuery = "INSERT INTO user_favorites_info () VALUES (?, ?, ?, ?, ?, ?)";
-         $insertStmt = $GLOBALS['connection']->prepare($insertQuery);
-         $insertStmt->bind_param('iisdss');
-
+         
          if ($insertStmt->execute()) {
             return $this->successResponse(time(), "Favorite added successfully.");
          } else {
             // Handle SQL execution error
             // Uncomment the following line for debugging
             // var_dump($insertStmt->error);
-            return $this->errorResponse("Error adding favorite: " . $insertStmt->error, time());
+            return $this->errorResponse(time(), "Error adding favorite: " . $insertStmt->error);
          }
       } catch (Exception $e) {
          // Handle any exceptions thrown during SQL execution
-         return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
+         return $this->errorResponse(time(),"An error occurred: " . $e->getMessage());
       }
    }
-   private function delete($title, $type) {
-      if($type === "film") {
+   private function delete($title, $item) {
+      if($item === "film") {
          $stmt = $GLOBALS['connection']->prepare("DELETE FROM Films WHERE Title = ?");
          $stmt->bind_param("s", $title);
         
@@ -489,10 +527,10 @@ class API
 
       }
    }
-   private function deleteFavourite($api, $filmID) {
+   private function deleteFavourite($api, $filmID, $showID) {
       try {
          // Retrieve user ID based on API key
-         $uIDQuery = "SELECT id FROM users WHERE apiKey=?";
+         $uIDQuery = "SELECT user_id FROM users WHERE apiKey=?";
          $uIDStmt = $GLOBALS['connection']->prepare($uIDQuery);
          $uIDStmt->bind_param('s', $api);
          $uIDStmt->execute();
@@ -500,19 +538,25 @@ class API
 
          if ($uIDResult->num_rows == 0) {
             // Handle case where API key does not correspond to any user
-            return $this->errorResponse("User not found for API key: " . $api, time());
+            return $this->errorResponse(time(), "User not found for API key: " . $api);
          }
 
          $userData = $uIDResult->fetch_assoc();
          $userID = $userData["id"];
 
          // Delete favorite from database
-         $deleteQuery = "DELETE FROM user_favorites_info WHERE userID=? AND FilmID=?";
-         $deleteStmt = $GLOBALS['connection']->prepare($deleteQuery);
-         $deleteStmt->bind_param('ii', $userID, $filmID);
+         if(isset($filmID)){
+            $deleteQuery = "DELETE FROM user_favorites_info WHERE userID=? AND films_id=?";
+            $deleteStmt = $GLOBALS['connection']->prepare($deleteQuery);
+            $deleteStmt->bind_param('ii', $userID, $filmID);   
+         } else {
+            $deleteQuery = "DELETE FROM user_favorites_info WHERE userID=? AND shows_id=?";
+            $deleteStmt = $GLOBALS['connection']->prepare($deleteQuery);
+            $deleteStmt->bind_param('ii', $userID, $showID);   
+         }
 
          if ($deleteStmt->execute()) {
-            return $this->successResponse(time(), "Removed film from favorites.");
+            return $this->successResponse(time(), "Removed from favorites.");
          } else {
             // Handle SQL execution error
             return $this->errorResponse(time(), "Error deleting favorite: " . $deleteStmt->error);
@@ -590,7 +634,7 @@ class API
    }
 
    private function getUserID($apiKey) {
-      $query = "SELECT id FROM users WHERE api_key = ?";
+      $query = "SELECT user_id FROM users WHERE api_key = ?";
       $stmt = $GLOBALS['connection']->prepare($query);
       $stmt->bind_param("s", $apiKey);
       $stmt->execute();
@@ -601,7 +645,7 @@ class API
       }
       $row = $result->fetch_assoc();
 
-      return $row;
+      return $row['id'];
    }
    private function getUserIDusername($username) {
       $query = "SELECT id FROM users WHERE username = ?";
@@ -615,11 +659,10 @@ class API
       }
       $row = $result->fetch_assoc();
 
-      return $row;
+      return $row['id'];
    }
 
    private function shareMovie($apiKey, $username, $filmID) {
-
       $userID = $this->getUserID($apiKey);
       $receiverID = $this->getUserIDusername($username);
 
@@ -648,7 +691,7 @@ class API
       if($stmt->execute()) {
          return $this->successResponse(time(), "Show shared successfully");
       } else {
-         return $this->errorResponse(time(), "Error sharing movie");
+         return $this->errorResponse(time(), "Error sharing show");
       }
 
    }
@@ -713,55 +756,83 @@ class API
                echo $this->errorResponse("Failed to logout", time());
             }
          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllMovies") { //========================
-            if (isset($requestData['apikey']) && isset($requestData['return'])) {
-               echo $this->getMovies($requestData['apikey'], $requestData['limit'], $requestData['sort'], $requestData['order'], $requestData['search'], $requestData['fuzzy'] = true, $requestData['return']);
+            if (isset($requestData['return'])) {
+               echo $this->getMovies($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
             } else {
-               echo $this->errorResponse("Get listings failed", time());
+               echo $this->errorResponse(time(),"Get movies failed");
             }
          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllFavourites") { //===========================
             if (isset($requestData['apikey'])) {
                echo $this->getAllFavourites($requestData['apikey']);
             } else {
-               echo $this->errorResponse("No API Key provided for favourites.", time());
+               echo $this->errorResponse(time(),"No API Key provided for favourites.");
             }
          } else if (isset($requestData["type"]) && $requestData["type"] === "Favourite") { //========================
-            if (isset($requestData["apikey"]) && isset($requestData["listingID"]) && isset($requestData["add"])) {
+            if (isset($requestData["apikey"]) && isset($requestData["add"]) && (isset($requestData['show_id']) || isset($requestData['film_id']))) {
                if ($requestData["add"] === "true") {
-                  echo $this->addFavourite($requestData["apikey"], $requestData["listingID"]);
+                  if(isset($requestData['show_id'])) {
+                     echo $this->addFavourite($requestData["apikey"], null ,$requestData['show_id']); 
+                  } else {
+                     echo $this->addFavourite($requestData["apikey"], $requestData['film_id'], null);
+                  }  
                } else {
-                  echo $this->deleteFavourite($requestData["apikey"], $requestData["listingID"]);
+                  if(isset($requestData['show_id'])) {
+                     echo $this->deleteFavourite($requestData["apikey"], null, $requestData['show_id']);
+                  } else {
+                     echo $this->deleteFavourite($requestData["apikey"],$requestData['film_id'], null);               
+                  }
                }
             } else {
-               echo $this->errorResponse("Could not access favourites", time());
+               echo $this->errorResponse(time(), "Could not access favourites");
             }
          } else if (isset($requestData['type']) && $requestData['type'] === "AddMovies") {
 
-         } else if (isset($requestData['type']) && $requestData['type'] === "RemoveMovies") {
-
+         } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
+            if(isset($requestData['item']) && isset($requestData['title'])) {
+               echo $this->delete($requestData['title'], $requestData['item']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for deleting movie/serie");
+            }
          } else if (isset($requestData['type']) && $requestData['type'] === "AddSeries") {
 
-         } else if (isset($requestData['type']) && $requestData['type'] === "RemoveSeries") {
-
-         } else if (isset($requestData['type']) && $requestData['type'] === "AddFeatured") {
-
          } else if (isset($requestData['type']) && $requestData['type'] === "ShareFilm") {
-
+            if(isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
+               echo $this->shareMovie($requestData['apikey'],$requestData['username'], $requestData['id']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for sharing film");
+            }
          } else if (isset($requestData['type']) && $requestData['type'] === "AddRating") {
-
+            if(isset($requestData['filmID']) || isset($requestData['showID'])) {
+               if(isset($requestData['filmID']) && isset($requestData['rating'])) {
+                  echo $this->addRatings($requestData['filmID'], null, $requestData['rating']);
+               } else if(isset($requestData['rating'])){
+                  echo $this->addRatings(null, $requestData['showID'], $requestData['rating']);
+               } else {
+                  echo $this->errorResponse(time(), "Missing values for adding rating");
+               }
+            }
          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllSeries") {
-
+            if (isset($requestData['apikey']) && isset($requestData['return'])) {
+               echo $this->getSeries($requestData['limit'], $requestData['sort'],  $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true,);
+            } else {
+               echo $this->errorResponse("Get series failed", time());
+            }
          } else if (isset($requestData['type']) && $requestData['type'] === "ShareSeries") {
-
+            if(isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
+               echo $this->shareShow($requestData['apikey'],$requestData['username'], $requestData['id']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for sharing show");
+            }
          } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") {
 
          } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") {
 
          } else if (isset($requestData['type']) && $requestData['type'] === "EditMovie") {
 
-         } else if (isset($requestData['type']) && $requestData['type'] === "EditSerie") {
+         } else if (isset($requestData['type']) && $requestData['type'] === "EditShow") {
 
          } else {
-            echo $this->errorResponse("Post parameters are missing", time());
+            echo $this->errorResponse(time(), "Post parameters are missing");
          }
          // Send a JSON response
       } else {
@@ -773,4 +844,3 @@ class API
 // Instantiate API object
 $api = new API();
 
-?>
