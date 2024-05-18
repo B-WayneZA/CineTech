@@ -82,14 +82,6 @@ class API
 
    public function registerUser($name, $surname, $email, $password, $username, $admin)
    {
-      // API endpoint URL
-
-      //METHOD POST
-      //check for missing, blank, incorrect fields
-      //validate email string
-
-      // Data to be sent in the request body (in JSON format)
-      // Validate input
       if (empty($name) || empty($surname) || empty($email) || empty($password)) {
          return json_encode(array("message" => "All fields are required"));
       }
@@ -128,15 +120,14 @@ class API
       $salt = $this->getSalt();
 
       // Hash password with salt
-
       $hashed_password = $this->HashPassword($password, $salt);
       $date = new DateTime();
       $lastLogin =  $date->getTimestamp();
-    
+
 
       $apiKey = $this->getApiKey();
       // Insert user into database
-      if($admin === "true") {
+      if ($admin === "true") {
          $stmt = $GLOBALS['connection']->prepare("INSERT INTO Admins (name, surname, email, password,salt,apikey, username) VALUES (?, ?, ?, ?, ?, ?, ?)");
       } else {
          $stmt = $GLOBALS['connection']->prepare("INSERT INTO users (name, surname, email, password,salt,apikey, username) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -151,14 +142,12 @@ class API
       }
    }
 
-   public function login($email, $pass, $admin)
-   {
+   public function login($email, $pass, $admin) {
       if (!$pass) {
          //unable to login
          return $this->errorResponse("Incorrect password", time());
       } else if ($this->checkCredentials($email, $pass)) {
-
-         if($admin === true) {
+         if ($admin === true) {
             $stmt = $GLOBALS['connection']->prepare("SELECT admin_id, apikey FROM Admins WHERE email = ? AND password = ?");
          } else {
             $stmt = $GLOBALS['connection']->prepare("SELECT user_id, apikey FROM users WHERE email = ? AND password = ?");
@@ -215,8 +204,7 @@ class API
       }
    }
 
-   public function getUserRecommendations($apiKey)
-   {
+   public function getUserRecommendations($apiKey) {//not done
       $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE apikey = ?");
       $stmt->bind_param("s", $apiKey);
       $stmt->execute();
@@ -224,7 +212,7 @@ class API
       if ($result->num_rows == 0) {
          return $this->errorResponse(time(), "User does not exists");
       } else {
-         $stmt = $GLOBALS["connection"]->prepare("SELECT ");
+         $stmt = $GLOBALS["connection"]->prepare("SELECT  ");
       }
    }
 
@@ -437,7 +425,6 @@ class API
 
             // Fetch each favorite and extract listing information from the listings table
             while ($row = $result->fetch_assoc()) {
-
                // Query to fetch listing information from the listings table
                $Query = "SELECT v.films_id , f.Title ,f.Country ,f.Description,f.Release_Year ,v.shows_id,s.Name,s.Seasons,s.Country,s.Release_Year FROM favourites v JOIN Films f ON f.Films_ID = v.films_id JOIN Shows s ON s.Show_id = v.shows_id WHERE user_id =?";
                $Stmt = $GLOBALS['connection']->prepare($Query);
@@ -468,7 +455,7 @@ class API
    { ///need to do
       try {
          // Retrieve user ID based on API key
-         $uIDQuery = "SELECT user_id FROM users WHERE apiKey=?";
+         $uIDQuery = "SELECT user_id FROM users WHERE apikey=?";
          $uIDStmt = $GLOBALS['connection']->prepare($uIDQuery);
          $uIDStmt->bind_param('s', $api);
          $uIDStmt->execute();
@@ -631,15 +618,62 @@ class API
       //Not sure what to do please help me with the guidance 
    }
 
-   private function getNewMovies()
-   { //get movies from this year 3.
+   private function searchBar($value) {
+      global $connection;
+      $searchValue = "%" . $value . "%";
+
+      try {
+         // Query to search both movies and shows with joins for rating and genre
+         $query = "
+              SELECT 
+                  m.title AS name, 
+                  r.rating_value AS rating, 
+                  g.genre_name AS genre, 
+                  m.poster_url, 
+                  m.release_year
+              FROM movies m
+              JOIN ratings r ON m.rating_id = r.id
+              JOIN genres g ON m.genre_id = g.id
+              WHERE m.title LIKE ? OR g.genre_name LIKE ?
+              UNION
+              SELECT 
+                  s.name AS title, 
+                  r.rating_value AS rating, 
+                  g.genre_name AS genre, 
+                  s.poster_url, 
+                  s.release_year
+              FROM shows s
+              JOIN ratings r ON s.rating_id = r.id
+              JOIN genres g ON s.genre_id = g.id
+              WHERE s.name LIKE ? OR g.genre_name LIKE ?";
+
+         $stmt = $connection->prepare($query);
+         $stmt->bind_param("ssss", $searchValue, $searchValue, $searchValue, $searchValue);
+         $stmt->execute();
+         $result = $stmt->get_result();
+
+         $results = [];
+         while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+         }
+
+         return $this->successResponse(time(), $results);
+      } catch (Exception $e) {
+         return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
+      }
+   }
+   private function getNewMovies() { //get movies from this year 3.
       try {
          $query = "SELECT * FROM Films WHERE YEAR(ReleaseDate) = YEAR(CURDATE()) ";
          $stmt = $GLOBALS['connection']->prepare($query);
          $stmt->execute();
          $result = $stmt->get_result();
+         $results = [];
+         while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+         }
 
-         return $result->fetch_assoc();
+         return $this->successResponse(time(), $results);
       } catch (Exception $e) {
          // Handle any exceptions thrown during SQL execution
          return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
@@ -647,10 +681,9 @@ class API
    }
 
 
-   private function addMovie($title, $genre, $ratingArr, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL)
+   private function addMovie($title, $genre, $ratingArr, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL)//change PDO to sqli
    { //4.
       try {
-
          $query = "INSERT INTO Film (Title, Genre, Country, Description, Runtime, Year, PostURL, VideoURL, ScreenURL) 
          VALUES (:title, :genre, :country, :description, :runtime, :year, :postURL, :videoURL, :screenURL)";
          $stmt = $GLOBALS['connection']->prepare($query);
@@ -680,7 +713,7 @@ class API
          return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
       }
    }
-   private function addSeries($title, $genre, $ratingArr, $country, $description, $runtime, $year, $seasons, $PostURL, $VideoURL, $ScreenURL)
+   private function addSeries($title, $genre, $ratingArr, $country, $description, $runtime, $year, $seasons, $PostURL, $VideoURL, $ScreenURL)//change PDO to sqli
    { //5.
       $query = "INSERT INTO Shows (Title, Genre, Country, Description, Runtime, Year, Seasons, PostURL, VideoURL, ScreenURL) 
       VALUES (:title, :genre, :country, :description, :runtime, :year, :seasons, :postURL, :videoURL, :screenURL)";
@@ -752,8 +785,7 @@ class API
 
       return $row['id'];
    }
-   private function getUserIDusername($username)
-   {
+   private function getUserIDusername($username) {
       $query = "SELECT id FROM users WHERE username = ?";
       $stmt = $GLOBALS['connection']->prepare($query);
       $stmt->bind_param("s", $username);
@@ -806,8 +838,8 @@ class API
    private function editMovie()
    {
    }
-   private function handleReq()
-   {
+
+   private function handleReq() {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          // Set the appropriate content type for JSON
          header('Content-Type: application/json');
@@ -894,14 +926,14 @@ class API
             } else {
                echo $this->errorResponse(time(), "Could not access favourites");
             }
-         } else if (isset($requestData['type']) && $requestData['type'] === "AddMovies") {
+         } else if (isset($requestData['type']) && $requestData['type'] === "AddMovies") {//revise
          } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
             if (isset($requestData['item']) && isset($requestData['title'])) {
                echo $this->delete($requestData['title'], $requestData['item']);
             } else {
                echo $this->errorResponse(time(), "Missing values for deleting movie/serie");
             }
-         } else if (isset($requestData['type']) && $requestData['type'] === "AddSeries") {
+         } else if (isset($requestData['type']) && $requestData['type'] === "AddSeries") {//revise
          } else if (isset($requestData['type']) && $requestData['type'] === "ShareFilm") {
             if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
                echo $this->shareMovie($requestData['apikey'], $requestData['username'], $requestData['id']);
@@ -930,14 +962,19 @@ class API
             } else {
                echo $this->errorResponse(time(), "Missing values for sharing show");
             }
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") {
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") {
-         } else if (isset($requestData['type']) && $requestData['type'] === "EditMovie") {
-         } else if (isset($requestData['type']) && $requestData['type'] === "EditShow") {
+         } else if (isset($requestData['type']) && $requestData['type'] === "Search") {
+            if (isset($requestData['search'])) {
+               echo $this->searchBar($requestData['search']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for searching");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") {//not done
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") {//not done
+         } else if (isset($requestData['type']) && $requestData['type'] === "EditMovie") { //not done
+         } else if (isset($requestData['type']) && $requestData['type'] === "EditShow") {//not done
          } else {
             echo $this->errorResponse(time(), "Post parameters are missing");
          }
-         // Send a JSON response
       } else {
          echo json_encode(array("message" => "Method Not Allowed", "code" => http_response_code(405)));
       }
