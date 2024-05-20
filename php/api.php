@@ -288,6 +288,7 @@ class API
          return $this->errorResponse(time(), "No movies found");
       }
    }
+
    public function getSeries($limit, $sort, $search, $return, $fuzzy)
    {
       $query = "SELECT s.Name , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
@@ -441,6 +442,8 @@ class API
       $stmt->execute();
 
    }
+
+
    public function addRatings($filmID, $showID, $rating)
    {
       //insert cintech rating
@@ -468,6 +471,7 @@ class API
          }
       }
    }
+
 
    public function getAllFavourites($apikey)
    { //need to change SQL
@@ -525,6 +529,7 @@ class API
          return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
       }
    }
+
 
    private function addFavourite($api, $filmID, $showID)
    { ///need to do
@@ -593,6 +598,8 @@ class API
          return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
       }
    }
+
+
    private function delete($title, $item)
    {
       if ($item === "film") {
@@ -615,6 +622,8 @@ class API
          }
       }
    }
+
+
    private function deleteFavourite($api, $filmID, $showID)
    {
       try {
@@ -695,6 +704,7 @@ class API
          }
       }
    }
+
 
    private function getPopularMovies()
    {
@@ -833,6 +843,8 @@ class API
       $query = "SELECT Rating_ID FROM Rating ORDER BY Rating_ID DESC LIMIT 1";
       return $film;
    }
+
+
    private function getRatingAvgFilm($filmId)
    {
       $query = "SELECT r.CineTech_Rating,(SELECT AVG(CineTech_Rating) FROM Rating WHERE Rating_ID = f.Rating_ID) AS CineTech_R FROM Films f JOIN Rating r ON f.Rating_ID = r.Rating_ID WHERE f.Films_ID = ?";
@@ -844,6 +856,8 @@ class API
 
       return $row;
    }
+
+
    private function getRatingAvgShow($showId)
    {
       $query = "SELECT r.CineTech_Rating,(SELECT AVG(CineTech_Rating) FROM Rating WHERE Rating_ID = f.Rating_ID) AS CineTech_R FROM Films f JOIN Rating r ON f.Rating_ID = r.Rating_ID WHERE f.Films_ID = ?";
@@ -922,6 +936,8 @@ class API
          return $this->errorResponse(time(), "Error sharing show");
       }
    }
+
+   
    private function editMovie()
    {
    }
