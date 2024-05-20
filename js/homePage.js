@@ -1,87 +1,102 @@
-// Get the user image and notifications icon
-const userIcon = document.querySelector('.search_user img');
-const notificationsIcon = document.querySelector('.notifications img');
+document.addEventListener('DOMContentLoaded', () => {
+    // Get the user image and notifications icon
+    const userIcon = document.querySelector('.search_user img');
+    const notificationsIcon = document.querySelector('.notifications img');
+  
+    // Get the user panel, user popup, and notifications popup
+    const userPanel = document.querySelector('.user-panel');
+    const notificationsPopup = document.querySelector('.notifications-popup');
 
-// Get the user popup and notifications popup
-const userPopup = document.querySelector('.search_user .search');
-const notificationsPopup = document.querySelector('.notifications-popup');
+    // Function to toggle the visibility of the user panel
+    userIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent the click event from bubbling up to the window
+        userPanel.classList.toggle('show');
+    });
 
-// Function to toggle the visibility of the user popup
-userIcon.addEventListener('click', function() {
-    userPopup.classList.toggle('show');
-});
+    // Function to toggle the visibility of the notifications popup
+    notificationsIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent the click event from bubbling up to the window
+        notificationsPopup.classList.toggle('show');
+    });
 
-// Function to toggle the visibility of the notifications popup
-notificationsIcon.addEventListener('click', function() {
-    notificationsPopup.classList.toggle('show');
-});
+    // Close the user panel and notifications popup if the user clicks outside of them
+    window.addEventListener('click', function(event) {
+        if (!event.target.closest('.search_user img') && !event.target.closest('.user-panel')) {
+            userPanel.classList.remove('show');
+        }
+        if (!event.target.closest('.notifications img') && !event.target.closest('.notifications-popup')) {
+            notificationsPopup.classList.remove('show');
+        }
+    });
 
-// Close the popups if user clicks outside of them
-window.addEventListener('click', function(event) {
-    if (!event.target.matches('.search_user img')) {
-        userPopup.classList.remove('show');
-    }
-    if (!event.target.matches('.notifications img')) {
-        notificationsPopup.classList.remove('show');
-    }
-});
+    // Handle logout button click
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        // Add logout functionality here
+    });
 
-// Get the user image and the user panel
-const userImage = document.querySelector('.search_user img');
-const userPanel = document.querySelector('.user-panel');
+    // Handle delete account button click
+    document.getElementById('delete-btn').addEventListener('click', function() {
+        // Add delete account functionality here
+    });
 
-// Show the user panel when the user image is clicked
-userImage.addEventListener('click', function() {
-    userPanel.classList.toggle('show');
-});
+    // Get references to elements
+    const changePasswordBtn = document.getElementById('change-password-btn');
+    const changeUsernameBtn = document.getElementById('change-username-btn');
 
-// Hide the user panel when clicking outside of it
-window.addEventListener('click', function(event) {
-    if (!event.target.matches('.search_user img') && !event.target.closest('.user-panel')) {
-        userPanel.classList.remove('show');
-    }
-});
+    // Get the password popup and username popup
+    const passwordPopup = document.querySelector('.password-popup');
+    const usernamePopup = document.querySelector('.username-popup');
 
-// Handle logout button click
-document.getElementById('logout-btn').addEventListener('click', function() {
-    // Add logout functionality here
-});
+    // Event listener for change password button
+    changePasswordBtn.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent the click event from bubbling up to the window
+        passwordPopup.classList.toggle('show');
+    });
 
-// Handle delete account button click
-document.getElementById('delete-btn').addEventListener('click', function() {
-    // Add delete account functionality here
-});
+    // Event listener for change username button
+    changeUsernameBtn.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent the click event from bubbling up to the window
+        usernamePopup.classList.toggle('show');
+    });
 
-// Get references to elements
-const changePasswordBtn = document.getElementById('change-password-btn');
-const changeUsernameBtn = document.getElementById('change-username-btn');
+    // Close the password popup when clicking outside
+    window.addEventListener('click', function(event) {
+        if (!event.target.closest('#change-password-btn') && !event.target.closest('.password-popup')) {
+            passwordPopup.classList.remove('show');
+        }
+        if (!event.target.closest('#change-username-btn') && !event.target.closest('.username-popup')) {
+            usernamePopup.classList.remove('show');
+        }
+    });
 
-// Get the password popup and username popup
-const passwordPopup = document.querySelector('.password-popup');
-const usernamePopup = document.querySelector('.username-popup');
+    // Handle save and cancel actions for popups
+    document.getElementById('cancel-password').addEventListener('click', function() {
+        passwordPopup.classList.remove('show');
+    });
 
-// Event listener for change password button
-changePasswordBtn.addEventListener('click', function(event) {
-    event.stopPropagation(); // Prevent the click event from bubbling up to the window
-    passwordPopup.classList.toggle('show');
-});
+    document.getElementById('save-password').addEventListener('click', function() {
+        // Save new password logic here
+        passwordPopup.classList.remove('show');
+    });
 
-// Event listener for change username button
-changeUsernameBtn.addEventListener('click', function(event) {
-    event.stopPropagation(); // Prevent the click event from bubbling up to the window
-    usernamePopup.classList.toggle('show');
-});
+    document.getElementById('cancel-username').addEventListener('click', function() {
+        usernamePopup.classList.remove('show');
+    });
 
-// Event listener for mode switch
-modeSwitch.addEventListener('change', function() {
-    // Code to toggle between light and dark mode
-    if (this.checked) {
-        // Dark mode
-        document.body.classList.add('dark-mode');
-        document.body.classList.remove('light-mode'); // Remove light mode
-    } else {
-        // Light mode
-        document.body.classList.remove('dark-mode');
-        document.body.classList.add('light-mode'); // Add light mode
-    }
+    document.getElementById('save-username').addEventListener('click', function() {
+        // Save new username logic here
+        usernamePopup.classList.remove('show');
+    });
+
+    // Event listener for mode switch
+    const modeSwitch = document.getElementById('mode-switch');
+    modeSwitch.addEventListener('change', function() {
+        if (this.checked) {
+            document.body.classList.add('dark-mode');
+            document.body.classList.remove('light-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+            document.body.classList.add('light-mode');
+        }
+    });
 });
