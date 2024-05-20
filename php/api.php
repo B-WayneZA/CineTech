@@ -142,7 +142,8 @@ class API
       }
    }
 
-   public function login($email, $pass, $admin) {
+   public function login($email, $pass, $admin) 
+   {
       if (!$pass) {
          //unable to login
          return $this->errorResponse("Incorrect password", time());
@@ -204,7 +205,9 @@ class API
       }
    }
 
-   public function getUserRecommendations($apiKey) {//not done
+   public function getUserRecommendations($apiKey) 
+   {
+      //not done
       $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE apikey = ?");
       $stmt->bind_param("s", $apiKey);
       $stmt->execute();
@@ -285,6 +288,7 @@ class API
          return $this->errorResponse(time(), "No movies found");
       }
    }
+
    public function getSeries($limit, $sort, $search, $return, $fuzzy)
    {
       $query = "SELECT s.Name , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
@@ -366,6 +370,8 @@ class API
       $stmt = $GLOBALS["connection"]->prepare($query);
       $stmt->execute();
    }
+
+
    public function addRatings($filmID, $showID, $rating)
    {
       //insert cintech rating
@@ -393,6 +399,7 @@ class API
          }
       }
    }
+
 
    public function getAllFavourites($apikey)
    { //need to change SQL
@@ -450,6 +457,7 @@ class API
          return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
       }
    }
+
 
    private function addFavourite($api, $filmID, $showID)
    { ///need to do
@@ -518,6 +526,8 @@ class API
          return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
       }
    }
+
+
    private function delete($title, $item)
    {
       if ($item === "film") {
@@ -540,6 +550,8 @@ class API
          }
       }
    }
+
+
    private function deleteFavourite($api, $filmID, $showID)
    {
       try {
@@ -581,6 +593,7 @@ class API
       }
    }
 
+
    private function checkCredentials($email, $password)
    {
       if (empty($email) || empty($password)) {
@@ -612,6 +625,7 @@ class API
          }
       }
    }
+
 
    private function getPopularMovies()
    {
@@ -662,6 +676,8 @@ class API
          return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
       }
    }
+
+
    private function getNewMovies() { //get movies from this year 3.
       try {
          $query = "SELECT * FROM Films WHERE YEAR(ReleaseDate) = YEAR(CURDATE()) ";
@@ -713,6 +729,7 @@ class API
          return $this->errorResponse("An error occurred: " . $e->getMessage(), time());
       }
    }
+
    private function addSeries($title, $genre, $ratingArr, $country, $description, $runtime, $year, $seasons, $PostURL, $VideoURL, $ScreenURL)//change PDO to sqli
    { //5.
       $query = "INSERT INTO Shows (Title, Genre, Country, Description, Runtime, Year, Seasons, PostURL, VideoURL, ScreenURL) 
@@ -747,6 +764,8 @@ class API
       $query = "SELECT Rating_ID FROM Rating ORDER BY Rating_ID DESC LIMIT 1";
       return $film;
    }
+
+
    private function getRatingAvgFilm($filmId)
    {
       $query = "SELECT r.CineTech_Rating,(SELECT AVG(CineTech_Rating) FROM Rating WHERE Rating_ID = f.Rating_ID) AS CineTech_R FROM Films f JOIN Rating r ON f.Rating_ID = r.Rating_ID WHERE f.Films_ID = ?";
@@ -758,6 +777,8 @@ class API
 
       return $row;
    }
+
+
    private function getRatingAvgShow($showId)
    {
       $query = "SELECT r.CineTech_Rating,(SELECT AVG(CineTech_Rating) FROM Rating WHERE Rating_ID = f.Rating_ID) AS CineTech_R FROM Films f JOIN Rating r ON f.Rating_ID = r.Rating_ID WHERE f.Films_ID = ?";
@@ -785,6 +806,8 @@ class API
 
       return $row['id'];
    }
+
+
    private function getUserIDusername($username) {
       $query = "SELECT id FROM users WHERE username = ?";
       $stmt = $GLOBALS['connection']->prepare($query);
@@ -835,6 +858,8 @@ class API
          return $this->errorResponse(time(), "Error sharing show");
       }
    }
+
+   
    private function editMovie()
    {
    }
