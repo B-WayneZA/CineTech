@@ -33,7 +33,7 @@ body {
   text-align: center;
 }
 
-.wrapper .input-box {
+.wrapper {
   position: relative;
   width: 100%;
   height: 50px;
@@ -64,6 +64,44 @@ body {
   transform: translateY(-59%);
   font-size: 20px;
 }
+
+
+/*.name input, 
+.surname input, 
+.username input, 
+.email input, 
+.password input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 20px 45px 20px 20px;
+}
+
+.name input::placeholder, 
+.surname input::placeholder, 
+.username input::placeholder, 
+.email input::placeholder, 
+.password input::placeholder {
+  color: #fff;
+}
+
+.name i, 
+.surname i, 
+.username i, 
+.email i, 
+.password i {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-59%);
+  font-size: 20px;
+}*/
 
 .wrapper .remember-forgot {
   display: flex;
