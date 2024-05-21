@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin:*');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 header('Content-Type: application/json');
 
@@ -942,151 +942,155 @@ class API
    {
    }
 
-   private function handleReq()
-   {
+   private function handleReq() {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-         // Set the appropriate content type for JSON
-         header('Content-Type: application/json');
+          // Set the appropriate content type for JSON
+          header('Content-Type: application/json');
 
-         // Decode the JSON data from the request body
-         $requestData = json_decode(file_get_contents('php://input'), true);
+          // Decode the JSON data from the request body
+          $requestData = json_decode(file_get_contents('php://input'), true);
 
-         // Check if the JSON data is valid
-         if ($requestData === null) {
-            echo json_encode(array("message" => "Invalid JSON data " . http_response_code(400)));
-            exit();
-         }
+          // Check if the JSON data is valid
+          if ($requestData === null) {
+              echo json_encode(array("message" => "Invalid JSON data " . http_response_code(400)));
+              exit();
+          }
 
-         if (isset($requestData['type']) && $requestData['type'] === "Register") { //========================
-            // Process the request
-            if (isset($requestData['name']) && isset($requestData['surname']) && isset($requestData['email']) && isset($requestData['password'])) {
-               echo $this->registerUser($requestData['name'], $requestData['surname'], $requestData['email'], $requestData['password'], $requestData['username'], $requestData['admin']);
-            } else {
-               echo $this->errorResponse("User registration failed " .  http_response_code(400), time());
-            }
-         } else if (isset($requestData["type"]) && $requestData["type"] === "Login") { //========================
-            if (isset($requestData["email"]) && isset($requestData["password"])) {
-               //check user exists and pass correct, any API requests must use API key, store as cookie
-               $email = $requestData["email"];
+          if (isset($requestData['type']) && $requestData['type'] === "Register") {
+              // Process the request
+              if (isset($requestData['name']) && isset($requestData['surname']) && isset($requestData['email']) && isset($requestData['password']) && isset($requestData['username']) && isset($requestData['admin'])) {
+                  echo $this->registerUser($requestData['name'], $requestData['surname'], $requestData['email'], $requestData['password'], $requestData['username'], $requestData['admin']);
+              } else {
+                  echo $this->errorResponse("User registration failed " .  http_response_code(400), time());
+              }
+          } else if (isset($requestData["type"]) && $requestData["type"] === "Login") {
+              if (isset($requestData["email"]) && isset($requestData["password"])) {
+                  // Check user exists and password is correct, any API requests must use API key, store as cookie
+                  $email = $requestData["email"];
 
-               //get salt from database
-               $salt = $this->retSalt($requestData["email"]);
-               if (!$salt) {
-                  echo $this->errorResponse("Email does not exist.", time());
-               } else {
-                  if (isset($_SESSION['api_key'])) {
-                     // User is logged in
-                     echo $this->errorResponse("Already registered", time());
+                  // Get salt from database
+                  $salt = $this->retSalt($requestData["email"]);
+                  if (!$salt) {
+                      echo $this->errorResponse("Email does not exist.", time());
                   } else {
-                     $pass = $this->HashPassword($requestData["password"], $salt);
-                     echo $this->login($email, $pass, $requestData['admin']);
+                      if (isset($_SESSION['api_key'])) {
+                          // User is logged in
+                          echo $this->errorResponse("Already registered", time());
+                      } else {
+                          $pass = $this->HashPassword($requestData["password"], $salt);
+                          echo $this->login($email, $pass, $requestData['admin']);
+                      }
                   }
-                  //API must only accept valid requests.
-               }
-            } else {
-               echo $this->errorResponse("Missing login information ", time());
-            }
-         } else if (isset($requestData["type"]) && $requestData["type"] === "Logout") { //========================
-            if (isset($requestData["email"]) && isset($requestData["password"])) {
-               //clear  user session here
-               //logout option  should be available only to logged in users.
-               if (isset($_SESSION['user_id'])) {
-                  // User is logged in
-                  $this->logout($_SESSION['user_id']);
-                  echo $this->successResponse(time(), "logged out");
-               } else {
-                  echo $this->errorResponse("You are logged in", time());
-               }
-            } else {
-               echo $this->errorResponse("Failed to logout", time());
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetAllMovies") { //========================
-            if (isset($requestData['return'])) {
-               echo $this->getMovies($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
-            } else {
-               echo $this->errorResponse(time(), "Get movies failed");
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetAllFavourites") { //===========================
-            if (isset($requestData['apikey'])) {
-               echo $this->getAllFavourites($requestData['apikey']);
-            } else {
-               echo $this->errorResponse(time(), "No API Key provided for favourites.");
-            }
-         } else if (isset($requestData["type"]) && $requestData["type"] === "Favourite") { //========================
-            if (isset($requestData["apikey"]) && isset($requestData["add"]) && (isset($requestData['show_id']) || isset($requestData['film_id']))) {
-               if ($requestData["add"] === "true") {
-                  if (isset($requestData['show_id'])) {
-                     echo $this->addFavourite($requestData["apikey"], null, $requestData['show_id']);
+              } else {
+                  echo $this->errorResponse("Missing login information ", time());
+              }
+          } else if (isset($requestData["type"]) && $requestData["type"] === "Logout") {
+              if (isset($requestData["email"]) && isset($requestData["password"])) {
+                  // Clear user session here
+                  // Logout option should be available only to logged in users.
+                  if (isset($_SESSION['user_id'])) {
+                      // User is logged in
+                      $this->logout($_SESSION['user_id']);
+                      echo $this->successResponse(time(), "Logged out");
                   } else {
-                     echo $this->addFavourite($requestData["apikey"], $requestData['film_id'], null);
+                      echo $this->errorResponse("You are logged in", time());
                   }
-               } else {
-                  if (isset($requestData['show_id'])) {
-                     echo $this->deleteFavourite($requestData["apikey"], null, $requestData['show_id']);
+              } else {
+                  echo $this->errorResponse("Failed to logout", time());
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllMovies") {
+              if (isset($requestData['return'])) {
+                  echo $this->getMovies($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+              } else {
+                  echo $this->errorResponse(time(), "Get movies failed");
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllFavourites") {
+              if (isset($requestData['apikey'])) {
+                  echo $this->getAllFavourites($requestData['apikey']);
+              } else {
+                  echo $this->errorResponse(time(), "No API Key provided for favourites.");
+              }
+          } else if (isset($requestData["type"]) && $requestData["type"] === "Favourite") {
+              if (isset($requestData["apikey"]) && isset($requestData["add"]) && (isset($requestData['show_id']) || isset($requestData['film_id']))) {
+                  if ($requestData["add"] === "true") {
+                      if (isset($requestData['show_id'])) {
+                          echo $this->addFavourite($requestData["apikey"], null, $requestData['show_id']);
+                      } else {
+                          echo $this->addFavourite($requestData["apikey"], $requestData['film_id'], null);
+                      }
                   } else {
-                     echo $this->deleteFavourite($requestData["apikey"], $requestData['film_id'], null);
+                      if (isset($requestData['show_id'])) {
+                          echo $this->deleteFavourite($requestData["apikey"], null, $requestData['show_id']);
+                      } else {
+                          echo $this->deleteFavourite($requestData["apikey"], $requestData['film_id'], null);
+                      }
                   }
-               }
-            } else {
-               echo $this->errorResponse(time(), "Could not access favourites");
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "AddMovies") { //revise, needs imput values
-         } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
-            if (isset($requestData['item']) && isset($requestData['title'])) {
-               echo $this->delete($requestData['title'], $requestData['item']);
-            } else {
-               echo $this->errorResponse(time(), "Missing values for deleting movie/serie");
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "AddSeries") { //revise
-         } else if (isset($requestData['type']) && $requestData['type'] === "ShareFilm") {
-            if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
-               echo $this->shareMovie($requestData['apikey'], $requestData['username'], $requestData['id']);
-            } else {
-               echo $this->errorResponse(time(), "Missing values for sharing film");
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "AddRating") {
-            if (isset($requestData['filmID']) || isset($requestData['showID'])) {
-               if (isset($requestData['filmID']) && isset($requestData['rating'])) {
-                  echo $this->addRatings($requestData['filmID'], null, $requestData['rating']);
-               } else if (isset($requestData['rating'])) {
-                  echo $this->addRatings(null, $requestData['showID'], $requestData['rating']);
-               } else {
-                  echo $this->errorResponse(time(), "Missing values for adding rating");
-               }
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetAllSeries") {
-            if (isset($requestData['return'])) {
-               echo $this->getSeries($requestData['limit'], $requestData['sort'],  $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
-            } else {
-               echo $this->errorResponse("Get series failed", time());
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "ShareSeries") {
-            if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
-               echo $this->shareShow($requestData['apikey'], $requestData['username'], $requestData['id']);
-            } else {
-               echo $this->errorResponse(time(), "Missing values for sharing show");
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "Search") {
-            if (isset($requestData['search'])) {
-               echo $this->searchBar($requestData['search']);
-            } else {
-               echo $this->errorResponse(time(), "Missing values for searching");
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetShared") {
-            if (isset($requestData['apikey'])) {
-               echo $this->getShared($requestData['apikey']);
-            } else {
-               echo $this->errorResponse(time(), "Missing values for getting shared movies/shows.");
-            }
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") { //not done, not a prioirty
-         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") { //not done, not a priority
-         } else if (isset($requestData['type']) && $requestData['type'] === "EditMovie") { //not done
-         } else if (isset($requestData['type']) && $requestData['type'] === "EditShow") { //not done
-         } else {
-            echo $this->errorResponse(time(), "Post parameters are missing");
-         }
+              } else {
+                  echo $this->errorResponse(time(), "Could not access favourites");
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "AddMovies") {
+              // Handle AddMovies request
+          } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
+              if (isset($requestData['item']) && isset($requestData['title'])) {
+                  echo $this->delete($requestData['title'], $requestData['item']);
+              } else {
+                  echo $this->errorResponse(time(), "Missing values for deleting movie/serie");
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "AddSeries") {
+              // Handle AddSeries request
+          } else if (isset($requestData['type']) && $requestData['type'] === "ShareFilm") {
+              if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
+                  echo $this->shareMovie($requestData['apikey'], $requestData['username'], $requestData['id']);
+              } else {
+                  echo $this->errorResponse(time(), "Missing values for sharing film");
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "AddRating") {
+              if (isset($requestData['filmID']) || isset($requestData['showID'])) {
+                  if (isset($requestData['filmID']) && isset($requestData['rating'])) {
+                      echo $this->addRatings($requestData['filmID'], null, $requestData['rating']);
+                  } else if (isset($requestData['rating'])) {
+                      echo $this->addRatings(null, $requestData['showID'], $requestData['rating']);
+                  } else {
+                      echo $this->errorResponse(time(), "Missing values for adding rating");
+                  }
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllSeries") {
+              if (isset($requestData['return'])) {
+                  echo $this->getSeries($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+              } else {
+                  echo $this->errorResponse("Get series failed", time());
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "ShareSeries") {
+              if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
+                  echo $this->shareShow($requestData['apikey'], $requestData['username'], $requestData['id']);
+              } else {
+                  echo $this->errorResponse(time(), "Missing values for sharing show");
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "Search") {
+              if (isset($requestData['search'])) {
+                  echo $this->searchBar($requestData['search']);
+              } else {
+                  echo $this->errorResponse(time(), "Missing values for searching");
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "GetShared") {
+              if (isset($requestData['apikey'])) {
+                  echo $this->getShared($requestData['apikey']);
+              } else {
+                  echo $this->errorResponse(time(), "Missing values for getting shared movies/shows.");
+              }
+          } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") {
+              // Handle GetPopularMovies request
+          } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") {
+              // Handle GetPopularSeries request
+          } else if (isset($requestData['type']) && $requestData['type'] === "EditMovie") {
+              // Handle EditMovie request
+          } else if (isset($requestData['type']) && $requestData['type'] === "EditShow") {
+              // Handle EditShow request
+          } else {
+              echo $this->errorResponse(time(), "Post parameters are missing");
+          }
       } else {
-         echo json_encode(array("message" => "Method Not Allowed", "code" => http_response_code(405)));
+          echo json_encode(array("message" => "Method Not Allowed", "code" => http_response_code(405)));
       }
    }
 }
