@@ -86,6 +86,7 @@
 
                 <!-- this is the part that deals with input fields -->
                 <div class="sql-query-row">
+                    <!-- this the delete movie/series block -->
                     <div class="delete-movie-series">
                         <h2>Delete Movie or Series</h2>
                         <p>Remove Movies/Series no longer needed in the database.</p>
@@ -95,7 +96,7 @@
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown button
+                                    Movie/Series
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Movie</a></li>
@@ -105,29 +106,41 @@
                             <button type="submit">Delete</button>
                         </form>
                     </div>
+                    <!-- this is the add to movie/series block -->
                     <div class="add-movie-series">
                         <h2>Add Movie or Series</h2>
                         <p>This box will add a movie or series to the database.</p>
                         <form>
                             <input type="text" placeholder="Title" required>
                             <textarea placeholder="Description" required></textarea>
-                            <input type="file" required>
                             <input type="number" placeholder="Rating" min="0" max="10" required>
                             <input type="text" placeholder="Genres" required>
                             <input type="number" placeholder="Year Released" required>
                             <button type="submit">Add</button>
                         </form>
                     </div>
+                    <!-- this is the edit to movie/series block -->
                     <div class="edit-movie-series">
                         <h2>Edit Movie or Series</h2>
                         <p>This box will edit a movie or series from the database.</p>
                         <form>
                             <input type="text" placeholder="Title" required>
-                            <!-- dropdown here -->
+                            <!-- dropdown for what we editing here -->
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown button
+                                    Movie/Series
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Movie</a></li>
+                                    <li><a class="dropdown-item" href="#">Series</a></li>
+                                </ul>
+                            </div>
+                            <!-- dropdown for what part we editing here -->
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Edit Here
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Title</a></li>
@@ -138,17 +151,15 @@
                                     <li><a class="dropdown-item" href="#">Release Year</a></li>
                                 </ul>
                             </div>
+                            <input type="text" placeholder="Edit" required>
                             <button type="submit">Edit</button>
-                            <button type="submit">Show Change</button> 
                         </form>
                     </div>
+                    <!-- this is the delete user block -->
                     <div class="delete-block-user">
                         <h2>Delete User from Database</h2>
                         <p>This box will remove a user from the database.</p>
                         <form>
-                            <input type="text" placeholder="First Name" required>
-                            <input type="text" placeholder="Last Name" required>
-                            <input type="number" placeholder="Age" required>
                             <input type="email" placeholder="Email" required>
                             <button type="submit">Delete</button>
                         </form>
