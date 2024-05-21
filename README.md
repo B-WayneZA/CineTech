@@ -34,11 +34,11 @@ The web application is built using PHP, HTML5, CSS, and JavaScript, leveraging t
 * User authentication and authorization mechanisms should be implemented to manage access to different features and content.
 ## Content Management:
 ### Movies and TV Series:
-* Users should be able to add, edit, and delete movies and TV series from the database.
+* Admins  should be able to add, edit, and delete movies and TV series from the database.
 * Each title should have associated metadata such as title, description, release date, genre, rating, etc.
-### Actors, Directors, Genres, and Production Studios:
-* The application should provide functionality to manage actors, directors, genres, and production studios.
-* Users should be able to add, edit, and delete entries for each entity, as well as associate them with movies and TV series.
+### Actors, Directors, Genres:
+* The application should provide functionality to manage actors, directors, genres.
+* Admins should be able to add, edit, and delete entries for each entity, as well as associate them with movies and TV series.
 ### Sorting and Filtering:
 * Users should have the ability to sort and filter content based on various criteria such as genre, rating, release date, etc.
 * The application should provide intuitive UI elements for users to customize their search and discovery experience.
