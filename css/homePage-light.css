@@ -331,7 +331,8 @@ header .content .btns a {
     margin-top: 50px;
 }
 
-.recommended section {
+.recommended section 
+{
     position:absolute;
     width: 100%;
     height: auto;
