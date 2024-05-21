@@ -441,7 +441,8 @@ header section .cards .card:hover .rest_card {
 /* ===================================================================================== */
 /* this is the part of the code responsible for ht main page conatiner */
 
-.recommended section {
+.recommended section 
+{
     position:absolute;
     width: 100%;
     height: auto;
