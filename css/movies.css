@@ -45,14 +45,14 @@ header::before {
     z-index: -1;
 }
 
-header::after {
+/* header::after {
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, transparent, #000);
     z-index: -1;
-}
+} */
 
 header video {
     position: absolute;
@@ -311,7 +311,7 @@ h4 {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 20px;
-    margin-top: 192px; /* Adjust this value to move the grid further down */
+    margin-top: 97px; /* Adjust this value to move the grid further down */
     background-color: black;
 }
 
