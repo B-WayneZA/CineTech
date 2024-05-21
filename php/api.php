@@ -992,7 +992,7 @@ class API
    {
    }
 
-   private function handleReq()
+private function handleReq()
    {
      
 
@@ -1144,6 +1144,4 @@ class API
       }
    }
 }
-
-// Instantiate API object
 $api = new API();
