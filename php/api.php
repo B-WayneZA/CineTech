@@ -1141,6 +1141,7 @@ class API
          }
       } else {
          echo json_encode(array("message" => "Method Not Allowed " . $_SERVER['REQUEST_METHOD'], "code" => http_response_code(405)));
+      
       }
    }
 }
