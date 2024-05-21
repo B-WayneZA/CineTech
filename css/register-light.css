@@ -1,121 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+}
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: white;
-} 
-
-#form-ui {
-    width: 100%;
-    max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: url('/img/Background-light.png') no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-#form {
-    display: grid;
-    place-items: center;
-    width: 100%;
-    padding: 25px;
-    background-color: #d4d4d4;
-    box-shadow: 0px 15px 60px #24054d;
-    outline: 1px solid #6f00ff;
-    border-radius: 10px;
+.wrapper {
+  width: 420px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.356);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(11, 2, 22, 0.637);
+  color: #fff;
+  border-radius: 10px;
+  padding: 30px 40px;
 }
 
-#form-body {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
+.wrapper h1 {
+  font-size: 36px;
+  text-align: center;
 }
 
-#welcome-lines {
-    text-align: center;
-    line-height: 1;
+.wrapper .input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 20px 0px;
 }
 
-#welcome-line-1 {
-    color: #6f00ff;
-    font-weight: 600;
-    font-size: 40px;
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 20px 45px 20px 20px;
 }
 
-#welcome-line-2 {
-    color: #0d0511;
-    font-size: 18px;
-    margin-top: 17px;
+.input-box input::placeholder {
+  color: #fff;
 }
 
-#input-area {
-    margin-top: 40px;
+.input-box i {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-59%);
+  font-size: 20px;
 }
 
-.form-inp {
-    padding: 10px 24px; /* Adjusted padding */
-    background: transparent;
-    border: 1px solid #e3e3e3;
-    line-height: 1;
-    border-radius: 8px;
+.wrapper .remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14.5px;
+  margin: -15px 0 15px;
 }
 
-.form-inp:focus {
-    border: 1px solid #6f00ff;
+.remember-forgot label input {
+  accent-color: #fff;
+  margin-right: 3px;
 }
 
-.form-inp:first-child {
-    margin-bottom: 15px;
+.remember-forgot a {
+  color: #fff;
+  text-decoration: none;
 }
 
-.form-inp input {
-    width: calc(100% - 50px); /* Adjusted width */
-    background: none;
-    font-size: 13.4px;
-    color: #6f00ff;
-    border: none;
-    padding: 0;
-    margin: 0;
+.remember-forgot a:hover {
+  text-decoration: underline;
 }
 
-.form-inp input:focus {
-    outline: none;
+.wrapper .btn {
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
 }
 
-#submit-button-cvr {
-    margin-top: 20px;
+.wrapper .register-link {
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0 15px;
 }
 
-#submit-button {
-    display: block;
-    width: 100%;
-    color: #882cff;
-    background-color: transparent;
-    font-weight: 600;
-    font-size: 14px;
-    margin: 0; 
-    padding: 14px 13px 12px 13px;
-    border: 0;
-    outline: 1px solid #6f00ff;
-    border-radius: 8px;
-    line-height: 1;
-    cursor: pointer;
-    transition: all ease-in-out .3s;
+.register-link p a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-#submit-button:hover {
-    transition: all ease-in-out .3s;
-    background-color: #6f00ff;
-    color: #fcfbfb;
-    cursor: pointer;
-}
-
-#forgot-pass {
-    text-align: center;
-    margin-top: 10px;
-}
-
-#forgot-pass a {
-    color: #868686;
-    font-size: 12px;
-    text-decoration: none;
+.register-link p a:hover {
+  text-decoration: underline;
 }
