@@ -4,19 +4,11 @@ header("Access-Control-Allow-Origin: *");
 session_start();
 
 // Set current page variable for header navigation
-$currentPage = 'register';
-
-if (isset($_SESSION['user_id'])) {
-    header('Location: https://cinetechwatch.000webhostapp.com/html/login.php'); // Redirect to login page if already logged in
-    exit();
-}
+$currentPage = 'login';
 
 // Check if the login form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get username and password from the login form
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $username = $_POST['username'];
+    // Get email and password from the login form
     $email = $_POST['email'];
     $password = $_POST['password'];
     $admin = isset($_POST['admin']) ? "true" : "false";
@@ -27,10 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Prepare the data for JSON request
         $data = array(
-            'type' => 'Register',
-            'name' => $name,
-            'username' => $username,
-            'surname' => $surname,
+            'type' => 'Login',
             'email' => $email,
             'password' => $password,
             'admin' => $admin
@@ -57,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Set basic authentication credentials
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+
         // Return response instead of outputting it
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -80,9 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 file_put_contents('decoded_response.log', print_r($login_response, true));
 
                 if (isset($login_response['status']) && $login_response['status'] === 'success') {
-                    // Assuming the login response includes user_id
-                    $_SESSION['username'] = $email;     
-                    header('Location: https://cinetechwatch.000webhostapp.com/html/login.php'); // Redirect to home page after successful login
+                    $_SESSION['apikey'] = json_decode($login_response['data'], true)['apikey'];
+                    header('Location: https://cinetechwatch.000webhostapp.com/html/homePage.html'); // Redirect to home page after successful login
                     exit();
                 } else {
                     $error = isset($login_response['data']) ? $login_response['data'] : 'Login failed';
@@ -94,25 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         curl_close($ch);
     }
 }
-
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -120,9 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>CineTech</title>
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/register-dark.css" id="dark-mode">
+    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/login-dark.css" id="dark-mode">
     <link rel="icon" type="image/x-icon" href="https://cinetechwatch.000webhostapp.com/img/4.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -135,24 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="error"><?php echo $error; ?></p>
         <?php endif; ?>
 
-        <form id="registerForm" method="POST">
-            <h1>Register</h1>
-            <!-- name of the user -->
-            <div class="input-box">
-                <input type="text" name="name" placeholder="Name" required>
-                <i class="fa fa-user" aria-hidden="true"></i>
-            </div>
-            <!-- surname of the user -->
-            <div class="input-box">
-                <input type="text" name="surname" placeholder="Surname" required>
-                <i class="fa fa-user" aria-hidden="true"></i>
-            </div>
-            <!-- username of the user -->
-            <div class="input-box">
-                <input type="text" name="username" placeholder="Username" required>
-                <i class="fa fa-user" aria-hidden="true"></i>
-            </div>
-            <!-- email of the user -->
+        <form id="loginForm" method="POST">
+            <h1>Login</h1>
+            <!-- email box -->
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email" required>
                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -162,12 +117,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" name="password" placeholder="Password" required>
                 <i class="fa fa-lock" aria-hidden="true"></i>
             </div>
-            <!-- remember me checkbox -->
-            <br>
+            <!-- admin or not checkbox -->
             <div class="remember-forgot">
                 <label><input type="checkbox" name="admin">Admin</label>
+                <a href="#">Forgot password?</a>
             </div>
-            <button type="submit" class="btn" >Sign Up</button>
+            <button type="submit" class="btn">Login</button>
+            <!-- register link -->
+            <div class="register-link">
+                <p>Don't have an account? <a href="https://cinetechwatch.000webhostapp.com/html/register.php">Register</a></p>
+            </div>
         </form>
     </div>
     <!--Footer-->
