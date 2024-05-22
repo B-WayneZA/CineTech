@@ -238,10 +238,10 @@ class API
 
             if ($column === 'year') {
                $year = (int) $value;
-               $filters[] = "Release_Year >= $year";
+               $filters[] = "f.Release_Year >= $year";
             } else if ($column === 'rating') {
                $rating = (int) $value;
-               $filters[] = "CineTech_Rating >= $rating";
+               $filters[] = "r.CineTech_Rating >= $rating";
             } else {
                // Add other filter conditions to the array
                if ($fuzzy === "true") {
@@ -273,14 +273,21 @@ class API
       // Check if any rows are returned
       if ($result->num_rows > 0) {
          // Fetch rows and store in array
+         $listings = array();
+
          while ($row = $result->fetch_assoc()) {
-            $listing = array();
-            foreach ($return as $column) {
-               $listing[$column] = $row[$column];
+            if ($return === "all") {
+               $listings[] = (object) $row;
+            } else {
+               $listing = array();
+               foreach ($return as $column) {
+                  if (isset($row[$column])) {
+                     $listing[$column] = $row[$column];
+                  }
+               }
+               $listings[] = (object) $listing;
             }
-            $listings[] = (object) $listing;
-         }
-         // Add the listing to the array
+        }
 
          return $this->successResponse(time(), $listings);
       } else {
@@ -303,18 +310,18 @@ class API
 
             if ($column === 'year') {
                $year = (int) $value;
-               $filters[] = "Release_Year >= $year";
-            } else if ($column === 'rating') {
+               $filters[] = "s.Release_Year >= $year";
+           } else if ($column === 'rating') {
                $rating = (int) $value;
-               $filters[] = "CineTech_Rating >= $rating";
-            } else {
+               $filters[] = "r.CineTech_Rating >= $rating";
+           } else {
                // Add other filter conditions to the array
                if ($fuzzy === "true") {
-                  $filters[] = "$column LIKE '%$value%'";
+                   $filters[] = "$column LIKE '%$value%'";
                } else {
-                  $filters[] = "$column = '$value'";
+                   $filters[] = "$column = '$value'";
                }
-            }
+           }
 
             $query .= " WHERE " . implode(' AND ', $filters);
          }
@@ -338,10 +345,13 @@ class API
          $listings = array();
          // Fetch rows and store in array
          while ($row = $result->fetch_assoc()) {
-            foreach ($return as $column) {
-               $listing[$column] = $row[$column];
-            }
-            $listings[] = (object) $listing;
+             $listing = array();
+             foreach ($return as $column) {
+                 if (isset($row[$column])) {
+                     $listing[$column] = $row[$column];
+                 }
+             }
+             $listings[] = (object) $listing;
          }
          // Add the listing to the array
 
@@ -370,19 +380,21 @@ class API
 
       // Query to get shared movies
       $sharedMoviesQuery = "
-        SELECT 
-            fm.Title AS title,
-            fm.Genre AS genre,
-            fm.Rating AS rating,
-            fm.PostURL AS poster_url,
-            fm.Year AS release_year,
-            u.username AS sender_username,
-            'movie' AS type
-        FROM shared_movies sm
-        JOIN users u ON sm.sender_id = u.user_id
-        JOIN Film fm ON sm.film_id = fm.Film_ID
-        WHERE sm.receiver_id = ?
-      ";
+         SELECT 
+         fm.Title AS title,
+         g.Genre AS genre,
+         r.CineTech_Rating AS rating,
+         fm.PosterURL AS poster_url,
+         fm.Release_Year AS release_year,
+         u.username AS sender_username,
+         'movie' AS type
+      FROM Shared_movies sm
+      JOIN users u ON sm.Sender_ID = u.user_id
+      JOIN Films fm ON sm.FIlm_shared = fm.Films_ID
+      JOIN Genre g ON fm.Genre_ID = g.Genre_ID
+      JOIN Rating r ON fm.Rating_ID = r.Rating_ID
+      WHERE sm.Receiver_id = ?
+   ";
 
       $sharedMoviesStmt = $GLOBALS['connection']->prepare($sharedMoviesQuery);
       $sharedMoviesStmt->bind_param('i', $userID);
@@ -396,19 +408,21 @@ class API
 
       // Query to get shared shows
       $sharedShowsQuery = "
-        SELECT 
-            sh.Name AS title,
-            sh.Genre AS genre,
-            sh.Rating AS rating,
-            sh.PostURL AS poster_url,
-            sh.ReleaseYear AS release_year,
+            SELECT 
+            fm.Title AS title,
+            g.Genre AS genre,
+            r.CineTech_Rating AS rating,
+            fm.PosterURL AS poster_url,
+            fm.Release_Year AS release_year,
             u.username AS sender_username,
-            'show' AS type
-        FROM shared_shows ss
-        JOIN users u ON ss.sender_id = u.user_id
-        JOIN Show sh ON ss.show_id = sh.Show_ID
-        WHERE ss.receiver_id = ?
-    ";
+            'movie' AS type
+         FROM Shared_shows sm
+         JOIN users u ON sm.Sender_ID = u.user_id
+         JOIN Films fm ON sm.Show_ID = fm.Films_ID
+         JOIN Genre g ON fm.Genre_ID = g.Genre_ID
+         JOIN Rating r ON fm.Rating_ID = r.Rating_ID
+         WHERE sm.Receiver_id = ?
+      ";
 
       $sharedShowsStmt = $GLOBALS['connection']->prepare($sharedShowsQuery);
       $sharedShowsStmt->bind_param('i', $userID);
@@ -429,18 +443,26 @@ class API
          SELECT s.RatingID, AVG(cr.Rating) AS avg_rating
          FROM CineTech_Show_Rating AS cr
          JOIN Shows AS s ON cr.Show_ID = s.Show_id
-         GROUP BY s.`RatingID`
+         GROUP BY s.RatingID
       ) AS subquery ON r.Rating_ID = subquery.RatingID
       SET r.CineTech_Rating = subquery.avg_rating";
 
       $stmt = $GLOBALS["connection"]->prepare($query);
+
       $stmt->execute();
 
-      $query = "UPDATE Rating AS r JOIN f.Rating_ID, (cr.Rating) AS avg_rating FROM CineTech_Film_Rating AS cr JOIN Films AS f ON cr.Films_ID = f.Films_ID GROUP BY f.Rating_ID ) AS subquery ON r.Rating_ID = subquery.Rating_ID r.CineTech_Rating = subquery.avg_rating";
+      $query = "UPDATE Rating AS r
+      JOIN (
+          SELECT f.Rating_ID, AVG(cr.Rating) AS avg_rating
+          FROM CineTech_Film_Rating AS cr
+          JOIN Films AS f ON cr.Films_ID = f.Films_ID
+          GROUP BY f.Rating_ID
+      ) AS subquery ON r.Rating_ID = subquery.Rating_ID
+      SET r.CineTech_Rating = subquery.avg_rating";
+
       $stmt = $GLOBALS["connection"]->prepare($query);
 
       $stmt->execute();
-
    }
 
 
@@ -448,7 +470,7 @@ class API
    {
       //insert cintech rating
       if (isset($filmID)) {
-         $query = "INSERT INTO CineTech_Film_Rating WHERE (Films_ID, Rating) VALUES (?,?)";
+         $query = "INSERT INTO CineTech_Film_Rating (Films_ID, Rating) VALUES (?,?)";
          $stmt = $GLOBALS["connection"]->prepare($query);
          $stmt->bind_param("ii", $filmID, $rating);
 
@@ -459,7 +481,7 @@ class API
             return $this->errorResponse(time(), "Failed to add CineTech Rating");
          }
       } else {
-         $query = "INSERT INTO CineTech_Show_Rating WHERE (Show_ID, Rating) VALUES (?,?)";
+         $query = "INSERT INTO CineTech_Show_Rating (Show_ID, Rating) VALUES (?,?)";
          $stmt = $GLOBALS["connection"]->prepare($query);
          $stmt->bind_param("ii", $showID, $rating);
 
@@ -547,9 +569,9 @@ class API
          }
 
          $userData = $uIDResult->fetch_assoc();
-         $userID = $userData["id"];
+         $userID = $userData["user_id"];
 
-         $insertQuery = "INSERT INTO user_favorites_info (user_id, shows_id, films_id) VALUES (?, ?, ?)";
+         $insertQuery = "INSERT INTO favourites (user_id, shows_id, films_id) VALUES (?, ?, ?)";
          $insertStmt = $GLOBALS['connection']->prepare($insertQuery);
 
          if (isset($filmID)) {
@@ -640,15 +662,15 @@ class API
          }
 
          $userData = $uIDResult->fetch_assoc();
-         $userID = $userData["id"];
+         $userID = $userData["user_id"];
 
          // Delete favorite from database
          if (isset($filmID)) {
-            $deleteQuery = "DELETE FROM user_favorites_info WHERE userID=? AND films_id=?";
+            $deleteQuery = "DELETE FROM favourites WHERE user_id=? AND films_id=?";
             $deleteStmt = $GLOBALS['connection']->prepare($deleteQuery);
             $deleteStmt->bind_param('ii', $userID, $filmID);
          } else {
-            $deleteQuery = "DELETE FROM user_favorites_info WHERE userID=? AND shows_id=?";
+            $deleteQuery = "DELETE FROM favourites WHERE user_id=? AND shows_id=?";
             $deleteStmt = $GLOBALS['connection']->prepare($deleteQuery);
             $deleteStmt->bind_param('ii', $userID, $showID);
          }
@@ -666,11 +688,39 @@ class API
    }
    private function fixDB()
    {
-      //populate films table, genre and and  ratings id,
-
+      //populate films table, Genre_ID col
+      //loop from 1 to 500
       //choose random number in range and populate
-
-
+      //fill in genere_id in films table with a number between 1- 34, numbers can be repeated.
+      try {
+         // Loop from 1 to 500
+         $GLOBALS['connection']->begin_transaction();
+         for ($i = 1; $i <=  60; $i++) {
+             // Choose a random number between 1 and 34
+             $randomGenreID = rand(1, 33);
+ 
+             // Prepare the update statement
+             $query = "UPDATE Shows SET RatingID = ? WHERE Show_ID = ?";
+             $stmt = $GLOBALS['connection']->prepare($query);
+             $stmt->bind_param('ii', $randomGenreID, $i);
+ 
+             // Execute the statement
+             $stmt->execute();
+ 
+             // Check for errors in the execution
+             if ($stmt->error) {
+                 throw new Exception("Error updating film ID $i: " . $stmt->error);
+             }
+         }
+ 
+         // Commit the transaction
+         $GLOBALS['connection']->commit();
+         echo "Database update successful.";
+     } catch (Exception $e) {
+         // Rollback the transaction in case of error
+         $GLOBALS['connection']->rollback();
+         echo "Database update failed: " . $e->getMessage();
+     }
    }
 
    private function checkCredentials($email, $password)
@@ -872,7 +922,7 @@ class API
 
    private function getUserID($apiKey)
    {
-      $query = "SELECT user_id FROM users WHERE api_key = ?";
+      $query = "SELECT user_id FROM users WHERE apikey = ?";
       $stmt = $GLOBALS['connection']->prepare($query);
       $stmt->bind_param("s", $apiKey);
       $stmt->execute();
@@ -883,11 +933,11 @@ class API
       }
       $row = $result->fetch_assoc();
 
-      return $row['id'];
+      return $row['user_id'];
    }
    private function getUserIDusername($username)
    {
-      $query = "SELECT id FROM users WHERE username = ?";
+      $query = "SELECT user_id FROM users WHERE username = ?";
       $stmt = $GLOBALS['connection']->prepare($query);
       $stmt->bind_param("s", $username);
       $stmt->execute();
@@ -898,7 +948,7 @@ class API
       }
       $row = $result->fetch_assoc();
 
-      return $row['id'];
+      return $row['user_id'];
    }
 
 
@@ -908,7 +958,7 @@ class API
       $userID = $this->getUserID($apiKey);
       $receiverID = $this->getUserIDusername($username);
 
-      $query = "INSERT INTO Shared_movies WHERE (Receiver_ID, Sender_ID, Film_shared) VALUES (?,?,?)";
+      $query = "INSERT INTO Shared_movies (Receiver_ID, Sender_ID, Film_shared) VALUES (?,?,?)";
       $stmt = $GLOBALS['connection']->prepare($query);
       $stmt->bind_param("iii", $receiverID, $userID, $filmID);
       $stmt->execute();
@@ -925,7 +975,7 @@ class API
       $userID = $this->getUserID($apiKey);
       $receiverID = $this->getUserIDusername($username);
 
-      $query = "INSERT INTO Shared_shows WHERE (Reciever_ID, Sender_id, Show_ID) VALUES (?,?,?)";
+      $query = "INSERT INTO Shared_shows (Receiver_ID, Sender_ID, Show_ID) VALUES (?,?,?)";
       $stmt = $GLOBALS['connection']->prepare($query);
       $stmt->bind_param("iii", $receiverID, $userID, $showID);
       $stmt->execute();
@@ -937,163 +987,161 @@ class API
       }
    }
 
-   
+
    private function editMovie()
    {
    }
 
-   private function handleReq() {
+private function handleReq()
+   {
+     
+
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-          // Set the appropriate content type for JSON
-          header('Content-Type: application/json');
+         // Set the appropriate content type for JSON
+        // header('Content-Type: application/json');
 
-          // Decode the JSON data from the request body
-          $requestData = json_decode(file_get_contents('php://input'), true);
+         // Decode the JSON data from the request body
+         $requestData = json_decode(file_get_contents('php://input'), true);
 
-          // Check if the JSON data is valid
-          if ($requestData === null) {
-              echo json_encode(array("message" => "Invalid JSON data " . http_response_code(400)));
-              exit();
-          }
+         // Check if the JSON data is valid
+         if ($requestData === null) {
+            echo json_encode(array("message" => "Invalid JSON data " . http_response_code(400)));
+            exit();
+         }
 
-          if (isset($requestData['type']) && $requestData['type'] === "Register") {
-              // Process the request
-              if (isset($requestData['name']) && isset($requestData['surname']) && isset($requestData['email']) && isset($requestData['password']) && isset($requestData['username']) && isset($requestData['admin'])) {
-                  echo $this->registerUser($requestData['name'], $requestData['surname'], $requestData['email'], $requestData['password'], $requestData['username'], $requestData['admin']);
-              } else {
-                  echo $this->errorResponse("User registration failed " .  http_response_code(400), time());
-              }
-          } else if (isset($requestData["type"]) && $requestData["type"] === "Login") {
-              if (isset($requestData["email"]) && isset($requestData["password"])) {
-                  // Check user exists and password is correct, any API requests must use API key, store as cookie
-                  $email = $requestData["email"];
+         //$this->fixDB();
 
-                  // Get salt from database
-                  $salt = $this->retSalt($requestData["email"]);
-                  if (!$salt) {
-                      echo $this->errorResponse("Email does not exist.", time());
+         if (isset($requestData['type']) && $requestData['type'] === "Register") { //========================
+            // Process the request
+            if (isset($requestData['name']) && isset($requestData['surname']) && isset($requestData['email']) && isset($requestData['password'])) {
+               echo $this->registerUser($requestData['name'], $requestData['surname'], $requestData['email'], $requestData['password'], $requestData['username'], $requestData['admin']);
+            } else {
+               echo $this->errorResponse("User registration failed " .  http_response_code(400), time());
+            }
+         } else if (isset($requestData["type"]) && $requestData["type"] === "Login") { //========================
+            if (isset($requestData["email"]) && isset($requestData["password"])) {
+               //check user exists and pass correct, any API requests must use API key, store as cookie
+               $email = $requestData["email"];
+
+               //get salt from database
+               $salt = $this->retSalt($requestData["email"]);
+               if (!$salt) {
+                  echo $this->errorResponse("Email does not exist.", time());
+               } else {
+                  if (isset($_SESSION['api_key'])) {
+                     // User is logged in
+                     echo $this->errorResponse("Already registered", time());
                   } else {
-                      if (isset($_SESSION['api_key'])) {
-                          // User is logged in
-                          echo $this->errorResponse("Already registered", time());
-                      } else {
-                          $pass = $this->HashPassword($requestData["password"], $salt);
-                          echo $this->login($email, $pass, $requestData['admin']);
-                      }
+                     $pass = $this->HashPassword($requestData["password"], $salt);
+                     echo $this->login($email, $pass, $requestData['admin']);
                   }
-              } else {
-                  echo $this->errorResponse("Missing login information ", time());
-              }
-          } else if (isset($requestData["type"]) && $requestData["type"] === "Logout") {
-              if (isset($requestData["email"]) && isset($requestData["password"])) {
-                  // Clear user session here
-                  // Logout option should be available only to logged in users.
-                  if (isset($_SESSION['user_id'])) {
-                      // User is logged in
-                      $this->logout($_SESSION['user_id']);
-                      echo $this->successResponse(time(), "Logged out");
+                  //API must only accept valid requests.
+               }
+            } else {
+               echo $this->errorResponse("Missing login information ", time());
+            }
+         } else if (isset($requestData["type"]) && $requestData["type"] === "Logout") { //========================
+            if (isset($requestData["email"]) && isset($requestData["password"])) {
+               //clear  user session here
+               //logout option  should be available only to logged in users.
+               if (isset($_SESSION['user_id'])) {
+                  // User is logged in
+                  $this->logout($_SESSION['user_id']);
+                  echo $this->successResponse(time(), "logged out");
+               } else {
+                  echo $this->errorResponse("You are logged in", time());
+               }
+            } else {
+               echo $this->errorResponse("Failed to logout", time());
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetAllMovies") { //========================
+            if (isset($requestData['return'])) {
+               echo $this->getMovies($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+            } else {
+               echo $this->errorResponse(time(), "Get movies failed");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetAllFavourites") { //===========================
+            if (isset($requestData['apikey'])) {
+               echo $this->getAllFavourites($requestData['apikey']);
+            } else {
+               echo $this->errorResponse(time(), "No API Key provided for favourites.");
+            }
+         } else if (isset($requestData["type"]) && $requestData["type"] === "Favourite") { //========================
+            if (isset($requestData["apikey"]) && isset($requestData["add"]) && (isset($requestData['show_id']) || isset($requestData['film_id']))) {
+               if ($requestData["add"] === "true") {
+                  if (isset($requestData['show_id'])) {
+                     echo $this->addFavourite($requestData["apikey"], null, $requestData['show_id']);
                   } else {
-                      echo $this->errorResponse("You are logged in", time());
+                     echo $this->addFavourite($requestData["apikey"], $requestData['film_id'], null);
                   }
-              } else {
-                  echo $this->errorResponse("Failed to logout", time());
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllMovies") {
-              if (isset($requestData['return'])) {
-                  echo $this->getMovies($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
-              } else {
-                  echo $this->errorResponse(time(), "Get movies failed");
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllFavourites") {
-              if (isset($requestData['apikey'])) {
-                  echo $this->getAllFavourites($requestData['apikey']);
-              } else {
-                  echo $this->errorResponse(time(), "No API Key provided for favourites.");
-              }
-          } else if (isset($requestData["type"]) && $requestData["type"] === "Favourite") {
-              if (isset($requestData["apikey"]) && isset($requestData["add"]) && (isset($requestData['show_id']) || isset($requestData['film_id']))) {
-                  if ($requestData["add"] === "true") {
-                      if (isset($requestData['show_id'])) {
-                          echo $this->addFavourite($requestData["apikey"], null, $requestData['show_id']);
-                      } else {
-                          echo $this->addFavourite($requestData["apikey"], $requestData['film_id'], null);
-                      }
+               } else {
+                  if (isset($requestData['show_id'])) {
+                     echo $this->deleteFavourite($requestData["apikey"], null, $requestData['show_id']);
                   } else {
-                      if (isset($requestData['show_id'])) {
-                          echo $this->deleteFavourite($requestData["apikey"], null, $requestData['show_id']);
-                      } else {
-                          echo $this->deleteFavourite($requestData["apikey"], $requestData['film_id'], null);
-                      }
+                     echo $this->deleteFavourite($requestData["apikey"], $requestData['film_id'], null);
                   }
-              } else {
-                  echo $this->errorResponse(time(), "Could not access favourites");
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "AddMovies") {
-              // Handle AddMovies request
-          } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
-              if (isset($requestData['item']) && isset($requestData['title'])) {
-                  echo $this->delete($requestData['title'], $requestData['item']);
-              } else {
-                  echo $this->errorResponse(time(), "Missing values for deleting movie/serie");
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "AddSeries") {
-              // Handle AddSeries request
-          } else if (isset($requestData['type']) && $requestData['type'] === "ShareFilm") {
-              if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
-                  echo $this->shareMovie($requestData['apikey'], $requestData['username'], $requestData['id']);
-              } else {
-                  echo $this->errorResponse(time(), "Missing values for sharing film");
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "AddRating") {
-              if (isset($requestData['filmID']) || isset($requestData['showID'])) {
-                  if (isset($requestData['filmID']) && isset($requestData['rating'])) {
-                      echo $this->addRatings($requestData['filmID'], null, $requestData['rating']);
-                  } else if (isset($requestData['rating'])) {
-                      echo $this->addRatings(null, $requestData['showID'], $requestData['rating']);
-                  } else {
-                      echo $this->errorResponse(time(), "Missing values for adding rating");
-                  }
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllSeries") {
-              if (isset($requestData['return'])) {
-                  echo $this->getSeries($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
-              } else {
-                  echo $this->errorResponse("Get series failed", time());
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "ShareSeries") {
-              if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
-                  echo $this->shareShow($requestData['apikey'], $requestData['username'], $requestData['id']);
-              } else {
-                  echo $this->errorResponse(time(), "Missing values for sharing show");
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "Search") {
-              if (isset($requestData['search'])) {
-                  echo $this->searchBar($requestData['search']);
-              } else {
-                  echo $this->errorResponse(time(), "Missing values for searching");
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "GetShared") {
-              if (isset($requestData['apikey'])) {
-                  echo $this->getShared($requestData['apikey']);
-              } else {
-                  echo $this->errorResponse(time(), "Missing values for getting shared movies/shows.");
-              }
-          } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") {
-              // Handle GetPopularMovies request
-          } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") {
-              // Handle GetPopularSeries request
-          } else if (isset($requestData['type']) && $requestData['type'] === "EditMovie") {
-              // Handle EditMovie request
-          } else if (isset($requestData['type']) && $requestData['type'] === "EditShow") {
-              // Handle EditShow request
-          } else {
-              echo $this->errorResponse(time(), "Post parameters are missing");
-          }
+               }
+            } else {
+               echo $this->errorResponse(time(), "Could not access favourites");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "AddMovies") { //revise, needs imput values
+         } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
+            if (isset($requestData['item']) && isset($requestData['title'])) {
+               echo $this->delete($requestData['title'], $requestData['item']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for deleting movie/serie");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "AddSeries") { //revise
+         } else if (isset($requestData['type']) && $requestData['type'] === "ShareFilm") {
+            if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
+               echo $this->shareMovie($requestData['apikey'], $requestData['username'], $requestData['id']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for sharing film");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "AddRating") {
+            if (isset($requestData['item'])) {
+               if ($requestData['item'] === "movie" && isset($requestData['rating']) && isset($requestData['ID'])) {
+                  echo $this->addRatings($requestData['ID'], null, $requestData['rating']);
+               } else if (isset($requestData['ID']) && isset($requestData['rating'])) {
+                  echo $this->addRatings(null, $requestData['ID'], $requestData['rating']);
+               } else {
+                  echo $this->errorResponse(time(), "Missing values for adding rating");
+               }
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetAllSeries") {
+            if (isset($requestData['return'])) {
+               echo $this->getSeries($requestData['limit'], $requestData['sort'],  $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+            } else {
+               echo $this->errorResponse("Get series failed", time());
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "ShareSeries") {
+            if (isset($requestData['apikey']) && isset($requestData['username']) && isset($requestData['id'])) {
+               echo $this->shareShow($requestData['apikey'], $requestData['username'], $requestData['id']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for sharing show");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "Search") {
+            if (isset($requestData['search'])) {
+               echo $this->searchBar($requestData['search']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for searching");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetShared") {
+            if (isset($requestData['apikey'])) {
+               echo $this->getShared($requestData['apikey']);
+            } else {
+               echo $this->errorResponse(time(), "Missing values for getting shared movies/shows.");
+            }
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") { //not done, not a prioirty
+         } else if (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") { //not done, not a priority
+         } else if (isset($requestData['type']) && $requestData['type'] === "EditMovie") { //not done
+         } else if (isset($requestData['type']) && $requestData['type'] === "EditShow") { //not done
+         } else {
+            echo $this->errorResponse(time(), "Post parameters are missing ");
+         }
       } else {
-          echo json_encode(array("message" => "Method Not Allowed", "code" => http_response_code(405)));
+         echo json_encode(array("message" => "Method Not Allowed " . $_SERVER['REQUEST_METHOD'], "code" => http_response_code(405)));
       }
    }
 }
-
-// Instantiate API object
 $api = new API();
