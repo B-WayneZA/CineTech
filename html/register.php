@@ -63,25 +63,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Execute the request
         $response = curl_exec($ch);
 
+        // Check for cURL errors
+        if ($response === false) {
+            $error = 'Curl error: ' . curl_error($ch);
+        } else {
+            file_put_contents('response.log', $response);
+
+            // Decode the JSON response
+            $login_response = json_decode($response, true);
+
+            // Check for JSON decoding errors
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $error = 'JSON decode error: ' . json_last_error_msg();
+            } else {
+                // Check if the login was successful
+                file_put_contents('decoded_response.log', print_r($login_response, true));
+
+                if (isset($login_response['status']) && $login_response['status'] === 'success') {
+                    // Assuming the login response includes user_id
+                    $_SESSION['username'] = $email;     
+                    header('Location: https://cinetechwatch.000webhostapp.com/html/login.php'); // Redirect to home page after successful login
+                    exit();
+                } else {
+                    $error = isset($login_response['data']) ? $login_response['data'] : 'Login failed';
+                }
+            }
+        }
+
         // Close cURL resource
         curl_close($ch);
-
-        // Decode the JSON response
-        $login_response = json_decode($response, true);
-        // Check if the login was successful
-
-        if (isset($login_response) && $login_response['status'] === 'success') {
-
-            $_SESSION['username'] = $email;
-            header('Location:https://cinetechwatch.000webhostapp.com/html/login.php'); 
-            exit();
-        } else {
-            $error = $responseData['data']; // Display the error message returned by the API        
-        }
     }
 }
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!DOCTYPE html>

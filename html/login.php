@@ -6,11 +6,6 @@ session_start();
 // Set current page variable for header navigation
 $currentPage = 'login';
 
-if (isset($_SESSION['user_id'])) {
-    header('Location: https://cinetechwatch.000webhostapp.com/html/homePage.html'); // Redirect to home page if already logged in
-    exit();
-}
-
 // Check if the login form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get email and password from the login form
@@ -51,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Set basic authentication credentials
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+
         // Return response instead of outputting it
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -74,9 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 file_put_contents('decoded_response.log', print_r($login_response, true));
 
                 if (isset($login_response['status']) && $login_response['status'] === 'success') {
-                    // Assuming the login response includes user_id
-                    $_SESSION['user_id'] = $login_response['data']['user_id'];
-                    $_SESSION['session_id'] = $login_response['data']['session_id'];
+                    $_SESSION['apikey'] = json_decode($login_response['data'], true)['apikey'];
                     header('Location: https://cinetechwatch.000webhostapp.com/html/homePage.html'); // Redirect to home page after successful login
                     exit();
                 } else {
@@ -91,9 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,11 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineTech</title>
-    <!-- <link rel="stylesheet" href="/css/login-light.css" id="light-mode"> -->
     <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/login-dark.css" id="dark-mode">
     <link rel="icon" type="image/x-icon" href="https://cinetechwatch.000webhostapp.com/img/4.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 
 <body>
@@ -115,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($error)) : ?>
             <p class="error"><?php echo $error; ?></p>
         <?php endif; ?>
-
 
         <form id="loginForm" method="POST">
             <h1>Login</h1>
@@ -129,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" name="password" placeholder="Password" required>
                 <i class="fa fa-lock" aria-hidden="true"></i>
             </div>
-            <!-- admin or not  checkbox -->
+            <!-- admin or not checkbox -->
             <div class="remember-forgot">
                 <label><input type="checkbox" name="admin">Admin</label>
                 <a href="#">Forgot password?</a>
