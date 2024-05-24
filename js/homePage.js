@@ -100,5 +100,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // aundrea just ignore everything above this it has to do with nav bar and not the rest of the homepage start here 
 });
