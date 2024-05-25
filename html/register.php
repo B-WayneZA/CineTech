@@ -7,7 +7,7 @@ session_start();
 $currentPage = 'register';
 
 if (isset($_SESSION['user_id'])) {
-    header('Location: https://cinetechwatch.000webhostapp.com/html/login.html'); // Redirect to login page if already logged in
+    header('Location: https://cinetechwatch.000webhostapp.com/html/login.php'); // Redirect to login page if already logged in
     exit();
 }
 

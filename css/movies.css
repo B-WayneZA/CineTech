@@ -179,6 +179,8 @@ header nav .search_user .search .card {
     display: none;
 }
 
+
+
 header nav .search_user .search .card::before {
     content: '';
     position: absolute;

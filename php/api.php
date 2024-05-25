@@ -44,11 +44,28 @@ class API
       $stmt = $GLOBALS['connection']->prepare("SELECT salt FROM users WHERE email= ?");
       $stmt->bind_param("s", $email);
       $stmt->execute();
-
-      $result = $stmt->get_result()->fetch_assoc();
-      return $result["salt"];
+      $result = $stmt->get_result();
+      
+      if ($result->num_rows > 0) {
+          $row = $result->fetch_assoc();
+          return $row["salt"];   
+      } else {
+          return null;
+      }
    }
-
+   private function retSaltAdmin($email) {
+      $stmt = $GLOBALS['connection']->prepare("SELECT salt FROM Admins WHERE email= ?");
+      $stmt->bind_param("s", $email);
+      $stmt->execute();
+      $result = $stmt->get_result();
+  
+      if ($result->num_rows > 0) {
+          $row = $result->fetch_assoc();
+          return $row["salt"];   
+      } else {
+          return null;
+      }
+   }
    private function getSalt()
    {
       //generate random string that will be used to on the password to add flavor
@@ -148,7 +165,7 @@ class API
          //unable to login
          return $this->errorResponse("Incorrect password", time());
       } else if ($this->checkCredentials($email, $pass)) {
-         if ($admin === true) {
+         if ($admin === 'true') {
             $stmt = $GLOBALS['connection']->prepare("SELECT admin_id, apikey FROM Admins WHERE email = ? AND password = ?");
          } else {
             $stmt = $GLOBALS['connection']->prepare("SELECT user_id, apikey FROM users WHERE email = ? AND password = ?");
@@ -164,7 +181,7 @@ class API
             // Credentials are correct, return the user ID
             session_start();
             $_SESSION["APIkey"] = $row["apikey"];
-            $key = $row["apiKey"];
+            $key = $row["apikey"];
 
             $api = array("apikey" => $key);
             return $this->successResponse(time(), json_encode($api));
@@ -219,13 +236,13 @@ class API
       }
    }
 
-   public function getMovies($limit, $sort, $search, $return, $fuzzy)
+   public function getMovies($limit, $search, $return, $fuzzy)
    {
       $table = $GLOBALS['connection'];
       if ($return === "['*']") {
          $query = "SELECT * FROM films";
       } else {
-         $query = "SELECT f.Title, g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, f.Country, f.Description, f.Runtime, f.Release_Year FROM Films f JOIN Genre g ON f.Genre_ID = g.Genre_ID JOIN Rating r ON f.Rating_ID = r.Rating_ID";
+         $query = "SELECT f.Title, f.PosterURL, g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, f.Country, f.Description, f.Runtime, f.Release_Year FROM Films f JOIN Genre g ON f.Genre_ID = g.Genre_ID JOIN Rating r ON f.Rating_ID = r.Rating_ID";
       }
 
       //add filters on table
@@ -256,9 +273,7 @@ class API
          $query .= " WHERE " . implode(' AND ', $filters);
       }
 
-      if (isset($sort)) {
-         $query .= ' ORDER BY ' . $sort;
-      }
+  
       if (isset($limit)) {
          $query .= ' LIMIT ' . $limit;
       }
@@ -287,7 +302,7 @@ class API
                }
                $listings[] = (object) $listing;
             }
-        }
+         }
 
          return $this->successResponse(time(), $listings);
       } else {
@@ -296,9 +311,9 @@ class API
       }
    }
 
-   public function getSeries($limit, $sort, $search, $return, $fuzzy)
+   public function getSeries($limit, $search, $return, $fuzzy)
    {
-      $query = "SELECT s.Name , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
+      $query = "SELECT s.Name, s.PosterURL , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
 
       // Add search and filter conditions
       if (isset($search) && is_array($search) && count($search) > 0) {          // Add conditions based on search parameters
@@ -311,26 +326,23 @@ class API
             if ($column === 'year') {
                $year = (int) $value;
                $filters[] = "s.Release_Year >= $year";
-           } else if ($column === 'rating') {
+            } else if ($column === 'rating') {
                $rating = (int) $value;
                $filters[] = "r.CineTech_Rating >= $rating";
-           } else {
+            } else {
                // Add other filter conditions to the array
                if ($fuzzy === "true") {
-                   $filters[] = "$column LIKE '%$value%'";
+                  $filters[] = "$column LIKE '%$value%'";
                } else {
-                   $filters[] = "$column = '$value'";
+                  $filters[] = "$column = '$value'";
                }
-           }
+            }
 
             $query .= " WHERE " . implode(' AND ', $filters);
          }
       }
 
-      // Add sorting and ordering
-      if (!empty($sort)) {
-         $query .= "ORDER BY $sort ";
-      }
+   
       if (isset($limit)) {
          $query .= ' LIMIT ' . $limit;
       }
@@ -344,16 +356,20 @@ class API
       if ($result->num_rows > 0) {
          $listings = array();
          // Fetch rows and store in array
+         // Fetch rows and store in array
          while ($row = $result->fetch_assoc()) {
-             $listing = array();
-             foreach ($return as $column) {
-                 if (isset($row[$column])) {
+            if ($return === "all") {
+               $listings[] = (object) $row;
+            } else if (is_array($return)) {
+               $listing = array();
+               foreach ($return as $column) {
+                  if (isset($row[$column])) {
                      $listing[$column] = $row[$column];
-                 }
-             }
-             $listings[] = (object) $listing;
-         }
-         // Add the listing to the array
+                  }
+               }
+               $listings[] = (object) $listing;
+            }
+         }         // Add the listing to the array
 
          return $this->successResponse(time(), $listings);
       } else {
@@ -402,8 +418,8 @@ class API
       $sharedMoviesResult = $sharedMoviesStmt->get_result();
 
       $sharedContent = [];
-      while ($row = $sharedMoviesResult->fetch_assoc()) {
-         $sharedContent[] = $row;
+      if ($sharedMoviesResult->num_rows > 0) {
+         $sharedContent[] = $sharedMoviesResult->fetch_assoc();
       }
 
       // Query to get shared shows
@@ -429,9 +445,9 @@ class API
       $sharedShowsStmt->execute();
       $sharedShowsResult = $sharedShowsStmt->get_result();
 
-      while ($row = $sharedShowsResult->fetch_assoc()) {
-         $sharedContent[] = $row;
-      }
+      // while ($row = $sharedShowsResult->fetch_assoc()) {
+      //    $sharedContent[] = $row;
+      // }
 
       return $this->successResponse(time(), $sharedContent);
    }
@@ -696,31 +712,31 @@ class API
          // Loop from 1 to 500
          $GLOBALS['connection']->begin_transaction();
          for ($i = 1; $i <=  60; $i++) {
-             // Choose a random number between 1 and 34
-             $randomGenreID = rand(1, 33);
- 
-             // Prepare the update statement
-             $query = "UPDATE Shows SET RatingID = ? WHERE Show_ID = ?";
-             $stmt = $GLOBALS['connection']->prepare($query);
-             $stmt->bind_param('ii', $randomGenreID, $i);
- 
-             // Execute the statement
-             $stmt->execute();
- 
-             // Check for errors in the execution
-             if ($stmt->error) {
-                 throw new Exception("Error updating film ID $i: " . $stmt->error);
-             }
+            // Choose a random number between 1 and 34
+            $randomGenreID = rand(1, 33);
+
+            // Prepare the update statement
+            $query = "UPDATE Shows SET RatingID = ? WHERE Show_ID = ?";
+            $stmt = $GLOBALS['connection']->prepare($query);
+            $stmt->bind_param('ii', $randomGenreID, $i);
+
+            // Execute the statement
+            $stmt->execute();
+
+            // Check for errors in the execution
+            if ($stmt->error) {
+               throw new Exception("Error updating film ID $i: " . $stmt->error);
+            }
          }
- 
+
          // Commit the transaction
          $GLOBALS['connection']->commit();
          echo "Database update successful.";
-     } catch (Exception $e) {
+      } catch (Exception $e) {
          // Rollback the transaction in case of error
          $GLOBALS['connection']->rollback();
          echo "Database update failed: " . $e->getMessage();
-     }
+      }
    }
 
    private function checkCredentials($email, $password)
@@ -992,13 +1008,13 @@ class API
    {
    }
 
-private function handleReq()
+   private function handleReq()
    {
-     
+
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          // Set the appropriate content type for JSON
-        // header('Content-Type: application/json');
+         // header('Content-Type: application/json');
 
          // Decode the JSON data from the request body
          $requestData = json_decode(file_get_contents('php://input'), true);
@@ -1024,7 +1040,11 @@ private function handleReq()
                $email = $requestData["email"];
 
                //get salt from database
-               $salt = $this->retSalt($requestData["email"]);
+               if($requestData['admin'] === "true") {
+                  $salt = $this->retSaltAdmin($requestData['email']);
+               } else {
+                  $salt = $this->retSalt($requestData["email"]);
+               }
                if (!$salt) {
                   echo $this->errorResponse("Email does not exist.", time());
                } else {
@@ -1056,7 +1076,11 @@ private function handleReq()
             }
          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllMovies") { //========================
             if (isset($requestData['return'])) {
-               echo $this->getMovies($requestData['limit'], $requestData['sort'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+               if(isset($requestData['search'])) {
+                  echo $this->getMovies($requestData['limit'],  $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+               } else {
+                  echo $this->getMovies($requestData['limit'],  null , $requestData['return'], $requestData['fuzzy'] = true);
+               }
             } else {
                echo $this->errorResponse(time(), "Get movies failed");
             }
@@ -1110,7 +1134,12 @@ private function handleReq()
             }
          } else if (isset($requestData['type']) && $requestData['type'] === "GetAllSeries") {
             if (isset($requestData['return'])) {
-               echo $this->getSeries($requestData['limit'], $requestData['sort'],  $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+               if(isset($requestData['search'])) {
+                  echo $this->getSeries($requestData['limit'], $requestData['search'], $requestData['return'], $requestData['fuzzy'] = true);
+               } else {
+                  echo $this->getSeries($requestData['limit'],null,$requestData['return'], $requestData['fuzzy'] = true);
+
+               }
             } else {
                echo $this->errorResponse("Get series failed", time());
             }
@@ -1141,7 +1170,6 @@ private function handleReq()
          }
       } else {
          echo json_encode(array("message" => "Method Not Allowed " . $_SERVER['REQUEST_METHOD'], "code" => http_response_code(405)));
-      
       }
    }
 }
