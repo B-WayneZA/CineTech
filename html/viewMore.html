@@ -55,34 +55,56 @@
         </div>
 
         <div class = "content-details">
-            <h2>StroryLine: </h2>  
-            <h3>Grace Waters (Crystal Fox), a longtime pillar of her Virginia community, stays composed when her ex weds his mistress and her son moves away. With convincing from her best friend Sarah (Phylicia Rashad), she tries putting herself first, and a handsome stranger (Mehcad Brooks) becomes her surprise second love. Yet any woman can snap, and Grace's new husband soon ravages her life, her work and - many say - her sanity. Shuttered in a cell awaiting trial for his murder, Grace's only hope for vindication lies with Jasmine Bryant (Bresha Webb), a public defender who has never tried a cases.</h3><br>
-            <h3>Genres: Crime, Drama, Suspense, Thriller, Mystery, Crime Fictio. </h3><br>
-                
-            <h3>Year Of Release:  2020</h3><br>
+            <!-- Create a div for the description as well as the other-->
+            <div class = "description">
+                <h2>Description: </h2> 
+                <h3>Grace Waters (Crystal Fox), a longtime pillar of her Virginia community, stays composed when her ex weds his mistress and her son moves away. With convincing from her best friend Sarah (Phylicia Rashad), she tries putting herself first, and a handsome stranger (Mehcad Brooks) becomes her surprise second love. Yet any woman can snap, and Grace's new husband soon ravages her life, her work and - many say - her sanity. Shuttered in a cell awaiting trial for his murder, Grace's only hope for vindication lies with Jasmine Bryant (Bresha Webb), a public defender who has never tried a cases.</h3><br>
+            </div>
+
+            <div class = "Genres">
+                <h3>Genres: Crime, Drama, Suspense, Thriller, Mystery, Crime Fictio. </h3><br>
+            </div>
             
+           <div class = "yearRelease">
+            <h3>Year Of Release:  2020</h3><br>
+           </div>
+            
+           <div class = "movieRating">
+            <h3>Movie Rating:  </h3>
+           </div>
+                
+            
+            <div class = "userRating">
             <h3>Ratings: </h3>
              <div class = "rating">
-                <input type = "radio" name = "rating" id = "r1"
+                <input type = "radio" name = "rating" id = "r1">
                 <label for=" r1"> </label>
 
-                <input type = "radio" name = "rating" id = "r2"
+                <input type = "radio" name = "rating" id = "r2">
                 <label for=" r2"> </label>
 
-                <input type = "radio" name = "rating" id = "r3"
+                <input type = "radio" name = "rating" id = "r3">
                 <label for=" r3"> </label>
 
-                <input type = "radio" name = "rating" id = "r4"
+                <input type = "radio" name = "rating" id = "r4">
                 <label for=" r4"> </label>
 
-                <input type = "radio" name = "rating" id = "r5"
+                <input type = "radio" name = "rating" id = "r5">
                 <label for=" r5"> </label>
              </div>
+            </div>
             
-            <h3>Actors:   </h3><br>
+            <div class = "actors">
+                <h3>Actors: Gabrielle Union, Mark June and Tyler Perry  </h3><br>
+            </div>
             
-              <a href="https://www.youtube.com/watch?v=mNixVHejlc0&pp=ygUXZmFsbCBmcm9tIGdyYWNlIHRyYWlsZXI%3D">Trailer</a>
-           
+            
+              <button class = "trailer" >
+                <a href="https://www.youtube.com/watch?v=mNixVHejlc0&pp=ygUXZmFsbCBmcm9tIGdyYWNlIHRyYWlsZXI%3D">Trailer</a><br>
+              </button>
+              
+              <button class="btn">Share</button>
+              <button class = "watchList">Add to MyList</button>
         </div>
     </div>
 
@@ -223,5 +245,29 @@
             </a>
 
         </div>
-    </section>
+ <!--This is to make the buttons of the stars to work -->
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const ratings = document.querySelectorAll('.rating input');
+        
+        ratings.forEach((rating) => {
+            rating.addEventListener('change', () => {
+                const selectedValue = rating.id.replace('r', '');
+                ratings.forEach((input, index) => {
+                    const label = input.nextElementSibling;
+                    if (index < selectedValue) {
+                        label.style.color = '#f9bf3b';
+                    } else {
+                        label.style.color = '#444';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+</section>
 </header>
+
+</body>
+</html>

@@ -114,7 +114,7 @@ header nav .search_user {
 header nav .search_user input {
     padding: 10px 40px;
     border-radius: 30px;
-    border: none;
+    border: 1px solid #6a3ce7 ;
     outline: none;
     background: rgb(255, 255, 255, .3);
     color: #fff;
@@ -215,7 +215,7 @@ header nav .search_user .search .card .cont p {
 }
 
 header nav .search_user .search .card .cont span {
-    background: yellow;
+    background: #4b2bc0;
     color: #000;
     padding: 0px 3px;
     margin: 0px 5px 0px 10px;
@@ -229,7 +229,7 @@ header .content {
     margin-left: 100px;
     padding-left: 50px;
     margin-bottom: 50px;
-    border: 2px solid white;
+    border: 2px solid rgb(148, 86, 241);
     width: 400px;
     height: 500px;
 }
@@ -254,7 +254,7 @@ header .content {
     margin-left: 500px;
     padding-left: 50px;
     margin-bottom: 50px;
-    border: 2px solid white;
+    border: 2px solid rgb(153, 66, 245);
     width: 800px;
     height: 500px;
 }
@@ -414,54 +414,105 @@ header section .cards .card:hover .rest_card {
 
 
 /*This is for the ratings */
-.rating{
-    margin: 90px auto;
-    width: 100px;
-
+.ratings-container {
+    width: 200px; /* Adjust width as needed */
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #ccc; /* Add border for the box */
+    padding: 20px; /* Add padding for spacing */
 }
 
-.rating >*{
+.rating {
+    margin-top: 10px; /* Adjust top margin as needed */
+}
 
-    float: right;
+.rating > * {
+    display: inline-block;
 }
 
 .rating label {
-      height: 40px;
-      width:20%;
-      display: block;
-      position: relative;
-      cursor: pointer;
+    height: 50px; /* Adjust height to enlarge the stars */
+    width: 50px; /* Adjust width to enlarge the stars */
+    font-size: 30px; /* Adjust font size to enlarge the stars */
+    position: relative;
+    cursor: pointer;
 }
 
-.rating label::after{
+.rating label::after {
     transition: all 0.4s ease-out;
-    -webkit-font-smoothing: antialised;
-    position:absolute;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
     content: "★";
     color: #444;
     top: 0;
     left: 0;
-    width:100%;
+    width: 100%;
     height: 100%;
     text-align: center;
-    font-size: 80px;
-    -webkit-animation: 1s pulse ease;
-    animation: 1s pulse ease;
-
+    line-height: 50px; /* Center the star vertically */
 }
 
-.rating label:hover::after{
-    color:#5e5e5e;
-    text-shadow: 0 0 15px #5e5e5e;
-}
-
-.rating input{
+.rating input {
     display: none;
 }
 
+.rating input:checked ~ label::after,
 .rating input:checked + label::after,
-.rating input:checked ~ label::after{
-    content: "★";
-    color:#f9bf3b;
-    text-shadow: 0 0 20px #f9bf3b;
+.rating input:checked + label ~ label::after {
+    color: #f9bf3b; /* Change color when checked */
+}
+
+button.trailer {
+    background: linear-gradient(90deg, #5b42f3, #a800eb);
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 15px 25px; /* Padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Make it inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 3px 1px; /* Small margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 25px;
+}
+
+/* Link Style */
+button.trailer a {
+    color: white; /* White text */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Link Hover Effect */
+button.trailer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+button.btn {
+    background: linear-gradient(90deg, #5b42f3, #a800eb);
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 15px 25px; /* Padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Make it inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Small margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+}
+
+button.watchList {
+    background: linear-gradient(90deg, #5b42f3, #a800eb);
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 15px 25px; /* Padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Make it inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Small margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
 }
