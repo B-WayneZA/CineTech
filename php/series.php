@@ -1,3 +1,61 @@
+<?php 
+
+// Start session to store user login status
+header("Access-Control-Allow-Origin: *");
+session_start();
+
+// Set current page variable for header navigation
+$currentPage = 'series';
+
+$series = array();
+
+if (isset($_SESSION['user_id'])) {
+    header('Location: https://cinetechwatch.000webhostapp.com/html/login.php'); // Redirect to login page if already logged in
+    exit();
+}
+
+$data = array(
+    
+ "type"  => "GetAllSeries",
+ "limit" => 100,
+ "return" => "all"
+);
+
+$json_data = json_encode($data);
+
+        // Create a new cURL resource
+        $ch = curl_init();
+
+        // Set the URL
+        curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+
+        // Set the request method to POST
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+        // Set the request data as JSON
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+        // Set the Content-Type header
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+        // Set basic authentication credentials
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+        // Return response instead of outputting it
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+         // Execute the request
+         $response = curl_exec($ch);
+
+       
+      // Decode the JSON response
+      $responseData = json_decode($response, true);
+
+       // Close cURL resource
+       curl_close($ch);
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +64,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/CSS/series.css" id="light-mode">
+    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/series.css" id="light-mode">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <!-- <link rel="stylesheet" href="/css/homePage-dark.css" id="dark-mode"> -->

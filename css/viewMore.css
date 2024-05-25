@@ -229,7 +229,7 @@ header .content {
     margin-left: 100px;
     padding-left: 50px;
     margin-bottom: 50px;
-    border: 2px solid rgb(148, 86, 241);
+    /*border: 2px solid rgb(148, 86, 241);*/
     width: 400px;
     height: 500px;
 }
