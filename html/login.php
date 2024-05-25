@@ -71,7 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (isset($login_response['status']) && $login_response['status'] === 'success') {
                     $_SESSION['apikey'] = json_decode($login_response['data'], true)['apikey'];
-                    header('Location: https://cinetechwatch.000webhostapp.com/html/homePage.html'); // Redirect to home page after successful login
+
+                    if ($admin === "true") {
+                        header('Location: https://cinetechwatch.000webhostapp.com/html/admin.html'); // Redirect to home page after successful login
+
+                    } else {
+                        header('Location: https://cinetechwatch.000webhostapp.com/html/homePage.html'); // Redirect to home page after successful login
+                    }
                     exit();
                 } else {
                     $error = isset($login_response['data']) ? $login_response['data'] : 'Login failed';
@@ -91,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>CineTech</title>
     <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/login-dark.css" id="dark-mode">
     <link rel="icon" type="image/x-icon" href="https://cinetechwatch.000webhostapp.com/img/4.png">
@@ -119,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <!-- admin or not checkbox -->
             <div class="remember-forgot">
-                <label><input type="checkbox" name="admin">Admin</label>
+                <label><input type="checkbox" name="admin" value="true">Admin</label>
                 <a href="#">Forgot password?</a>
             </div>
             <button type="submit" class="btn">Login</button>
