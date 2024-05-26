@@ -251,3 +251,140 @@ const areaChart = new ApexCharts(
   areaChartOptions
 );
 areaChart.render();
+
+
+
+
+// Added code to add functionality using the api
+
+
+
+// Function to handle form submission for deleting a movie or series
+document.getElementById('deleteForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const formData = new FormData(this);
+  const title = formData.get('title');
+  const type = formData.get('type');
+
+  fetch('https://your-api-url.com/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      type: type,
+      title: title,
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle response from the server
+    console.log(data);
+    // Optionally, display a success or error message to the user
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Optionally, display an error message to the user
+  });
+});
+
+// Function to handle form submission for adding a movie or series
+document.getElementById('addForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const formData = new FormData(this);
+  const title = formData.get('title');
+  const description = formData.get('description');
+  const rating = formData.get('rating');
+  const genres = formData.get('genres');
+  const yearReleased = formData.get('yearReleased');
+  const type = formData.get('type');
+
+  fetch('https://your-api-url.com/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      type: type,
+      title: title,
+      description: description,
+      rating: rating,
+      genres: genres,
+      yearReleased: yearReleased,
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle response from the server
+    console.log(data);
+    // Optionally, display a success or error message to the user
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Optionally, display an error message to the user
+  });
+});
+
+// Function to handle form submission for editing a movie or series
+document.getElementById('editForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const formData = new FormData(this);
+  const title = formData.get('title');
+  const editField = formData.get('editField');
+  const editValue = formData.get('editValue');
+  const type = formData.get('type');
+
+  fetch('https://your-api-url.com/edit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      type: type,
+      title: title,
+      editField: editField,
+      editValue: editValue,
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle response from the server
+    console.log(data);
+    // Optionally, display a success or error message to the user
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Optionally, display an error message to the user
+  });
+});
+
+// Function to handle form submission for deleting a user
+document.getElementById('deleteUserForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const formData = new FormData(this);
+  const email = formData.get('email');
+
+  fetch('https://your-api-url.com/deleteUser', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle response from the server
+    console.log(data);
+    // Optionally, display a success or error message to the user
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Optionally, display an error message to the user
+  });
+});

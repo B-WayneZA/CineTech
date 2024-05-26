@@ -881,41 +881,40 @@ class API
    }
 
 
-
-   private function addMovie($title, $genre, $ratingArr, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL) //change PDO to sqli
-   { //4.
+   // DEBUGGED
+   private function addMovie($title, $genreID, $ratingArr, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL) { // DONE
       try {
-          // Insert the film into the Films table
-          $query = "INSERT INTO Films (Title, Genre_ID, Country, Description, Runtime, Release_Year, PosterURL, TrailerURL, ScreenshotURL) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-          $stmt = $GLOBALS['connection']->prepare($query);
-          $stmt->bind_param('sisssisss', $title, $genre, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL);
-          $stmt->execute();
-  
-          // Get the last inserted film ID
-          $filmID = $stmt->insert_id;
-  
-          // Insert the ratings into the Rating table
-          $ratingQuery = "INSERT INTO Rating (IMDB_score, IMDB_votes, TMDB_popularity, TMDB_score) VALUES (?, ?, ?, ?)";
-          $ratingStmt = $GLOBALS['connection']->prepare($ratingQuery);
-          $ratingStmt->bind_param('dddd', 
-                $ratingArr['IMDB_score'], 
-                $ratingArr['IMDB_votes'], 
-                $ratingArr['TMDB_popularity'], 
-                $ratingArr['TMDB_score']
-          );
-          $ratingStmt->execute();
-  
-          // Get the last inserted rating ID
-          $ratingID = $ratingStmt->insert_id;
-  
-          // Update the film with the rating ID
-          $updateQuery = "UPDATE Films SET Rating_ID = ? WHERE Films_ID = ?";
-          $updateStmt = $GLOBALS['connection']->prepare($updateQuery);
-          $updateStmt->bind_param('ii', $ratingID, $filmID);
-          $updateStmt->execute();
-  
-          return $this->successResponse(time(), "Movie added successfully");
+         // Insert the film into the Films table
+         $query = "INSERT INTO Films (Title, Genre_ID, Country, Description, Runtime, Release_Year, PosterURL, TrailerURL, ScreenshotURL) 
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+         $stmt = $GLOBALS['connection']->prepare($query);
+         $stmt->bind_param('sisssisss', $title, $genreID, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL);
+         $stmt->execute();
+
+         // Get the last inserted film ID
+         $filmID = $stmt->insert_id;
+
+         // Insert the ratings into the Rating table
+         $ratingQuery = "INSERT INTO Rating (IMDB_score, IMDB_votes, TMDB_popularity, TMDB_score) VALUES (?, ?, ?, ?)";
+         $ratingStmt = $GLOBALS['connection']->prepare($ratingQuery);
+         $ratingStmt->bind_param('dddd', 
+               $ratingArr['IMDB_score'], 
+               $ratingArr['IMDB_votes'], 
+               $ratingArr['TMDB_popularity'], 
+               $ratingArr['TMDB_score']
+         );
+         $ratingStmt->execute();
+
+         // Get the last inserted rating ID
+         $ratingID = $ratingStmt->insert_id;
+
+         // Update the film with the rating ID
+         $updateQuery = "UPDATE Films SET Rating_ID = ? WHERE Films_ID = ?";
+         $updateStmt = $GLOBALS['connection']->prepare($updateQuery);
+         $updateStmt->bind_param('ii', $ratingID, $filmID);
+         $updateStmt->execute();
+
+         return $this->successResponse(time(), "Movie added successfully");
       } catch (Exception $e) {
          // Handle any exceptions thrown during SQL execution
          return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
@@ -923,57 +922,56 @@ class API
    }
 
 
-
-
-
    // DEBUGGED
    private function addSeries($title, $genreID, $ratingArr, $country, $description, $runtime, $year, $seasons, $PostURL, $VideoURL, $ScreenURL) { // DONE
       try {
-          // Insert the series into the Shows table
-          $query = "INSERT INTO Shows (Name, Genre_ID, Country, Description, Runtime, Release_Year, Seasons, PosterURL, TrailerURL, ScreenshotURL) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-          $stmt = $GLOBALS['connection']->prepare($query);
-          if (!$stmt) {
-              return $this->errorResponse(time(), "Prepare failed: " . $GLOBALS['connection']->error);
-          }
-          $stmt->bind_param('sisssiisss', $title, $genreID, $country, $description, $runtime, $year, $seasons, $PostURL, $VideoURL, $ScreenURL);
-          $stmt->execute();
-          
-          // Get the last inserted show ID
-          $showID = $stmt->insert_id;
-          
-          // Insert the ratings into the Rating table
-          $ratingQuery = "INSERT INTO Rating (IMDB_score, IMDB_votes, TMDB_popularity, TMDB_score) VALUES (?, ?, ?, ?)";
-          $ratingStmt = $GLOBALS['connection']->prepare($ratingQuery);
-          if (!$ratingStmt) {
-              return $this->errorResponse(time(), "Prepare failed: " . $GLOBALS['connection']->error);
-          }
-          $ratingStmt->bind_param('dddd', 
-                $ratingArr['IMDB_score'], 
-                $ratingArr['IMDB_votes'], 
-                $ratingArr['TMDB_popularity'],
-                $ratingArr['TMDB_score']
-          );
-          $ratingStmt->execute();
-          
-          // Get the last inserted rating ID
-          $ratingID = $ratingStmt->insert_id;
-          
-          // Update the show with the rating ID
-          $updateQuery = "UPDATE Shows SET RatingID = ? WHERE Show_id = ?";
-          $updateStmt = $GLOBALS['connection']->prepare($updateQuery);
-          if (!$updateStmt) {
-              return $this->errorResponse(time(), "Prepare failed: " . $GLOBALS['connection']->error);
-          }
-          $updateStmt->bind_param('ii', $ratingID, $showID);
-          $updateStmt->execute();
-          
-          return $this->successResponse(time(), "Series added successfully");
+         // Insert the series into the Shows table
+         $query = "INSERT INTO Shows (Name, Genre_ID, Country, Description, Runtime, Release_Year, Seasons, PosterURL, TrailerURL, ScreenshotURL) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+         $stmt = $GLOBALS['connection']->prepare($query);
+         if (!$stmt) {
+            return $this->errorResponse(time(), "Prepare failed: " . $GLOBALS['connection']->error);
+         }
+         $stmt->bind_param('sisssiisss', $title, $genreID, $country, $description, $runtime, $year, $seasons, $PostURL, $VideoURL, $ScreenURL);
+         $stmt->execute();
+         
+         // Get the last inserted show ID
+         $showID = $stmt->insert_id;
+         
+         // Insert the ratings into the Rating table
+         $ratingQuery = "INSERT INTO Rating (IMDB_score, IMDB_votes, TMDB_popularity, TMDB_score) VALUES (?, ?, ?, ?)";
+         $ratingStmt = $GLOBALS['connection']->prepare($ratingQuery);
+         if (!$ratingStmt) {
+            return $this->errorResponse(time(), "Prepare failed: " . $GLOBALS['connection']->error);
+         }
+         $ratingStmt->bind_param('dddd', 
+               $ratingArr['IMDB_score'], 
+               $ratingArr['IMDB_votes'], 
+               $ratingArr['TMDB_popularity'],
+               $ratingArr['TMDB_score']
+         );
+         $ratingStmt->execute();
+         
+         // Get the last inserted rating ID
+         $ratingID = $ratingStmt->insert_id;
+         
+         // Update the show with the rating ID
+         $updateQuery = "UPDATE Shows SET RatingID = ? WHERE Show_id = ?";
+         $updateStmt = $GLOBALS['connection']->prepare($updateQuery);
+         if (!$updateStmt) {
+            return $this->errorResponse(time(), "Prepare failed: " . $GLOBALS['connection']->error);
+         }
+         $updateStmt->bind_param('ii', $ratingID, $showID);
+         $updateStmt->execute();
+         
+         return $this->successResponse(time(), "Series added successfully");
       } catch (Exception $e) {
-          // Handle any exceptions thrown during SQL execution
-          return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
+         // Handle any exceptions thrown during SQL execution
+         return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
       }
    }
+
+
 
 
    private function getRatingID($film)
