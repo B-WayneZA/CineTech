@@ -205,29 +205,32 @@ class API
    }
 
 
-   // DEBUGGED
-   public function deleteUser($id) { // DONE
-      // Prepare the statement to find the user by user_id
-      $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE user_id = ?");
-      $stmt->bind_param("i", $id);
+   // DEBUGGED FOR THE SECOND TIME
+   public function deleteUser($email) { // DONE
+      // Prepare the statement to find the user by email
+      $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE email = ?");
+      $stmt->bind_param("s", $email);
       $stmt->execute();
       $result = $stmt->get_result();
-
-
+  
       // Check if the user exists
       if ($result->num_rows == 0) {
-         return $this->errorResponse(time(), "User does not exist");
+          return $this->errorResponse(time(), "User does not exist");
       } else {
-         // Prepare the statement to delete the user by user_id
-         $stmt = $GLOBALS['connection']->prepare("DELETE FROM users WHERE user_id = ?");
-         $stmt->bind_param("i", $id);
-         if ($stmt->execute()) {
-               return $this->successResponse(time(), "User successfully deleted");
-         } else {
-               return $this->errorResponse(time(), "An error occurred while deleting the user");
-         }
+          // Fetch the user ID
+          $row = $result->fetch_assoc();
+          $user_id = $row['user_id'];
+  
+          // Prepare the statement to delete the user by user_id
+          $stmt = $GLOBALS['connection']->prepare("DELETE FROM users WHERE user_id = ?");
+          $stmt->bind_param("i", $user_id);
+          if ($stmt->execute()) {
+              return $this->successResponse(time(), "User successfully deleted");
+          } else {
+              return $this->errorResponse(time(), "An error occurred while deleting the user");
+          }
       }
-   }
+  }
 
 
    public function getUserRecommendations($apiKey)
