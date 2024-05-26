@@ -1260,7 +1260,7 @@ class API
                     $requestData['VideoURL'], 
                     $requestData['ScreenURL']
                 );
-        //revise, needs imput values
+            }        //revise, needs imput values
          } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
             if (isset($requestData['item']) && isset($requestData['title'])) {
                echo $this->deleteByTitle($requestData['title'], $requestData['item']);
@@ -1374,6 +1374,5 @@ class API
          echo json_encode(array("message" => "Method Not Allowed " . $_SERVER['REQUEST_METHOD'], "code" => http_response_code(405)));
       }
    }
-}
 }
 $api = new API();
