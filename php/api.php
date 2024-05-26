@@ -1361,10 +1361,10 @@ class API
             }
       
          } else if (isset($requestData['type']) && $requestData['type'] === "DeleteUser") { // =========================== CHECKED
-            if (isset($requestData['userID'])) {
-                echo $this->deleteUser($requestData['userID']);
+            if (isset($requestData['email'])) {
+               echo $this->deleteUser($requestData['email']);
             } else {
-                echo $this->errorResponse(time(), "Missing userID for deleting user.");
+               echo $this->errorResponse(time(), "Missing email for deleting user.");
             }
          } else {
             echo $this->errorResponse(time(), "Post parameters are missing ");
@@ -1374,4 +1374,5 @@ class API
       }
    }
 }
+
 $api = new API();
