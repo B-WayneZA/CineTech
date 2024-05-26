@@ -889,7 +889,7 @@ class API
           $query = "INSERT INTO Films (Title, Genre_ID, Country, Description, Runtime, Release_Year, PosterURL, TrailerURL, ScreenshotURL) 
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
           $stmt = $GLOBALS['connection']->prepare($query);
-          $stmt->bind_param('sisssisss', $title, $genreID, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL);
+          $stmt->bind_param('sisssisss', $title, $genre, $country, $description, $runtime, $year, $PostURL, $VideoURL, $ScreenURL);
           $stmt->execute();
   
           // Get the last inserted film ID
@@ -1117,8 +1117,6 @@ class API
 
    // Unified helper function for determining the bind type based on the field
    private function getBindType($key)
-
-   private function editMovie()
    {
       $typeMap = [
          // Common fields
@@ -1261,7 +1259,6 @@ class API
                     $requestData['VideoURL'], 
                     $requestData['ScreenURL']
                 );
-=
         //revise, needs imput values
          } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
             if (isset($requestData['item']) && isset($requestData['title'])) {
@@ -1376,5 +1373,6 @@ class API
          echo json_encode(array("message" => "Method Not Allowed " . $_SERVER['REQUEST_METHOD'], "code" => http_response_code(405)));
       }
    }
+}
 }
 $api = new API();
