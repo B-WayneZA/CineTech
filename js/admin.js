@@ -255,7 +255,7 @@ areaChart.render();
 
 
 
-// Added code to add functionality using the api
+// -----------------  Added code to add functionality using the api --------------------------
 
 
 // Delete Movie or Series Form Submission
@@ -272,9 +272,9 @@ document.getElementById('deleteForm').addEventListener('submit', function(event)
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      type: 'DeleteMovieOrSeries',
+      type: 'Remove',
       title: title,
-      objectType: type
+      item: type
     })
   })
   .then(response => response.json())

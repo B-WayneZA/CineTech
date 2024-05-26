@@ -116,21 +116,39 @@
                     <div class="add-movie-series">
                         <h2>Add Movie or Series</h2>
                         <p>This box will add a movie or series to the database.</p>
-                        <form>
-                            <input type="text" placeholder="Title" required>
-                            <textarea placeholder="Description" required></textarea>
-                            <input type="number" placeholder="Rating" min="0" max="10" required>
-                            <input type="text" placeholder="Genres" required>
-                            <input type="number" placeholder="Year Released" required>
+                        <form id="addForm">
+                            <input type="text" id="addTitle" placeholder="Title" required>
+                            <!-- dropdown here -->
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Movie/Series
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <input type="radio" id="addMovie" name="addType" value="Movie" checked>
+                                        <label for="addMovie">Movie</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="addSeries" name="addType" value="Series">
+                                        <label for="addSeries">Series</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <textarea id="addDescription" placeholder="Description" required></textarea>
+                            <input type="number" id="addRating" placeholder="Rating" min="0" max="10" required>
+                            <input type="text" id="addGenres" placeholder="Genres" required>
+                            <input type="number" id="addYearReleased" placeholder="Year Released" required>
                             <button type="submit">Add</button>
                         </form>
                     </div>
+                    
                     <!-- this is the edit to movie/series block -->
                     <div class="edit-movie-series">
                         <h2>Edit Movie or Series</h2>
                         <p>This box will edit a movie or series from the database.</p>
-                        <form>
-                            <input type="text" placeholder="Title" required>
+                        <form id="editForm">
+                            <input type="text" id="editTitle" placeholder="Title" required>
                             <!-- dropdown for what we editing here -->
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -138,8 +156,14 @@
                                     Movie/Series
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Movie</a></li>
-                                    <li><a class="dropdown-item" href="#">Series</a></li>
+                                    <li>
+                                        <input type="radio" id="editMovie" name="editType" value="movie" checked>
+                                        <label for="editMovie">Movie</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="editSeries" name="editType" value="series">
+                                        <label for="editSeries">Series</label>
+                                    </li>
                                 </ul>
                             </div>
                             <!-- dropdown for what part we editing here -->
@@ -149,18 +173,19 @@
                                     Edit Here
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Title</a></li>
-                                    <li><a class="dropdown-item" href="#">Description</a></li>
-                                    <li><a class="dropdown-item" href="#">Poster</a></li>
-                                    <li><a class="dropdown-item" href="#">Rating</a></li>
-                                    <li><a class="dropdown-item" href="#">Genre</a></li>
-                                    <li><a class="dropdown-item" href="#">Release Year</a></li>
+                                    <li><input type="radio" id="editTitle" name="editField" value="title"><label for="editTitle">Title</label></li>
+                                    <li><input type="radio" id="editDescription" name="editField" value="description"><label for="editDescription">Description</label></li>
+                                    <li><input type="radio" id="editPoster" name="editField" value="poster"><label for="editPoster">Poster</label></li>
+                                    <li><input type="radio" id="editRating" name="editField" value="rating"><label for="editRating">Rating</label></li>
+                                    <li><input type="radio" id="editGenre" name="editField" value="genre"><label for="editGenre">Genre</label></li>
+                                    <li><input type="radio" id="editReleaseYear" name="editField" value="release_year"><label for="editReleaseYear">Release Year</label></li>
                                 </ul>
                             </div>
-                            <input type="text" placeholder="Edit" required>
+                            <input type="text" id="editValue" placeholder="Edit" required>
                             <button type="submit">Edit</button>
                         </form>
                     </div>
+                    
                     <!-- this is the delete user block -->
                     <div class="delete-block-user">
                         <h2>Delete User from Database</h2>
