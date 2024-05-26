@@ -230,7 +230,7 @@ class API
               return $this->errorResponse(time(), "An error occurred while deleting the user");
           }
       }
-  }
+   }
 
 
    public function getUserRecommendations($apiKey)
@@ -1360,9 +1360,14 @@ class API
                echo $this->errorResponse(time(), "Missing values for getting shared movies/shows.");
             }
       
+         } else if (isset($requestData['type']) && $requestData['type'] === "DeleteUser") { // =========================== CHECKED
+            if (isset($requestData['userID'])) {
+                echo $this->deleteUser($requestData['userID']);
+            } else {
+                echo $this->errorResponse(time(), "Missing userID for deleting user.");
+            }
          } else {
             echo $this->errorResponse(time(), "Post parameters are missing ");
-
          }
       } else {
          echo json_encode(array("message" => "Method Not Allowed " . $_SERVER['REQUEST_METHOD'], "code" => http_response_code(405)));
