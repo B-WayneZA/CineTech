@@ -69,9 +69,9 @@ if ($responseData['status'] === 'success') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/movies.css" id="light-mode">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
     <link rel="icon" href="https://cinetechwatch.000webhostapp.com/img/4.png" type="image/x-icon">
-    <!-- <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/font-awesome-4.7.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/font-awesome-4.7.0/font-awesome.min.css"> 
     <title>CineTech</title>
 </head>
 
@@ -157,10 +157,10 @@ if ($responseData['status'] === 'success') {
             if (isset($movies)) {
                 foreach ($movies as $movie) {
                     // main grid
-                    // echo '<div class="cards">';
-
+                    $title = urlencode($movie['Title']);
                     // individual card for each movie
-                    echo '<a href="#" class="card">';
+                    echo '<a href="viewMore.php?title=' . $title . '" class="card">'; 
+                   
 
                     // image of the poster
                     echo '<img src='.$movie['PosterURL'].' alt="" class="poster">';
