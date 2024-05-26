@@ -1,0 +1,518 @@
+@import url('https://fonts.googleapis.com/css2?familyPoppins:itl,wght@0,100;0,200;0');
+
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: rgb(8, 8, 8);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y:visible;
+    overflow-x: hidden;
+    /* overflow: hidden; */
+}
+
+header {
+    position: relative; /* Change position to fixed */
+    width: 100%;
+    height: 100vh;
+    /* border: 1px solid #fff; */
+    /* border-radius: 0px; */
+    /* overflow: hidden; */
+    /* box-shadow: 0px 10px 25px -8px #000;  */
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .6;
+    z-index: -1;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #000);
+    z-index: -1;
+}
+
+header video {
+    position: absolute;
+    width: 120%;
+    height: 190%;
+    top: -47%;
+    z-index: -1;
+}
+
+/* adjust size of nav bar */
+header nav {
+    width: 100%;
+    height: 15%;
+    /* border: 1px solid #fff; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 50px;
+}
+
+header nav .logo_ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header nav .logo_ul img {
+    width: 70px;
+    border-radius: 50%;
+    /* Make logo circular */
+}
+
+header nav .logo_ul ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+header nav .logo_ul ul li {
+    padding: 3px 15px;
+}
+
+header nav .logo_ul ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    transition: .3s linear;
+}
+
+header nav .logo_ul ul li a:hover {
+    color: rgba(102, 92, 240, 0.7);
+} 
+
+/* adjust the size the user  */
+header nav .search_user {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px; /* Increase the height */
+}
+
+/* adjust the size the user  */
+header nav .search_user input {
+    padding: 10px 40px;
+    border-radius: 30px;
+    border: 1px solid #6a3ce7 ;
+    outline: none;
+    background: rgb(255, 255, 255, .3);
+    color: #fff;
+    margin-right: 20px;
+}
+
+header nav .search_user input::placeholder {
+    color: #fff;
+}
+
+header nav .search_user img {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+}
+
+/* adjust the size the user  */
+header nav .search_user .search {
+    position: absolute;
+    width: 320px;
+    height: 220px;
+    /* border: 1px solid #fff; */
+    right: 0;
+    top: 40px;
+    z-index: 99999;
+    overflow-y: auto;
+}
+
+header nav .search_user .search::-webkit-scrollbar {
+    width: 5px;
+    background: rgb(255, 255, 255, .3);
+    border-radius: 5px;
+    visibility: hidden;
+}
+
+header nav .search_user .search::-webkit-scrollbar-thumb {
+    width: 5px;
+    background: rgb(255, 255, 255, .4);
+    border-radius: 5px;
+    visibility: hidden;
+}
+
+header nav .search_user .search:hover::-webkit-scrollbar {
+    visibility: visible;
+}
+
+header nav .search_user .search:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+header nav .search_user .search .card {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 3px 0px;
+    text-decoration: none;
+    display: none;
+}
+
+header nav .search_user .search .card::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255, .1);
+    backdrop-filter: blur(5px);
+    border-radius: 5px;
+    z-index: -1;
+}
+
+header nav .search_user .search .card img {
+    width: 28px;
+    height: 90%;
+    border-radius: 2px;
+    margin-left: 8px;
+}
+
+header nav .search_user .search .card .cont {
+    margin-left: 10px;
+    color: #fff;
+}
+
+header nav .search_user .search .card .cont h3 {
+    font-size: 15px;
+    line-height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 250px;
+}
+
+header nav .search_user .search .card .cont p {
+    font-size: 10px;
+    color: rgb(255, 255, 255, .8);
+}
+
+header nav .search_user .search .card .cont span {
+    background: #4b2bc0;
+    color: #000;
+    padding: 0px 3px;
+    margin: 0px 5px 0px 10px;
+    font-weight: 500;
+}
+
+header .content {
+    position: relative;
+    color: #fff;
+    margin-top: 50px;
+    margin-left: 100px;
+    padding-left: 50px;
+    margin-bottom: 50px;
+    /*border: 2px solid rgb(148, 86, 241);*/
+    width: 400px;
+    height: 500px;
+}
+
+ /* .content img{
+    width: 200%;
+    height: 200%;
+    border-radius: 50%;
+    position: relative;
+    left: -100%;
+    top: -100%;
+} */
+.movieImg{
+    width: 100%;
+    height: 100%;
+}
+
+.content-details{
+    position: relative;
+    color: #fff;
+    margin-top: 50px;
+    margin-left: 500px;
+    padding-left: 50px;
+    margin-bottom: 50px;
+    border: 2px solid rgb(153, 66, 245);
+    width: 800px;
+    height: 500px;
+}
+
+.ViewDetails{
+    display: grid;
+    grid-template-columns: 80px 200px;
+}
+
+.recommended section {
+    position:absolute;
+    width: 100%;
+    height: auto;
+    padding: 0px 50px;
+    bottom: -520px;
+    left: 0px;
+    color: #fff;
+    margin-top: 100px;
+    margin-bottom: 200px;
+}
+
+
+header section {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    padding: 0px 50px;
+    bottom: -250px;
+    color: #fff;
+    margin-top: 50px;
+}
+
+header section .cards{
+    position: relative;
+    width: 100%;
+    height: 200px;
+    /* border: 1px solid #fff; */
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+header section .cards::-webkit-scrollbar{
+    width: 3px;
+    background: rgb(255, 255, 255, .3);
+    border-radius: 5px;
+    visibility: hidden;
+}
+
+header section .cards::-webkit-scrollbar-thumb{
+    width: 3px;
+    background: rgba(102, 82, 214, 0.4);
+    border-radius: 5px;
+    visibility: visible;
+}
+
+header section .cards .card{
+    position: relative;
+    min-width: 130px;
+    height: 180px;
+    /* border: 1px solid #fff; */
+    border-radius: 8px;
+    margin-right: 10px;
+    background: #000;
+    transition: .3s linear;
+}
+
+header section .cards .card .poster{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+}
+
+header section .cards .card:hover {
+    min-width: 300px;
+    overflow: hidden;
+}
+
+header section .cards .card .rest_card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    left: 0;
+    top: 0;
+    z-index: 999999;
+    opacity: 0;
+    transition: .5s linear;
+}
+
+header section .cards .card .rest_card img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+header section .cards .card .rest_card::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #000);
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+header section .cards .card .rest_card .cont {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    left: 0;
+    color: #fff;
+    padding: 0px 20px;
+}
+
+header section .cards .card .rest_card .cont .sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header section .cards .card .rest_card .cont .sub p {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(255, 255, 255, .7);
+}
+
+header section .cards .card .rest_card .cont .sub h3 {
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+header section .cards .card .rest_card .cont .sub h3 span{
+    background: yellow;
+    color: #000;
+    padding: 0px 3px;
+    margin: 0px 5px 0px 10px;
+    font-weight: 500;
+    border-radius: 2px;
+}
+
+header section .cards .card .rest_card .cont .sub h3 i{
+    margin-right: 3px;
+}
+
+header section .cards .card:hover .rest_card {
+    opacity: 1;
+}
+
+
+/*This is for the ratings */
+.ratings-container {
+    width: 200px; /* Adjust width as needed */
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #ccc; /* Add border for the box */
+    padding: 20px; /* Add padding for spacing */
+}
+
+.rating {
+    margin-top: 10px; /* Adjust top margin as needed */
+}
+
+.rating > * {
+    display: inline-block;
+}
+
+.rating label {
+    height: 50px; /* Adjust height to enlarge the stars */
+    width: 50px; /* Adjust width to enlarge the stars */
+    font-size: 30px; /* Adjust font size to enlarge the stars */
+    position: relative;
+    cursor: pointer;
+}
+
+.rating label::after {
+    transition: all 0.4s ease-out;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    content: "★";
+    color: #444;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 50px; /* Center the star vertically */
+}
+
+.rating input {
+    display: none;
+}
+
+.rating input:checked ~ label::after,
+.rating input:checked + label::after,
+.rating input:checked + label ~ label::after {
+    color: #f9bf3b; /* Change color when checked */
+}
+
+button.trailer {
+    background: linear-gradient(90deg, #5b42f3, #a800eb);
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 15px 25px; /* Padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Make it inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 3px 1px; /* Small margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 25px;
+}
+
+/* Link Style */
+button.trailer a {
+    color: white; /* White text */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Link Hover Effect */
+button.trailer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+button.btn {
+    background: linear-gradient(90deg, #5b42f3, #a800eb);
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 15px 25px; /* Padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Make it inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Small margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+}
+
+button.watchList {
+    background: linear-gradient(90deg, #5b42f3, #a800eb);
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 15px 25px; /* Padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Make it inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Small margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+}

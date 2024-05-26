@@ -8,8 +8,7 @@
 
 body {
     width: 100%;
-    height: 100vh;
-    background: rgb(8, 8, 8);
+    height: 100vh; 
     font-family: 'Poppins', sans-serif;
     display: flex;
     align-items: center;
@@ -17,6 +16,7 @@ body {
     overflow-y:visible;
     overflow-x: hidden;
     /* overflow: hidden; */
+    background: #11091f;
 }
 
 header {
@@ -25,16 +25,17 @@ header {
     height: 100vh;
     /* border: 1px solid #fff; */
     /* border-radius: 0px; */
-    /* overflow: hidden; */
-    /* box-shadow: 0px 10px 25px -8px #000;  */
+    overflow: hidden;
+    box-shadow: 0px 10px 25px -8px #000; 
 }
 
 header::before {
     content: '';
-    position: absolute;
+    341`    QYUIOP'
+    p  
+    sition: absolute;
     width: 100%;
     height: 100%;
-    background: url('/img/JohnWickVisual.jpeg')no-repeat center center/cover;
     opacity: .6;
     z-index: -1;
 }
@@ -99,7 +100,7 @@ header nav .logo_ul ul li a {
 }
 
 header nav .logo_ul ul li a:hover {
-    color: rgba(102, 92, 240, 0.7);
+    color: #df5eff;
 } 
 
 /* adjust the size the user  */
@@ -115,7 +116,7 @@ header nav .search_user {
 header nav .search_user input {
     padding: 10px 40px;
     border-radius: 30px;
-    border: none;
+    border: 1px solid #6a3ce7;
     outline: none;
     background: rgb(255, 255, 255, .3);
     color: #fff;
@@ -138,8 +139,8 @@ header nav .search_user .search {
     width: 320px;
     height: 220px;
     /* border: 1px solid #fff; */
-    right: 0;
-    top: 40px;
+    right: 20px;
+    top: 50px;
     z-index: 99999;
     overflow-y: auto;
 }
@@ -166,6 +167,7 @@ header nav .search_user .search:hover::-webkit-scrollbar-thumb {
     visibility: visible;
 }
 
+/* keep this css for overall search look */
 header nav .search_user .search .card {
     position: relative;
     width: 100%;
@@ -175,7 +177,19 @@ header nav .search_user .search .card {
     margin-bottom: 5px;
     padding: 3px 0px;
     text-decoration: none;
-    display: none;
+    /* display: none; */
+}
+
+/* remove this specific css to make the search bar info visible */
+header nav .search_user .search .card {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 3px 0px;
+    text-decoration: none;
 }
 
 header nav .search_user .search .card::before {
@@ -216,11 +230,11 @@ header nav .search_user .search .card .cont p {
 }
 
 header nav .search_user .search .card .cont span {
-    background: yellow;
-    color: #000;
+    background: #4b2bc0;
+    color: #fff;
     padding: 0px 3px;
     margin: 0px 5px 0px 10px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 header .content {
@@ -236,7 +250,7 @@ header .content h1 {
 }
 
 header .content p {
-    font-size: 11px;
+    font-size: 14px;
     width: 350px;
     word-break: break-all;
 }
@@ -249,19 +263,19 @@ header .content .details {
 
 header .content .details h6 {
     color: rgb(255, 255, 255, .8);
-    font-size: 10px;
+    font-size: 12px;
     margin-right: 10px;
 }
 
 header .content .details h5 {
     color: rgba(87, 50, 223);
-    font-size: 10px;
+    font-size: 12px;
     margin-right: 10px;
 }
 
 header .content .details h4 {
     color: #fff;
-    font-size: 10px;
+    font-size: 12px;
     margin-right: 10px;
 }
 
@@ -269,15 +283,17 @@ header .content .details h3 {
     color: #fff;
     display: flex;
     align-items: center;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 header .content .details h3 span {
-    background: yellow;
-    color: #000;
-    padding: 0px 3px;
+    background: rgb(195, 0, 255);
+    color: #cecbcb;
+    padding: 0px 5px;
     margin: 0px 5px 0px 5px;
-    font-weight: 500;
+    font-weight: 600;
+    border-radius: 10px;
+    width: 65px;
 }
 
 header .content .details h3 i{
@@ -294,7 +310,7 @@ header .content .btns a {
     padding: 8px 12px;
     font-size: 15px;
     font-weight: 600;
-    background: linear-gradient(90deg, #5b42f3, #00ddeb);
+    background: linear-gradient(90deg, #5b42f3, #a800eb);
     border-radius: 5px;
     color: #fff;
     margin-left: 10px;
@@ -303,145 +319,22 @@ header .content .btns a {
 
 /* ============================================================================= */
 /* this section is for popular row in the header div */
-header section {
-    position: absolute;
+
+/* ===================================================================================== */
+/* this is the part of the code responsible for ht main page conatiner */
+.popular section {
+    position:absolute;
     width: 100%;
     height: auto;
     padding: 0px 50px;
-    bottom: -250px;
+    bottom: -280px;
+    left: 0px;
     color: #fff;
     margin-top: 50px;
 }
 
-header section .cards{
-    position: relative;
-    width: 100%;
-    height: 200px;
-    /* border: 1px solid #fff; */
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-}
-
-header section .cards::-webkit-scrollbar{
-    width: 3px;
-    background: rgb(255, 255, 255, .3);
-    border-radius: 5px;
-    visibility: hidden;
-}
-
-header section .cards::-webkit-scrollbar-thumb{
-    width: 3px;
-    background: rgba(102, 82, 214, 0.4);
-    border-radius: 5px;
-    visibility: visible;
-}
-
-header section .cards .card{
-    position: relative;
-    min-width: 130px;
-    height: 180px;
-    /* border: 1px solid #fff; */
-    border-radius: 8px;
-    margin-right: 10px;
-    background: #000;
-    transition: .3s linear;
-}
-
-header section .cards .card .poster{
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    position: relative;
-}
-
-header section .cards .card:hover {
-    min-width: 300px;
-    overflow: hidden;
-}
-
-header section .cards .card .rest_card {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    left: 0;
-    top: 0;
-    z-index: 999999;
-    opacity: 0;
-    transition: .5s linear;
-}
-
-header section .cards .card .rest_card img {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    z-index: -1;
-}
-
-header section .cards .card .rest_card::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, #000);
-    left: 0;
-    bottom: 0;
-    z-index: -1;
-}
-
-header section .cards .card .rest_card .cont {
-    position: absolute;
-    width: 100%;
-    bottom: 10px;
-    left: 0;
-    color: #fff;
-    padding: 0px 20px;
-}
-
-header section .cards .card .rest_card .cont .sub {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-header section .cards .card .rest_card .cont .sub p {
-    font-size: 12px;
-    font-weight: 400;
-    color: rgb(255, 255, 255, .7);
-}
-
-header section .cards .card .rest_card .cont .sub h3 {
-    color: #fff;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-}
-
-header section .cards .card .rest_card .cont .sub h3 span{
-    background: yellow;
-    color: #000;
-    padding: 0px 3px;
-    margin: 0px 5px 0px 10px;
-    font-weight: 500;
-    border-radius: 2px;
-}
-
-header section .cards .card .rest_card .cont .sub h3 i{
-    margin-right: 3px;
-}
-
-header section .cards .card:hover .rest_card {
-    opacity: 1;
-}
-
-/* ===================================================================================== */
-/* this is the part of the code responsible for ht main page conatiner */
-
-.recommended section {
+.recommended section 
+{
     position:absolute;
     width: 100%;
     height: auto;
@@ -510,6 +403,7 @@ header section .cards .card:hover .rest_card {
 /* ===================================================================================== */
 /* this section is the popular row in the decommended div */
 
+.popular section .cards,
 .recommended section .cards, 
 .binge-watch section .cards,
 .latest-movie section .cards,
@@ -527,7 +421,8 @@ header section .cards .card:hover .rest_card {
     scroll-behavior: smooth;
 }
 
-/* ToDo com fix the scrolling issue here => scant scroll with mouse */
+/* ToDo come fix the scrolling issue here => scant scroll with mouse */
+.popular section .cards::-webkit-scrollbar, 
 .recommended section .cards::-webkit-scrollbar, 
 .binge-watch section .cards::-webkit-scrollbar,
 .latest-movie section .cards::-webkit-scrollbar,
@@ -540,6 +435,7 @@ header section .cards .card:hover .rest_card {
     visibility: hidden;
 }
 
+.popular section .cards::-webkit-scrollbar-thumb,
 .recommended section .cards::-webkit-scrollbar-thumb, 
 .binge-watch section .cards::-webkit-scrollbar-thumb,
 .latest-movie section .cards::-webkit-scrollbar-thumb,
@@ -547,12 +443,13 @@ header section .cards .card:hover .rest_card {
 .international section .cards::-webkit-scrollbar-thumb,
 .top-picks section .cards::-webkit-scrollbar-thumb{
     width: 5px;
-    background: rgba(102, 82, 214, 0.4);
+    background: rgba(102, 82, 214, 0.103);
     border-radius: 5px;
     visibility: visible;
 }
 
-.recommended section .cards .card, 
+.popular section .cards .card, 
+.recommended section .cards .card,
 .binge-watch section .cards .card,
 .latest-movie section .cards .card,
 .latest-series section .cards .card,
@@ -568,7 +465,8 @@ header section .cards .card:hover .rest_card {
     transition: .3s linear;
 }
 
-.recommended section .cards .card .poster, 
+.popular section .cards .card .poster, 
+.recommended section .cards .card .poster,
 .binge-watch section .cards .card .poster,
 .latest-movie section .cards .card .poster,
 .latest-series section .cards .card .poster,
@@ -580,6 +478,7 @@ header section .cards .card:hover .rest_card {
     position: relative;
 }
 
+.popular section .cards .card:hover,
 .recommended section .cards .card:hover, 
 .binge-watch section .cards .card:hover,
 .latest-movie section .cards .card:hover,
@@ -590,7 +489,8 @@ header section .cards .card:hover .rest_card {
     overflow: hidden;
 }
 
-.recommended section .cards .card .rest_card, 
+.popular section .cards .card .rest_card, 
+.recommended section .cards .card .rest_card,
 .binge-watch section .cards .card .rest_card,
 .latest-movie section .cards .card .rest_card,
 .latest-series section .cards .card .rest_card,
@@ -607,6 +507,7 @@ header section .cards .card:hover .rest_card {
     transition: .5s linear;
 }
 
+.popular section .cards .card .rest_card img,
 .recommended section .cards .card .rest_card img, 
 .binge-watch section .cards .card .rest_card img,
 .latest-movie section .cards .card .rest_card img,
@@ -620,6 +521,7 @@ header section .cards .card:hover .rest_card {
     z-index: -1;
 }
 
+.popular section .cards .card .rest_card::after,
 .recommended section .cards .card .rest_card::after, 
 .binge-watch section .cards .card .rest_card::after,
 .latest-movie section .cards .card .rest_card::after,
@@ -636,6 +538,7 @@ header section .cards .card:hover .rest_card {
     z-index: -1;
 }
 
+.popular section .cards .card .rest_card .cont,
 .recommended section .cards .card .rest_card .cont, 
 .binge-watch section .cards .card .rest_card .cont,
 .latest-movie section .cards .card .rest_card .cont,
@@ -650,7 +553,8 @@ header section .cards .card:hover .rest_card {
     padding: 0px 20px;
 }
 
-.recommended section .cards .card .rest_card .cont .sub, 
+.popular section .cards .card .rest_card .cont .sub, 
+.recommended section .cards .card .rest_card .cont .sub,
 .binge-watch section .cards .card .rest_card .cont .sub,
 .latest-movie section .cards .card .rest_card .cont .sub,
 .latest-series section .cards .card .rest_card .cont .sub,
@@ -661,6 +565,7 @@ header section .cards .card:hover .rest_card {
     justify-content: space-between;
 }
 
+.popular section .cards .card .rest_card .cont .sub p,
 .recommended section .cards .card .rest_card .cont .sub p, 
 .binge-watch section .cards .card .rest_card .cont .sub p,
 .latest-movie section .cards .card .rest_card .cont .sub p,
@@ -672,6 +577,7 @@ header section .cards .card:hover .rest_card {
     color: rgb(255, 255, 255, .7);
 }
 
+.popular section .cards .card .rest_card .cont .sub h3,
 .recommended section .cards .card .rest_card .cont .sub h3, 
 .binge-watch section .cards .card .rest_card .cont .sub h3,
 .latest-movie section .cards .card .rest_card .cont .sub h3,
@@ -684,20 +590,22 @@ header section .cards .card:hover .rest_card {
     align-items: center;
 }
 
-.recommended section .cards .card .rest_card .cont .sub h3 span, 
+.popular section .cards .card .rest_card .cont .sub h3 span, 
+.recommended section .cards .card .rest_card .cont .sub h3 span,
 .binge-watch section .cards .card .rest_card .cont .sub h3 span,
 .latest-movie section .cards .card .rest_card .cont .sub h3 span,
 .latest-series section .cards .card .rest_card .cont .sub h3 span,
 .international section .cards .card .rest_card .cont .sub h3 span,
 .top-picks section .cards .card .rest_card .cont .sub h3 span{
-    background: yellow;
-    color: #000;
+    background: rgb(0, 132, 255);
+    color: #fff;
     padding: 0px 3px;
     margin: 0px 5px 0px 10px;
     font-weight: 500;
     border-radius: 2px;
 }
 
+.popular section .cards .card .rest_card .cont .sub h3 i,
 .recommended section .cards .card .rest_card .cont .sub h3 i, 
 .binge-watch section .cards .card .rest_card .cont .sub h3 i,
 .latest-movie section .cards .card .rest_card .cont .sub h3 i,
@@ -707,7 +615,8 @@ header section .cards .card:hover .rest_card {
     margin-right: 3px;
 }
 
-.recommended section .cards .card:hover .rest_card, 
+.popular section .cards .card:hover .rest_card, 
+.recommended section .cards .card:hover .rest_card,
 .binge-watch section .cards .card:hover .rest_card,
 .latest-movie section .cards .card:hover .rest_card,
 .latest-series section .cards .card:hover .rest_card,
@@ -721,24 +630,60 @@ header section .cards .card:hover .rest_card {
 .notifications-popup {
     display: none;
     position: absolute;
-    top: 40px;
+    top: 60px; /* Adjusted for better alignment */
     right: 20px;
-    background-color: #f9f9f96e;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: #f9f9f986;
+    min-width: 200px; /* Increased width for better spacing */
+    box-shadow: 0px 8px 16px 0px rgba(150, 29, 29, 0.2);
     z-index: 1;
-    padding: 10px;
+    padding: 15px; /* Increased padding for better spacing */
+    border-radius: 10px; /* Added border radius for rounded corners */
 }
 
-.notifications img{
-    width: 50px;
+.notifications-popup img {
+    width: 30px; /* Adjusted image size */
     border-radius: 50%;
-    margin-left: 10px;
+    margin-right: 10px; /* Adjusted margin for better spacing */
 }
 
-/* Show the notifications popup */
+.notifications-popup .toast {
+    margin-bottom: 15px; /* Increased margin between notifications */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Column layout for the toast */
+}
+
+.notifications-popup .toast-header {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Space between the items */
+    padding-bottom: 5px; /* Adjusted padding for better spacing */
+    border-bottom: 1px solid #ccc; /* Optional: Add a bottom border for separation */
+}
+
+.notifications-popup .toast-body {
+    margin-top: 10px; /* Add margin to separate from the header */
+    padding: 10px 0; /* Adjust padding for better spacing */
+}
+
 .notifications-popup.show {
     display: block;
+}
+
+.me-auto {
+    font-size: 20px;
+    color: #261077;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+    cursor: pointer; /* Add cursor pointer */
+    font-size: 16px; /* Adjust font size for the close button */
+}
+
+.fa-times {
+    font-size: 20px;
+    color: #000; /* Adjust color for better visibility */
 }
 
 /* ===================================================================== */
@@ -749,10 +694,10 @@ header .user-panel {
     right: -300px; /* Initially hidden */
     width: 300px;
     height: 100vh;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255, .5);
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 9999999999;
 }
 
 /* Show the user panel */
@@ -765,7 +710,7 @@ header .user-info {
     padding: 20px;
     text-align: center;
 }
-
+ 
 header.user-info img {
     width: 100px;
     height: 100px;
@@ -778,9 +723,10 @@ header .user-info h3 {
 }
 
 header .user-info p {
-    color: #888;
+    color:  #11091f;
 }
 
+/* ===================================================================== */
 /* Style user actions */
 header .user-actions {
     padding: 20px;
@@ -801,6 +747,7 @@ header .user-actions button:hover {
     background-color: #4b2bc0;
 }
 
+/* ===================================================================== */
 /* Style the switch */
 .switch {
     position: relative;
@@ -858,4 +805,72 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/* ===================================================================== */
+/* Popup styling */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 9999999999;
+    padding: 50px;
+    background: rgb(255, 255, 255, .8);
+    border-radius: 10px;
+    border: 5px solid #6a3ce7;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.popup.show {
+    display: block;
+    width: 500px;
+    height: 220px;
+}
+
+.password-popup, .username-popup {
+    width: 300px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup-header {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.popup-content {
+    margin-bottom: 20px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.popup-footer {
+    text-align: right;
+}
+
+.popup-footer button {
+    margin-left: 10px;
+    color: #fff;
+    background: #8f42f3;
+    padding: 5px;
+    /* border-radius: 5px; */
+    border: none;
+    width: 100px;
+    height: 30px;
+}
+
+#new-password{
+    border-radius: 10px;
+    width: 165px;
+    height: 20px;
+    border: 2px solid #df5eff;
+}
+
+#new-username{
+    border-radius: 10px;
+    width: 165px;
+    height: 20px;
+    border: 2px solid #df5eff;
 }

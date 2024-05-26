@@ -1,1215 +1,2092 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/homePage-light.css" id="light-mode">
-    <!-- <link rel="stylesheet" href="/css/homePage-dark.css" id="dark-mode"> -->
-    <link rel="icon" href="/img/4.png" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cinetechwatch.000webhostapp.com/css/homePage-light.css"
+      id="light-mode"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cinetechwatch.000webhostapp.com/css/homePage-dark.css"
+      id="dark-mode"
+    />
+    <link
+      rel="icon"
+      href="https://cinetechwatch.000webhostapp.com/img/4.png"
+      type="image/x-icon"
+    />
     <!-- the icons used in the website -->
-    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
     <title>CineTech</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <!--Header-->
     <header>
-        <!-- convert this image to a webm so it actually plays  -->
-        <video src="/video/JohnWickTrailer.mp4" autoplay muted loop="true"></video>
-        <nav>
-            <div class="logo_ul">
-                <img src="/img/4.png" alt="">
-                <ul>
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="#">Movies</a>
-                    </li>
-                    <li>
-                        <a href="#">Series</a>
-                    </li>
-                    <li>
-                        <a href="#">Recently Added</a>
-                    </li>
-                    <li>
-                        <a href="#">Browse By Language</a>
-                    </li>
-                    <li>
-                        <a href="#">My List</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="search_user">
-                <input type="text" placeholder="Search..." id="search_input">
-                <!-- User image -->
-                <img src="/img/UserPFP.jpeg" alt="">
-                <!-- User panel -->
-                <div class="user-panel">
-                    <div class="user-info">
-                        <!-- User details go here -->
-                        <img src="/img/UserPFP.jpeg" alt="">
-                        <h3>Johnny Wicker</h3>
-                        <p>Email: mr.johnnyWick@gmail.com</p>
-                    </div>
-                    <div class="user-actions">
-                        <!-- Additional user actions -->
-                        <button id="change-password-btn">Change Password</button>
-                        <button id="change-username-btn">Change Username</button>
-                        <!-- Logout and delete buttons -->
-                        <button id="logout-btn">Logout</button>
-                        <button id="delete-btn">Delete Account</button>
-                        <!-- Toggle between light and dark mode -->
-                        <label class="switch">
-                            <input type="checkbox" id="mode-switch">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Add a button for notifications -->
-                <div class="notifications">
-                    <img src="/img/Notifications.png" alt="">
-                    <div class="notifications-popup">
-                        <!-- Content of notifications popup goes here -->
-                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                                <img src="/img/Notifications.png" class="rounded me-2" alt="...">
-                                <strong class="me-auto">CineTech</strong>
-                                <small class="text-body-secondary">11 mins ago</small>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                    aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-                            </div>
-                            <div class="toast-body">
-                                Hello, Johnny someone sent you a gift.
-                            </div>
-                        </div>
-                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                                <img src="/img/Notifications.png" class="rounded me-2" alt="...">
-                                <strong class="me-auto">CineTech</strong>
-                                <small class="text-body-secondary">15 mins ago</small>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                    aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-                            </div>
-                            <div class="toast-body">
-                                Hello, Johnny someone sent you a gift.
-                            </div>
-                        </div>
-                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                                <img src="/img/Notifications.png" class="rounded me-2" alt="...">
-                                <strong class="me-auto">CineTech</strong>
-                                <small class="text-body-secondary">1 hour ago</small>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                    aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
-                            </div>
-                            <div class="toast-body">
-                                Hello, Johnny someone sent you a gift.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="search">
-                    <!-- add more of these to test search feature -->
-                    <a href="#" class="card">
-                        <img src="/img/JohnWick.jpeg" alt="">
-                        <div class="cont">
-                            <h3>John Wick</h3>
-                            <p>Action, 2014, <span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>7.4</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </nav>
-        <div class="content">
-            <h1 id="title">John Wick 2014</h1>
-            <p>John Wick, a retired hitman, is forced to return to his old ways after a group of Russian gangsters steal
-                his car and kill a puppy gifted to him by his late wife.</p>
-            <div class="details">
-                <h6>A CineTech Original</h6>
-                <h5 id="gen">Action, Crime, Thriller</h5>
-                <h4>2014</h4>
-                <h3 id="rate"><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>7.4</h3>
-            </div>
-            <div class="btns">
-                <a href="#" id="play">Watch <i class="fa fa-play" aria-hidden="true"></i></a>
-            </div>
-        </div>
-        <section>
-            <h4>Popular</h4>
-            <div class="cards">
-                <!-- add more of these to check scroll featur -->
-                <a href="#" class="card">
-                    <img src="/img/JohnWick.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/Dune.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/Fall.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/Howl.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/Inception.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/Sightless.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="card">
-                    <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                    <div class="rest_card">
-                        <img src="/img/JohnWickVisual.jpeg" alt="">
-                        <div class="cont">
-                            <h4>John Wick</h4>
-                            <div class="sub">
-                                <p>Action, 2024</p>
-                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+      <!-- convert this image to a webm so it actually plays  -->
+      <video
+        src="https://cinetechwatch.000webhostapp.com/video/JohnWickTrailer.mp4"
+        autoplay
+        muted
+        loop="true"
+      ></video>
+      <!-- navigation bar over the video -->
+      <nav>
+        <div class="logo_ul">
+          <img src="https://cinetechwatch.000webhostapp.com/img/4.png" alt="" />
+          <ul>
+            <li>
+              <a
+                href="https://cinetechwatch.000webhostapp.com/html/homePage.html"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a href="https://cinetechwatch.000webhostapp.com/html/movies.html"
+                >Movies</a
+              >
+            </li>
+            <li>
+              <a href="https://cinetechwatch.000webhostapp.com/html/series.html"
+                >Series</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://cinetechwatch.000webhostapp.com/html/recAdded.html"
+                >Recently Added</a
+              >
+            </li>
 
+            <li>
+              <a
+                href="https://cinetechwatch.000webhostapp.com/html/favourites.html"
+                >My List</a
+              >
+            </li>
+          </ul>
+        </div>
+        <!-- these are the div associated with the user icon, notification and search bar -->
+        <div class="search_user">
+          <input type="text" placeholder="Search..." id="search_input" />
+          <!-- User image -->
+          <img
+            src="https://cinetechwatch.000webhostapp.com/img/UserPFP.jpeg"
+            alt=""
+          />
+          <!-- this is the div responsible for the styling of the searhc -->
+          <div class="search">
+            <!-- add more of these to test search feature -->
+            <!-- First search option -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+              />
+              <div class="cont">
+                <h3>John Wick</h3>
+                <p>
+                  Action, 2014, <span>CineTech</span
+                  ><i class="fa fa-star" aria-hidden="true"></i>7.4
+                </p>
+              </div>
+            </a>
+            <!-- Second search option -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+              />
+              <div class="cont">
+                <h3>Dune</h3>
+                <p>
+                  Action, 2024, <span>CineTech</span
+                  ><i class="fa fa-star" aria-hidden="true"></i>6.9
+                </p>
+              </div>
+            </a>
+            <!-- Third search option -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                alt=""
+              />
+              <div class="cont">
+                <h3>Inception</h3>
+                <p>
+                  Action, Sci-Fi 2012, <span>CineTech</span
+                  ><i class="fa fa-star" aria-hidden="true"></i>7.4
+                </p>
+              </div>
+            </a>
+            <!-- Fourth search option -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                alt=""
+              />
+              <div class="cont">
+                <h3>Sightless</h3>
+                <p>
+                  Action, Thriller 2017, <span>CineTech</span
+                  ><i class="fa fa-star" aria-hidden="true"></i>7.4
+                </p>
+              </div>
+            </a>
+          </div>
+          <!-- User panel -->
+          <div class="user-panel">
+            <div class="user-info">
+              <!-- User details go here -->
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/UserPFP.jpeg"
+                alt=""
+              />
+              <h3>Johnny Wicker</h3>
+              <p>Email: mr.johnnyWick@gmail.com</p>
             </div>
-        </section>
+            <div class="user-actions">
+              <!-- Additional user actions -->
+              <button id="change-password-btn">Change Password</button>
+              <button id="change-username-btn">Change Username</button>
+              <!-- Logout and delete buttons -->
+              <button id="logout-btn">Logout</button>
+              <button id="delete-btn">Delete Account</button>
+              <!-- Toggle between light and dark mode -->
+              <label class="switch">
+                <input type="checkbox" id="mode-switch" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <!-- Add a button for notifications -->
+          <div class="notifications">
+            <img
+              src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+              alt=""
+            />
+            <div class="notifications-popup">
+              <!-- Content of notifications popup goes here -->
+              <div
+                class="toast"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+              >
+                <div class="toast-header">
+                  <img
+                    src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+                    class="rounded me-2"
+                    alt="..."
+                  />
+                  <strong class="me-auto">CineTech</strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="toast-body">
+                  Hello, Johnny someone sent you a movie.
+                </div>
+              </div>
+              <div
+                class="toast"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+              >
+                <div class="toast-header">
+                  <img
+                    src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+                    class="rounded me-2"
+                    alt="..."
+                  />
+                  <strong class="me-auto">CineTech</strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="toast-body">
+                  Hello, Johnny someone sent you new series.
+                </div>
+              </div>
+              <div
+                class="toast"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+              >
+                <div class="toast-header">
+                  <img
+                    src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+                    class="rounded me-2"
+                    alt="..."
+                  />
+                  <strong class="me-auto">CineTech</strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"
+                  >
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="toast-body">
+                  Hello, Johnny someone sent you a gift.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- container for the information about the current video playing -->
+      <div class="content">
+        <h1 id="title">John Wick: Chapter 4</h1>
+        <p>
+          John Wick uncovers a path to defeating The High Table. But before he
+          can earn his freedom, Wick must face off against a new enemy with
+          powerful alliances across the globe and forces that turn old friends
+          into foes.
+        </p>
+        <div class="details">
+          <h6>A CineTech Original</h6>
+          <h5 id="gen">Action, Crime, Thriller</h5>
+          <h4>2023</h4>
+          <h3 id="rate">
+            <span>CineTech</span
+            ><i class="fa fa-star" aria-hidden="true"></i>7.7
+          </h3>
+        </div>
+        <div class="btns">
+          <a href="#" id="play"
+            >Watch <i class="fa fa-play" aria-hidden="true"></i
+          ></a>
+        </div>
+      </div>
     </header>
 
-    <!-- this is the container resonsible for the ful layout of the page after the header -->
-    <div class="main-page">
-        <!-- this section is responsible for the recommended part of the page -->
-        <div class="recommended">
-            <section>
-                <h4>Recommended</h4>
-                <div class="cards">
-                    <!-- add more of these to check scroll featur -->
-                    <a href="#" class="card">
-                        <img src="/img/JohnWick.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Dune.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Fall.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Howl.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Inception.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Sightless.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+    <!-- Popup containers -->
+    <!-- popup for the change of password -->
+    <div class="popup password-popup">
+      <div class="popup-header">Change Password</div>
+      <div class="popup-content">
+        <label for="new-password">New Password:</label>
+        <input type="password" id="new-password" />
+      </div>
+      <div class="popup-footer">
+        <button id="cancel-password">Cancel</button>
+        <button id="save-password">Save</button>
+      </div>
+    </div>
 
+    <!-- popup for the change of username -->
+    <div class="popup username-popup">
+      <div class="popup-header">Change Username</div>
+      <div class="popup-content">
+        <label for="new-username">New Username:</label>
+        <input type="text" id="new-username" />
+      </div>
+      <div class="popup-footer">
+        <button id="cancel-username">Cancel</button>
+        <button id="save-username">Save</button>
+      </div>
+    </div>
+
+    <!-- main page container -->
+    <!-- this is the container resonsible for the ful layout of the page after the video header -->
+    <div class="main-page">
+      <div class="popular">
+        <section>
+          <h4>Popular</h4>
+          <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
                 </div>
-            </section>
-        </div>
-        <!-- this section is responsible for the binge-watch part of the page -->
-        <div class="binge-watch">
-            <section>
-                <h4>Binge Wacth Now</h4>
-                <div class="cards">
-                    <!-- add more of these to check scroll featur -->
-                    <a href="#" class="card">
-                        <img src="/img/JohnWick.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Dune.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Fall.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Howl.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Inception.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Sightless.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
                 </div>
-            </section>
-        </div>
-        <!-- this section is responsible for the latest movies part of the page -->
-        <div class="latest-movie">
-            <section>
-                <h4>New Movies</h4>
-                <div class="cards">
-                    <!-- add more of these to check scroll featur -->
-                    <a href="#" class="card">
-                        <img src="/img/JohnWick.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Dune.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Fall.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Howl.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Inception.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Sightless.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
                 </div>
-            </section>
-        </div>
-        <!-- this section is responsible for the lastest series part of the page -->
-        <div class="latest-series">
-            <section>
-                <h4>Catch Up Series</h4>
-                <div class="cards">
-                    <!-- add more of these to check scroll featur -->
-                    <a href="#" class="card">
-                        <img src="/img/JohnWick.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Dune.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Fall.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Howl.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Inception.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Sightless.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Fall.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
                 </div>
-            </section>
-        </div>
-        <!-- this section is responsible for the international part of the page -->
-        <div class="international">
-            <section>
-                <h4>International</h4>
-                <div class="cards">
-                    <!-- add more of these to check scroll featur -->
-                    <a href="#" class="card">
-                        <img src="/img/JohnWick.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Dune.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Fall.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Howl.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Inception.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Sightless.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/FallFromGrace.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
                 </div>
-            </section>
-        </div>
-        <!-- this section is responsible for the our Top picks part of the page -->
-        <div class="top-picks">
-            <section>
-                <h4>CineTech Top Picks</h4>
-                <div class="cards">
-                    <!-- add more of these to check scroll featur -->
-                    <a href="#" class="card">
-                        <img src="/img/JohnWick.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Dune.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Fall.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/FallFromGrace.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Howl.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Inception.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/Sightless.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="card">
-                        <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                        <div class="rest_card">
-                            <img src="/img/JohnWickVisual.jpeg" alt="">
-                            <div class="cont">
-                                <h4>John Wick</h4>
-                                <div class="sub">
-                                    <p>Action, 2024</p>
-                                    <h3><span>IMDB</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Howl.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
                 </div>
-            </section>
-        </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/LalaLand.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/StepItUp.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/TheGreatestShowman.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+      <!-- this section is responsible for the recommended part of the page -->
+      <div class="recommended">
+        <section>
+          <h4>Recommended</h4>
+          <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Fall.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/FallFromGrace.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Howl.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/LalaLand.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/StepItUp.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/TheGreatestShowman.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+      <!-- this section is responsible for the binge-watch part of the page -->
+      <div class="binge-watch">
+        <section>
+          <h4>Binge Wacth Now</h4>
+          <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Fall.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/FallFromGrace.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Howl.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/LalaLand.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/StepItUp.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/TheGreatestShowman.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+      <!-- this section is responsible for the latest movies part of the page -->
+      <div class="latest-movie">
+        <section>
+          <h4>New Movies</h4>
+          <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Fall.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/FallFromGrace.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Howl.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/LalaLand.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/StepItUp.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/TheGreatestShowman.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+      <!-- this section is responsible for the lastest series part of the page -->
+      <div class="latest-series">
+        <section>
+          <h4>Catch Up Series</h4>
+          <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Fall.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/FallFromGrace.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Howl.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/LalaLand.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/StepItUp.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/TheGreatestShowman.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+      <!-- this section is responsible for the international part of the page -->
+      <div class="international">
+        <section>
+          <h4>International</h4>
+          <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="/https://cinetechwatch.000webhostapp.comimg/EverythingEverywhereAllAtOnceMoviePoster.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Fall.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/FallFromGrace.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Howl.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/LalaLand.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/StepItUp.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="/https://cinetechwatch.000webhostapp.comimg/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/TheGreatestShowman.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+      <!-- this section is responsible for the our Top picks part of the page -->
+      <div class="top-picks">
+        <section>
+          <h4>CineTech Top Picks</h4>
+          <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img
+                  src="https://cinetechwatch.000webhostapp.com/img/JohnWickVisual.jpeg"
+                  alt=""
+                />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img
+                src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg"
+                alt=""
+                class="poster"
+              />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/Fall.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/FallFromGrace.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/Howl.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/Inception.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/LalaLand.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/Sightless.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/StepItUp.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a href="#" class="card">
+              <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster" />
+              <div class="rest_card">
+                <img src="/img/JohnWickVisual.jpeg" alt="" />
+                <div class="cont">
+                  <h4>John Wick</h4>
+                  <div class="sub">
+                    <p>Action, 2024</p>
+                    <h3>
+                      <span>CineTech</span
+                      ><i class="fa fa-star" aria-hidden="true"></i>9.6
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
     </div>
 
     <!-- this section is for the js of the page -->
     <script src="/js/homePage.js"></script>
     <!--Footer-->
-</body>
-
+  </body>
 </html>
