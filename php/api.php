@@ -206,7 +206,7 @@ class API
 
 
    // DEBUGGED FOR THE SECOND TIME
-   public function deleteUser($email) { // DONE
+   public function deleteUser($email) {
       // Prepare the statement to find the user by email
       $stmt = $GLOBALS['connection']->prepare("SELECT user_id FROM users WHERE email = ?");
       $stmt->bind_param("s", $email);
@@ -1360,11 +1360,11 @@ class API
                echo $this->errorResponse(time(), "Missing values for getting shared movies/shows.");
             }
       
-         } else if (isset($requestData['type']) && $requestData['type'] === "DeleteUser") { // =========================== CHECKED
+         } else if (isset($requestData['type']) && $requestData['type'] === "DeleteUser") {
             if (isset($requestData['email'])) {
-               echo $this->deleteUser($requestData['email']);
+                echo $this->deleteUser($requestData['email']);
             } else {
-               echo $this->errorResponse(time(), "Missing email for deleting user.");
+                echo $this->errorResponse(time(), "Email is required for deleting user");
             }
          } else {
             echo $this->errorResponse(time(), "Post parameters are missing ");
