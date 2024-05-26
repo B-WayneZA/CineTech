@@ -1262,7 +1262,7 @@ class API
         //revise, needs imput values
          } else if (isset($requestData['type']) && $requestData['type'] === "Remove") {
             if (isset($requestData['item']) && isset($requestData['title'])) {
-               echo $this->delete($requestData['title'], $requestData['item']);
+               echo $this->deleteByTitle($requestData['title'], $requestData['item']);
 
             } else {
                 echo $this->errorResponse(time(), "Missing values for adding movie");
