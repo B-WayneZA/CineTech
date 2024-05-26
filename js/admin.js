@@ -258,133 +258,161 @@ areaChart.render();
 // Added code to add functionality using the api
 
 
-
-// Function to handle form submission for deleting a movie or series
+// Delete Movie or Series Form Submission
 document.getElementById('deleteForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  const formData = new FormData(this);
-  const title = formData.get('title');
-  const type = formData.get('type');
+  event.preventDefault(); // Prevent default form submission
 
-  fetch('https://your-api-url.com/delete', {
+  const title = document.getElementById('deleteTitle').value; // Get title input value
+  const type = document.querySelector('input[name="deleteType"]:checked').value; // Get selected type (Movie/Series)
+
+  // AJAX request to delete movie or series
+  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      type: type,
+      type: 'DeleteMovieOrSeries',
       title: title,
-    }),
+      objectType: type
+    })
   })
   .then(response => response.json())
   .then(data => {
-    // Handle response from the server
-    console.log(data);
-    // Optionally, display a success or error message to the user
+    // Handle response from API
+    if (data.success) {
+      alert(data.message); // Show success message
+    } else {
+      alert(data.error); // Show error message
+    }
   })
   .catch(error => {
     console.error('Error:', error);
-    // Optionally, display an error message to the user
+    alert('An error occurred. Please try again.'); // Show generic error message
   });
 });
 
-// Function to handle form submission for adding a movie or series
-document.getElementById('addForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  const formData = new FormData(this);
-  const title = formData.get('title');
-  const description = formData.get('description');
-  const rating = formData.get('rating');
-  const genres = formData.get('genres');
-  const yearReleased = formData.get('yearReleased');
-  const type = formData.get('type');
 
-  fetch('https://your-api-url.com/add', {
+
+
+// Delete User Form Submission
+document.getElementById('deleteUserForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  const email = document.getElementById('deleteEmail').value; // Get email input value
+
+  // AJAX request to delete user
+  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      type: type,
+      type: 'DeleteUser',
+      email: email
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle response from API
+    if (data.status === 'success') {
+      alert(data.data); // Show success message
+    } else {
+      alert('An error occurred: ' + data.data); // Show error message
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred. Please try again.'); // Show generic error message
+  });
+});
+
+
+
+
+// Add Movie or Series Form Submission
+document.getElementById('addForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  // Get input values
+  const title = document.getElementById('addTitle').value;
+  const description = document.getElementById('addDescription').value;
+  const rating = document.getElementById('addRating').value;
+  const genres = document.getElementById('addGenres').value;
+  const yearReleased = document.getElementById('addYearReleased').value;
+  const type = document.querySelector('input[name="addType"]:checked').value; // Get selected type (Movie/Series)
+
+  // AJAX request to add movie or series
+  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      type: (type === 'Movie') ? 'AddMovie' : 'AddSeries', // Determine whether it's a movie or series
       title: title,
       description: description,
       rating: rating,
       genres: genres,
       yearReleased: yearReleased,
-    }),
+      objectType: type
+    })
   })
   .then(response => response.json())
   .then(data => {
-    // Handle response from the server
-    console.log(data);
-    // Optionally, display a success or error message to the user
+    // Handle response from API
+    if (data.status === 'success') {
+      alert(data.data); // Show success message
+    } else {
+      alert(data.error); // Show error message
+    }
   })
   .catch(error => {
     console.error('Error:', error);
-    // Optionally, display an error message to the user
+    alert('An error occurred. Please try again.'); // Show generic error message
   });
 });
 
-// Function to handle form submission for editing a movie or series
+
+
+
+// Edit Movie or Series Form Submission
 document.getElementById('editForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  const formData = new FormData(this);
-  const title = formData.get('title');
-  const editField = formData.get('editField');
-  const editValue = formData.get('editValue');
-  const type = formData.get('type');
+  event.preventDefault(); // Prevent default form submission
 
-  fetch('https://your-api-url.com/edit', {
+  // Get input values
+  const title = document.getElementById('editTitle').value;
+  const editField = document.getElementById('editField').value;
+  const editValue = document.getElementById('editValue').value;
+  const type = document.querySelector('input[name="editType"]:checked').value; // Get selected type (Movie/Series)
+
+  // Prepare fields object
+  const fields = {};
+  fields[editField] = editValue;
+
+  // AJAX request to edit movie or series
+  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      type: type,
+      type: type === 'movie' ? 'EditMovie' : 'EditShow',
       title: title,
-      editField: editField,
-      editValue: editValue,
-    }),
+      fields: fields
+    })
   })
   .then(response => response.json())
   .then(data => {
-    // Handle response from the server
-    console.log(data);
-    // Optionally, display a success or error message to the user
+    // Handle response from API
+    if (data.status === 'success') {
+      alert(data.data); // Show success message
+    } else {
+      alert('An error occurred: ' + data.data); // Show error message
+    }
   })
   .catch(error => {
     console.error('Error:', error);
-    // Optionally, display an error message to the user
-  });
-});
-
-// Function to handle form submission for deleting a user
-document.getElementById('deleteUserForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  const formData = new FormData(this);
-  const email = formData.get('email');
-
-  fetch('https://your-api-url.com/deleteUser', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: email,
-    }),
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Handle response from the server
-    console.log(data);
-    // Optionally, display a success or error message to the user
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // Optionally, display an error message to the user
+    alert('An error occurred. Please try again.'); // Show generic error message
   });
 });

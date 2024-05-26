@@ -99,8 +99,14 @@
                                     Movie/Series
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Movie</a></li>
-                                    <li><a class="dropdown-item" href="#">Series</a></li>
+                                    <li>
+                                        <input type="radio" id="deleteMovie" name="deleteType" value="Movie" checked>
+                                        <label for="deleteMovie">Movie</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="deleteSeries" name="deleteType" value="Series">
+                                        <label for="deleteSeries">Series</label>
+                                    </li>
                                 </ul>
                             </div>
                             <button type="submit">Delete</button>
@@ -159,8 +165,8 @@
                     <div class="delete-block-user">
                         <h2>Delete User from Database</h2>
                         <p>This box will remove a user from the database.</p>
-                        <form>
-                            <input type="email" placeholder="Email" required>
+                        <form id="deleteUserForm">
+                            <input type="email" id="deleteEmail" placeholder="Email" required>
                             <button type="submit">Delete</button>
                         </form>
                     </div>
