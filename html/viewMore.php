@@ -1,3 +1,87 @@
+<?php
+if(isset($_GET['name'])) {
+   $name = urldecode($_GET['name']);
+   $data = array(
+      "type" => "GetAllSeries",
+      "limit" => 1,
+      "search" => array(
+          "Name" => $name
+      ),
+      "return" => "all"
+  );
+} else {
+   $title = urldecode($_GET['title']);
+   $data = array(
+      "type" => "GetAllMovies",
+      "limit" => 1,
+      "search" => array(
+         "Title" => $title
+      ),
+      "return" => "all"
+   );
+}
+
+//header("Access-Control-Allow-Origin: http://localhost");
+//header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+//header("Access-Control-Allow-Headers: Content-Type, Authorization");
+session_start(); // Start session to store user login status
+
+$currentPage = 'view';
+
+// Check if the user is not logged in, redirect to login page
+
+$movies = array();
+// Check if the login form is submitted
+// Prepare the data for JSON request
+
+// Convert data to JSON format
+$json_data = json_encode($data);
+
+// Create a new cURL resource
+$ch = curl_init();
+
+// Set the URL
+curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+
+// Set the request method to POST
+curl_setopt($ch, CURLOPT_POST, 1);
+
+// Set the request data as JSON
+curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+// Set the Content-Type header
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+// Set basic authentication credentials
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%'); // Replace with your actual credentials
+
+// Return response instead of outputting it
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Execute the request
+$response = curl_exec($ch);
+
+// Close cURL resource
+curl_close($ch);
+
+// Decode the JSON response
+$responseData = json_decode($response, true);
+// Check if the request was successful
+if ($responseData['status'] === 'success') {
+    // Process the listings data and display on the page
+    $movies = $responseData['data'][0];
+
+} else {
+    // Handle error response
+    $error = $responseData['data'];
+}
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +134,7 @@
     <div class = "ViewDetails">
         <div class="content">
             <div class = "content-image">
-                <img class="movieImg" src="/img/FallFromGrace.jpeg" alt="">
+                <img class="movieImg" src="<?php echo $movies['PosterURL']?>" alt="">
             </div>
         </div>
 
@@ -58,19 +142,19 @@
             <!-- Create a div for the description as well as the other-->
             <div class = "description">
                 <h2>Description: </h2> 
-                <h3>Grace Waters (Crystal Fox), a longtime pillar of her Virginia community, stays composed when her ex weds his mistress and her son moves away. With convincing from her best friend Sarah (Phylicia Rashad), she tries putting herself first, and a handsome stranger (Mehcad Brooks) becomes her surprise second love. Yet any woman can snap, and Grace's new husband soon ravages her life, her work and - many say - her sanity. Shuttered in a cell awaiting trial for his murder, Grace's only hope for vindication lies with Jasmine Bryant (Bresha Webb), a public defender who has never tried a cases.</h3><br>
+                <h3><?php echo $movies['Description'] ?></h3><br>
             </div>
 
             <div class = "Genres">
-                <h3>Genres: Crime, Drama, Suspense, Thriller, Mystery, Crime Fictio. </h3><br>
+                <h3>Genre: <?php echo $movies['Genre']?> </h3><br>
             </div>
             
            <div class = "yearRelease">
-            <h3>Year Of Release:  2020</h3><br>
+            <h3>Year Of Release:  <?php echo $movies['Release_Year']?></h3><br>
            </div>
             
            <div class = "movieRating">
-            <h3>Movie Rating:  </h3>
+            <h3>CineTech Rating:  <?php echo $movies['CineTech_Rating']?></h3>
            </div>
                 
             
@@ -100,7 +184,7 @@
             
             
               <button class = "trailer" >
-                <a href="https://www.youtube.com/watch?v=mNixVHejlc0&pp=ygUXZmFsbCBmcm9tIGdyYWNlIHRyYWlsZXI%3D">Trailer</a><br>
+                <a href=" <?php echo ' ' ?> " >Trailer</a><br>
               </button>
               
               <button class="btn">Share</button>

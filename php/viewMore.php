@@ -10,6 +10,7 @@
     <link rel="icon" href="/img/4.png" type="image/x-icon">
     <!-- the icons used in the website -->
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    
     <title>CineTech</title>
 </head>
 

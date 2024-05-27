@@ -31,7 +31,9 @@ header {
 
 header::before {
     content: '';
-    position: absolute;
+    341`    QYUIOP'
+    p  
+    sition: absolute;
     width: 100%;
     height: 100%;
     opacity: .6;
@@ -175,12 +177,12 @@ header nav .search_user .search .card {
     margin-bottom: 5px;
     padding: 3px 0px;
     text-decoration: none;
-    /*display:none;*/
-} 
+    /* display: none; */
+}
 
 /* remove this specific css to make the search bar info visible */
 header nav .search_user .search .card {
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 50px;
     display: flex;

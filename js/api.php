@@ -539,7 +539,6 @@ class API
 
          $userData = $uIDResult->fetch_assoc();
          $userID = $userData["user_id"];
-         $userID = $userData["user_id"];
 
          // Query to fetch favorites from favourites table
          $query = "SELECT * FROM favourites WHERE user_id=?";
@@ -834,7 +833,7 @@ class API
                   g.genre_name AS genre, 
                   m.poster_url, 
                   m.release_year
-              FROM Films m
+              FROM movies m
               JOIN ratings r ON m.rating_id = r.id
               JOIN genres g ON m.genre_id = g.id
               WHERE m.title LIKE ? OR g.genre_name LIKE ?
