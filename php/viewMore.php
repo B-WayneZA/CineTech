@@ -105,7 +105,7 @@ if ($responseData['status'] === 'success') {
                 <img src="../img/4.png" alt="">
                 <ul>
                     <li>
-                        <a href="../html/homePage.html">Home</a>
+                        <a href="../php/homePage.php">Home</a>
                     </li>
                     <li>
                         <a href="../php/movies.php">Movies</a>
@@ -212,7 +212,7 @@ if ($responseData['status'] === 'success') {
        
         </div>
 
-        <script src="../js/homePage.js"></script>
+        <!-- <script src="../js/homePage.js"></script> -->
 
  <!--This is to make the buttons of the stars to work -->
 <script>
