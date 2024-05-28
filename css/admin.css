@@ -22,7 +22,7 @@ body {
         "main main";
     height: 100vh;
 }
-
+ 
 /* ---------- HEADER ---------- */
 .header {
     grid-area: header;
