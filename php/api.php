@@ -253,7 +253,7 @@ class API
       if ($return === "['*']") {
          $query = "SELECT * FROM films";
       } else {
-         $query = "SELECT f.Title, f.PosterURL, g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, f.Country, f.Description, f.Runtime, f.Release_Year FROM Films f JOIN Genre g ON f.Genre_ID = g.Genre_ID JOIN Rating r ON f.Rating_ID = r.Rating_ID";
+         $query = "SELECT f.Title, f.Films_ID AS ID, f.PosterURL, g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, f.Country, f.Description, f.Runtime, f.Release_Year FROM Films f JOIN Genre g ON f.Genre_ID = g.Genre_ID JOIN Rating r ON f.Rating_ID = r.Rating_ID";
       }
 
       //add filters on table
@@ -324,7 +324,7 @@ class API
 
    public function getSeries($limit, $search, $return, $fuzzy)
    {
-      $query = "SELECT s.Name, s.PosterURL , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
+      $query = "SELECT s.Name, s.Show_id AS ID,s.PosterURL , s.Seasons , g.Genre, r.IMDB_score, r.IMDB_votes, r.TMDB_popularity, r.TMDB_score, r.CineTech_Rating, s.Country, s.Description, s.Runtime, s.Release_Year FROM Shows s JOIN Genre g ON s.Genre_ID = g.Genre_ID JOIN Rating r ON s.RatingID = r.Rating_ID";
 
       // Add search and filter conditions
       if (isset($search) && is_array($search) && count($search) > 0) {          // Add conditions based on search parameters
@@ -539,6 +539,7 @@ class API
 
          $userData = $uIDResult->fetch_assoc();
          $userID = $userData["user_id"];
+         $userID = $userData["user_id"];
 
          // Query to fetch favorites from favourites table
          $query = "SELECT * FROM favourites WHERE user_id=?";
@@ -663,8 +664,7 @@ class API
    }
 
 
-   // DEBUGGED FOR SECOND TIME
-   private function deleteByTitle($title, $item) // DONE
+   private function delete($title, $item)
    {
       // Check if the item parameter is valid
       if ($item !== "film" && $item !== "show") {
@@ -823,31 +823,33 @@ class API
    {
       global $connection;
       $searchValue = "%" . $value . "%";
-
+      if($value === "") {
+         return $this->errorResponse(time(), $value);
+      }
       try {
          // Query to search both movies and shows with joins for rating and genre
          $query = "
               SELECT 
-                  m.title AS name, 
-                  r.rating_value AS rating, 
-                  g.genre_name AS genre, 
-                  m.poster_url, 
-                  m.release_year
-              FROM movies m
-              JOIN ratings r ON m.rating_id = r.id
-              JOIN genres g ON m.genre_id = g.id
-              WHERE m.title LIKE ? OR g.genre_name LIKE ?
+                  m.Title AS name, 
+                  r.IMDB_score AS rating, 
+                  g.Genre AS genre, 
+                  m.PosterURL, 
+                  m.Release_Year
+              FROM Films m
+              JOIN Rating r ON m.Rating_ID = r.Rating_ID
+              JOIN Genre g ON m.Genre_ID = g.Genre_ID
+              WHERE m.Title LIKE ? OR g.Genre LIKE ?
               UNION
               SELECT 
-                  s.name AS title, 
-                  r.rating_value AS rating, 
-                  g.genre_name AS genre, 
-                  s.poster_url, 
-                  s.release_year
-              FROM shows s
-              JOIN ratings r ON s.rating_id = r.id
-              JOIN genres g ON s.genre_id = g.id
-              WHERE s.name LIKE ? OR g.genre_name LIKE ?";
+                  s.Name AS title, 
+                  r.IMDB_score AS rating, 
+                  g.Genre AS genre, 
+                  s.PosterURL, 
+                  s.Release_Year
+              FROM Shows s
+              JOIN Rating r ON s.RatingID = r.Rating_ID
+              JOIN Genre g ON s.Genre_ID = g.Genre_ID
+              WHERE s.Name LIKE ? OR g.Genre LIKE ?";
 
          $stmt = $connection->prepare($query);
          $stmt->bind_param("ssss", $searchValue, $searchValue, $searchValue, $searchValue);
