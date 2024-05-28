@@ -60,14 +60,14 @@
             </li>
             <li>
               <a
-                href="../html/recAdded.php"
+                href="../php/recAdded.php"
                 >Recently Added</a
               >
             </li>
 
             <li>
               <a
-                href="../html/favourites.php"
+                href="../php/favourites.php"
                 >My List</a
               >
             </li>

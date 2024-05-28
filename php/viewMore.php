@@ -41,7 +41,7 @@ $json_data = json_encode($data);
 $ch = curl_init();
 
 // Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
 // Set the request method to POST
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -54,7 +54,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
 // Set basic authentication credentials
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%'); // Replace with your actual credentials
+curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
 
 // Return response instead of outputting it
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -89,11 +89,10 @@ if ($responseData['status'] === 'success') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/viewMore.css" id="light-mode">
-    <!-- <link rel="stylesheet" href="/css/homePage-dark.css" id="dark-mode"> -->
-    <link rel="icon" href="/img/4.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/viewMore.css" id="light-mode">
+    <link rel="icon" href="../img/4.png" type="image/x-icon">
     <!-- the icons used in the website -->
-    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
     <title>CineTech</title>
 </head>
 
@@ -101,32 +100,32 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
         <!-- convert this image to a webm so it actually plays  -->
-        <!-- <video src="/video/JohnWickTrailer.mp4" autoplay muted loop="true"></video> -->
         <nav>
             <div class="logo_ul">
-                <img src="/img/4.png" alt="">
+                <img src="../img/4.png" alt="">
                 <ul>
                     <li>
-                        <a href="/html/homePage.html">Home</a>
+                        <a href="../html/homePage.html">Home</a>
                     </li>
                     <li>
-                        <a href="/html/movies.html">Movies</a>
+                        <a href="../php/movies.php">Movies</a>
                     </li>
                     <li>
-                        <a href="/html/series.html">Series</a>
+                        <a href="../php/series.php">Series</a>
                     </li>
                     <li>
-                        <a href="/html/recAdded.html">Recently Added</a>
+                        <a href="../php/recAdded.php">Recently Added</a>
                     </li>
                     <li>
-                        <a href="/html/favourites.html">My List</a>
+                        <a href="../php/favourites.php">My List</a>
                     </li>
                 </ul>
             </div>
+            
             <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
                 <!-- User image -->
-                <img src="/img/UserPFP.jpeg" alt="">                
+                <img src="../img/UserPFP.jpeg" alt="">                
                 <!-- Add a button for notifications -->
             </div>
         </nav>
@@ -198,9 +197,9 @@ if ($responseData['status'] === 'success') {
         <div class="cards">
             <!-- add more of these to check scroll featur -->
             <a href="#" class="card">
-                <img src="/img/JohnWick.jpeg" alt="" class="poster">
+                <img src="../img/JohnWick.jpeg" alt="" class="poster">
                 <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <img src="../img/JohnWickVisual.jpeg" alt="">
                     <div class="cont">
                         <h4>John Wick</h4>
                         <div class="sub">
@@ -210,125 +209,11 @@ if ($responseData['status'] === 'success') {
                     </div>
                 </div>
             </a>
-            <a href="#" class="card">
-                <img src="/img/Dune.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/Fall.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/Howl.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/Inception.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/LalaLand.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/Sightless.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/StepItUp.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="#" class="card">
-                <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="/img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
+       
         </div>
+
+        <script src="../js/homePage.js"></script>
+
  <!--This is to make the buttons of the stars to work -->
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
