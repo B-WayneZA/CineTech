@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>CineTech</title>
     <link rel="stylesheet" href="../CSS/login-dark.css" id="dark-mode">
-    <link rel="icon" type="image/x-icon" href="/img/4.png">
+    <link rel="icon" type="image/x-icon" href="../img/4.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 

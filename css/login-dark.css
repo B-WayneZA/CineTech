@@ -12,7 +12,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: url('/img/Background-dark.png') no-repeat;
+  background: url('../img/Background-dark.png') no-repeat;
   background-size: cover;
   background-position: center;
 }

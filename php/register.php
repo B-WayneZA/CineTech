@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (isset($login_response['status']) && $login_response['status'] === 'success') {
                     // Assuming the login response includes user_id
                     $_SESSION['username'] = $email;     
-                    header('Location: https://cinetechwatch.000webhostapp.com/html/login.php'); // Redirect to home page after successful login
+                    header('Location: ../html/login.php'); // Redirect to home page after successful login
                     exit();
                 } else {
                     $error = isset($login_response['data']) ? $login_response['data'] : 'Login failed';
