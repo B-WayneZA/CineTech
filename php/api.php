@@ -1374,8 +1374,8 @@ class API
                echo $this->errorResponse(time(), "Missing values for searching");
             }
 
-         } elseif (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") {//not done
-         } elseif (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") {//not done
+         } elseif (isset($requestData['type']) && $requestData['type'] === "GetPopularMovies") {// Not done - not priority
+         } elseif (isset($requestData['type']) && $requestData['type'] === "GetPopularSeries") {// Not done - not priority
          } elseif (isset($requestData['type']) && $requestData['type'] === "EditMovie") { // =========================== CHECKED
             if (isset($requestData['title']) && !empty($requestData['fields'])) {
                 echo $this->editEntityByTitle('Films', 'Title', $requestData['title'], $requestData['fields']);
