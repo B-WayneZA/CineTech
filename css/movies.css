@@ -248,7 +248,7 @@ header nav .search_user .search .card .cont span {
 header .content {
     position: relative;
     color: #fff;
-    margin-top: 300px;
+    margin-top: 100px;
     padding-left: 50px;
     margin-bottom: 50px;
 }
@@ -329,10 +329,11 @@ header .content .btns a {
 /* ================This is the css for how the cards are displayed and look/work================ */
 .cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 30px; /* Adjusted to move the grid further down */
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+    margin-top: 30px; 
     background-color: black;
+    overflow-y: visible;
 }
 
 .card {
@@ -448,19 +449,20 @@ header .content .btns a {
 .dropdown:hover .dropdown-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    background: #dfcfeecb;
-    padding: 20px 0px;
+    /* background: #dfcfeecb; */
+    background: none;
+    border: none;
+    padding: 10px 0px;
     width: 800px;
 }
 
 /* Optional: Customize the button */
 .dropdown button {
-    background-color: rgba(174, 85, 246, 0.8);
+    background-color: rgb(127, 71, 231);
     border: none;
     color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 18px;
-    color: #ccc;
+    padding: 10px 10px;
+    border-radius: 1px;
+    font-size: 16px;
 }
 

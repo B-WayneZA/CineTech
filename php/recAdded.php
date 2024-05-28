@@ -13,7 +13,7 @@ $json_data = json_encode($data);
 $ch = curl_init();
 
 // Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php ');
 
 // Set the request method to POST
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -26,7 +26,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
 // Set basic authentication credentials
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 // Return response instead of outputting it
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -38,6 +38,7 @@ curl_close($ch);
 // Decode the JSON response
 $series = json_decode($response, true);
 // Check if the login was successful
+echo $response;
 if ($series['status'] === 'success') {
    $shows = $series['data'];
 } else {
@@ -57,13 +58,13 @@ if ($series['status'] === 'success') {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/movies.css" id="light-mode">
-   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+   <!-- <link rel="stylesheet" href="/css/movies.css" id="light-mode"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
 
-   <!-- <link rel="stylesheet" href="/css/homePage-dark.css" id="dark-mode"> -->
+   <link rel="stylesheet" href="../css/homePage-dark.css" id="dark-mode">
    <!-- <link rel="icon" href="https://cinetechwatch.000webhostapp.com/img/4.png" type="image/x-icon"> -->
    <!-- the icons used in the website -->
-   <!-- <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css"> -->
+   <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
    <title>CineTech</title>
 </head>
 
@@ -71,25 +72,25 @@ if ($series['status'] === 'success') {
    <!--Header-->
    <header>
       <!-- convert this image to a webm so it actually plays  -->
-      <video src="https://cinetechwatch.000webhostapp.com/video/JohnWickTrailer.mp4" autoplay muted></video>
+      <video src="../video/JohnWickTrailer.mp4" autoplay muted></video>
       <nav>
          <div class="logo_ul">
             <!-- <img src="https://cinetechwatch.000webhostapp.com/img/4.png" alt=""> -->
             <ul>
                <li>
-                  <a href="https://cinetechwatch.000webhostapp.com/html/homePage.html">Home</a>
+                  <a href="../php/homePage.php">Home</a>
                </li>
                <li>
-                  <a href="https://cinetechwatch.000webhostapp.com/html/movies.html">Movies</a>
+                  <a href="../php/movies.php">Movies</a>
                </li>
                <li>
-                  <a href="https://cinetechwatch.000webhostapp.com/html/series.html">Series</a>
+                  <a href="../php/series.php">Series</a>
                </li>
                <li>
-                  <a href="https://cinetechwatch.000webhostapp.com/html/recAdded.html">Recently Added</a>
+                  <a href="../php/recAdded.php">Recently Added</a>
                </li>
                <li>
-                  <a href="https://cinetechwatch.000webhostapp.com/html/favourites.html">My List</a>
+                  <a href="../php/favourites.php">My List</a>
                </li>
             </ul>
          </div>
@@ -129,7 +130,9 @@ if ($series['status'] === 'success') {
          <?php 
             if(isset($shows)) {
                foreach($shows as $show) {
-                  echo '<a href="#" class="card">';
+                  $title = urlencode($show['Name']);
+                  // individual card for each movie
+                  echo '<a href="viewMore.php?title=' . $title . '" class="card">';
                   echo '<img src=" '.$show['PosterURL'] .'" alt="">';
 
                   echo '<div class="rest_card">';

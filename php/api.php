@@ -181,7 +181,7 @@ class API
       if (!$pass) {
          // Unable to login error checking
          return $this->errorResponse("Incorrect password", time());
-      } elseif ($this->checkCredentials($email, $pass)) {
+      } else {
          if ($admin === 'true') {
             $stmt = $GLOBALS['connection']->prepare("SELECT admin_id, apikey FROM Admins WHERE email = ? AND password = ?");
          } else {
@@ -197,7 +197,7 @@ class API
          if ($result->num_rows > 0) {
             // Credentials are correct, return the user ID
             session_start();
-            $_SESSION["APIkey"] = $row["apikey"];
+            $_SESSION["apikey"] = $row["apikey"];
             $key = $row["apikey"];
 
             $api = array("apikey" => $key);
@@ -205,9 +205,6 @@ class API
          } else {
             return $this->errorResponse("Incorrect login details", time());
          }
-      } else {
-         // Wrong credentials
-         return $this->errorResponse("Incorrect login details", time());
       }
    }
 
@@ -1300,7 +1297,7 @@ class API
       
          } elseif (isset($requestData['type']) && $requestData['type'] === "Remove") { // =========================== CHECKED
             if (isset($requestData['item']) && isset($requestData['title'])) { 
-                echo $this->deleteByTitle($requestData['title'], $requestData['item']);
+                echo $this->delete($requestData['title'], $requestData['item']);
             } else {
                 echo $this->errorResponse(time(), "Missing title or item type for deleting entity.");
             }
