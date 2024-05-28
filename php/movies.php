@@ -170,8 +170,10 @@ if ($responseData['status'] === 'success') {
                     // echo '<div class="cards">';
 
                     // individual card for each movie
-                    echo '<a href="#" class="card">';
-
+                    $title = urlencode($movie['Title']);
+                    // individual card for each movie
+                    echo '<a href="viewMore.php?title=' . $title . '" class="card">';
+  
                     // image of the poster
                     echo '<img src="'  . $movie['PosterURL'] . '"  alt="" class="poster">';
 

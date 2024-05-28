@@ -384,7 +384,9 @@
             {
               foreach($movies as $movie)
               {
-                echo '<a href="#" class="card">';
+                $title = urlencode($movie['Title']);
+                // individual card for each movie
+                echo '<a href="viewMore.php?title=' . $title . '" class="card">';
 
                 echo '<img src="'. $movie['PosterURL'].'" alt="" class="poster">';
 
@@ -483,7 +485,9 @@
             {
               foreach($movies2 as $movie2)
               {
-                echo '<a href="#" class="card">';
+                $title2 = urlencode($movie2['Name']);
+                // individual card for each movie
+                echo '<a href="viewMore.php?title=' . $title2 . '" class="card">';
 
                 echo '<img src="'. $movie2['PosterURL'].'" alt="" class="poster">';
 
@@ -497,7 +501,7 @@
 
                 echo '<p>'. $movie2['Genre'].'</p>';  // assuming 'description' key exists in the array
                 // echo '<br>'; 
-                echo '<p>'. $movie2['Seasons'].'</p>'; 
+                echo '<p>Seasons: '. $movie2['Seasons'].'</p>'; 
                 echo '<h3>';
                 echo '<span>CineTech</span>';
                 echo '<i class="fa fa-star" aria-hidden="true"></i>'. $movie2['IMDB_score'];  // assuming 'rating' key exists in the array
@@ -586,7 +590,9 @@
             {
               foreach($movies3 as $movie3)
               {
-                echo '<a href="#" class="card">';
+                $title3 = urlencode($movie3['Title']);
+                // individual card for each movie
+                echo '<a href="viewMore.php?title=' . $title3 . '" class="card">';
 
                 echo '<img src="'. $movie3['PosterURL'].'" alt="" class="poster">';
 
@@ -686,7 +692,9 @@
             {
               foreach($movies4 as $movie4)
               {
-                echo '<a href="#" class="card">';
+                $title4 = urlencode($movie4['Title']);
+                // individual card for each movie
+                echo '<a href="viewMore.php?title=' . $title4 . '" class="card">';
 
                 echo '<img src="'. $movie4['PosterURL'].'" alt="" class="poster">';
 
@@ -786,7 +794,9 @@
             {
               foreach($movies5 as $movie5)
               {
-                echo '<a href="#" class="card">';
+                $title5 = urlencode($movie5['Name']);
+                // individual card for each movie
+                echo '<a href="viewMore.php?title=' . $title . '" class="card">';
 
                 echo '<img src="'. $movie5['PosterURL'].'" alt="" class="poster">';
 
@@ -801,7 +811,7 @@
 
                 echo '<p>'. $movie5['Genre'].'</p>';  // assuming 'description' key exists in the array
                 // echo '<br>'; 
-                 echo '<p>'. $movie5['Seasons'].'</p>';  // assuming 'description' key exists in the array
+                 echo '<p>Seasons: '. $movie5['Seasons'].'</p>';  // assuming 'description' key exists in the array
                 echo '<h3>';
                 echo '<span>CineTech</span>';
                 echo '<i class="fa fa-star" aria-hidden="true"></i>'. $movie5['IMDB_score'];  // assuming 'rating' key exists in the array
@@ -888,7 +898,9 @@
             {
               foreach($movies6 as $movie6)
               {
-                echo '<a href="#" class="card">';
+                $title6 = urlencode($movie6['Name']);
+                // individual card for each movie
+                echo '<a href="viewMore.php?title=' . $title6 . '" class="card">';
 
                 echo '<img src="'. $movie6['PosterURL'].'" alt="" class="poster">';
 
@@ -903,7 +915,7 @@
 
                 echo '<p>'. $movie6['Genre'].'</p>';  // assuming 'description' key exists in the array
                 // echo '<br>'; 
-                echo '<p>'. $movie6['Seasons'].'</p>';  // assuming 'description' key exists in the array
+                echo '<p>Seasons: '. $movie6['Seasons'].'</p>';  // assuming 'description' key exists in the array
                 echo '<h3>';
                 echo '<span>CineTech</span>';
                 echo '<i class="fa fa-star" aria-hidden="true"></i>'. $movie6['IMDB_score'];  // assuming 'rating' key exists in the array
@@ -989,7 +1001,9 @@
             {
               foreach($movies7 as $movie7)
               {
-                echo '<a href="#" class="card">';
+                $title7 = urlencode($movie7['Title']);
+                // individual card for each movie
+                echo '<a href="viewMore.php?title=' . $title7 . '" class="card">';
 
                 echo '<img src="'. $movie7['PosterURL'].'" alt="" class="poster">';
 

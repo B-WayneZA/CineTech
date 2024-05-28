@@ -130,7 +130,9 @@ if ($series['status'] === 'success') {
          <?php 
             if(isset($shows)) {
                foreach($shows as $show) {
-                  echo '<a href="#" class="card">';
+                  $title = urlencode($show['Name']);
+                  // individual card for each movie
+                  echo '<a href="viewMore.php?title=' . $title . '" class="card">';
                   echo '<img src=" '.$show['PosterURL'] .'" alt="">';
 
                   echo '<div class="rest_card">';
