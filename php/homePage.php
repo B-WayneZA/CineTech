@@ -501,7 +501,7 @@
 
                 echo '<p>'. $movie2['Genre'].'</p>';  // assuming 'description' key exists in the array
                 // echo '<br>'; 
-                echo '<p>'. $movie2['Seasons'].'</p>'; 
+                echo '<p>Seasons: '. $movie2['Seasons'].'</p>'; 
                 echo '<h3>';
                 echo '<span>CineTech</span>';
                 echo '<i class="fa fa-star" aria-hidden="true"></i>'. $movie2['IMDB_score'];  // assuming 'rating' key exists in the array
@@ -811,7 +811,7 @@
 
                 echo '<p>'. $movie5['Genre'].'</p>';  // assuming 'description' key exists in the array
                 // echo '<br>'; 
-                 echo '<p>'. $movie5['Seasons'].'</p>';  // assuming 'description' key exists in the array
+                 echo '<p>Seasons: '. $movie5['Seasons'].'</p>';  // assuming 'description' key exists in the array
                 echo '<h3>';
                 echo '<span>CineTech</span>';
                 echo '<i class="fa fa-star" aria-hidden="true"></i>'. $movie5['IMDB_score'];  // assuming 'rating' key exists in the array
@@ -915,7 +915,7 @@
 
                 echo '<p>'. $movie6['Genre'].'</p>';  // assuming 'description' key exists in the array
                 // echo '<br>'; 
-                echo '<p>'. $movie6['Seasons'].'</p>';  // assuming 'description' key exists in the array
+                echo '<p>Seasons: '. $movie6['Seasons'].'</p>';  // assuming 'description' key exists in the array
                 echo '<h3>';
                 echo '<span>CineTech</span>';
                 echo '<i class="fa fa-star" aria-hidden="true"></i>'. $movie6['IMDB_score'];  // assuming 'rating' key exists in the array
