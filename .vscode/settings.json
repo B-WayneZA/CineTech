@@ -70,5 +70,6 @@
    "php.suggest.basic": false,
    "php.validate.run": "onType",
    "php.validate.enable": true,
-   "php.validate.executablePath": "path/to/php"
+   "php.validate.executablePath": "path/to/php",
+   "liveServer.settings.port": 5501
 }
