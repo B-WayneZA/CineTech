@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Decode the JSON response
             $login_response = json_decode($response, true);
-
             // Check for JSON decoding errors
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $error = 'JSON decode error: ' . json_last_error_msg();
@@ -69,20 +68,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Check if the login was successful
                 file_put_contents('decoded_response.log', print_r($login_response, true));
 
-                if (isset($login_response['status']) && $login_response['status'] === 'success') {
-                    $_SESSION['apikey'] = json_decode($login_response['data'], true)['apikey'];
+            // Check for JSON decoding errors
+            if (isset($login_response['status']) && $login_response['status'] === 'success') {
+                $login_data = json_decode($login_response['data'], true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $_SESSION['apikey'] = $login_data['apikey'];
+                    $_SESSION['username'] = $login_data['username'];
 
                     if ($admin === "true") {
-                        header('Location: ../html/admin.html'); // Redirect to home page after successful login
-
+                        header('Location: ../php/admin.php'); // Redirect to admin page after successful login
                     } else {
-                        header('Location: ../html/homePage.html'); // Redirect to home page after successful login
+                        header('Location: /php/homePage.php'); // Redirect to home page after successful login
                     }
                     exit();
                 } else {
-                    $error = isset($login_response['data']) ? $login_response['data'] : 'Login failed';
+                    $error = 'JSON decode error: ' . json_last_error_msg();
                 }
+            } else {
+                $error = isset($login_response['data']) ? $login_response['data'] : 'Login failed';
             }
+        }
         }
 
         // Close cURL resource
@@ -99,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>CineTech</title>
-    <link rel="stylesheet" href="../CSS/login-dark.css" id="dark-mode">
+    <link rel="stylesheet" href="../css/login-dark.css" id="dark-mode">
     <link rel="icon" type="image/x-icon" href="../img/4.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
