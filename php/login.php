@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($admin === "true") {
                         header('Location: ../php/admin.php'); // Redirect to admin page after successful login
                     } else {
-                        header('Location: /php/homePage.php'); // Redirect to home page after successful login
+                        header('Location: ../php/homePage.php'); // Redirect to home page after successful login
                     }
                     exit();
                 } else {
