@@ -13,7 +13,7 @@ $movies = array();
 // Prepare the data for JSON request
 $data = array(
     'type' => 'GetAllSeries',
-    'limit' => 10,
+    'limit' => 50,
     'return' => 'all'
 );
 
@@ -24,7 +24,7 @@ $json_data = json_encode($data);
 $ch = curl_init();
 
 // Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
 // Set the request method to POST
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -37,7 +37,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
 // Set basic authentication credentials
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%'); // Replace with your actual credentials
+curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
 
 // Return response instead of outputting it
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -69,10 +69,10 @@ if ($responseData['status'] === 'success') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/series.css" id="light-mode">
+    <link rel="stylesheet" href="../css/series.css" id="light-mode">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
-    <link rel="icon" href="https://cinetechwatch.000webhostapp.com/img/4.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="../img/4.png" type="image/x-icon">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
     <title>CineTech</title>
 </head>
 
@@ -80,31 +80,31 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
 
-        <video src="https://cinetechwatch.000webhostapp.com/video/JJKaisen.mp4" autoplay muted></video>
+        <video src="../video/JJKaisen.mp4" autoplay muted></video>
         <nav>
             <div class="logo_ul">
-                <img src="https://cinetechwatch.000webhostapp.com/img/4.png" alt="" />
+                <img src="../img/4.png" alt="" />
                 <ul>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/html/homePage.html">Home</a>
+                        <a href="../php/homePage.php">Home</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/movies.php">Movies</a>
+                        <a href="../php/movies.php">Movies</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/series.php">Series</a>
+                        <a href="../php/series.php">Series</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/recAdded.php">Recently Added</a>
+                        <a href="../php/recAdded.php">Recently Added</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/favourites.php">My List</a>
+                        <a href="../php/favourites.php">My List</a>
                     </li>
                 </ul>
             </div>
             <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
-                <img src="https://cinetechwatch.000webhostapp.com/img/UserPFP.jpeg" alt="">
+                <img src="../img/UserPFP.jpeg" alt="">
                 <div class="search" id="search_results"></div>
             </div>
         </nav>
@@ -151,13 +151,14 @@ if ($responseData['status'] === 'success') {
 
         <!-- Contnent/details of video playing  -->
         <div class="content">
-            <h1 id="title">John Wick 2014</h1>
-            <p>John Wick, a retired hitman, is forced to return to his old ways after a group of Russian gangsters steal his car and kill a puppy gifted to him by his late wife.</p>
+            <h1 id="title">Jujutsu Kaisen </h1>
+            <p>A boy swallows a cursed talisman - the finger of a demon - and becomes cursed himself. He enters a 
+                shaman's school to be able to locate the demon's other body parts and thus exorcise himself.</p>
             <div class="details">
                 <h6>A CineTech Original</h6>
-                <h5 id="gen">Action, Crime, Thriller</h5>
-                <h4>2014</h4>
-                <h3 id="rate"><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>7.4</h3>
+                <h5 id="gen">Action, Adventure, Anime</h5>
+                <h4>2020</h4>
+                <h3 id="rate"><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>8.6</h3>
             </div>
             <div class="btns">
                 <a href="#" id="play">Watch <i class="fa fa-play" aria-hidden="true"></i></a>
@@ -182,7 +183,7 @@ if ($responseData['status'] === 'success') {
                     echo '<div class="rest_card">';
                     echo '<div class="cont">';
                     echo '<div class="sub">';
-                    echo '<h4>' . $movie['Title'] . '</h4>';
+                    echo '<h4>' . $movie['Name'] . '</h4>';
 
                     // content of the card
                     echo '<p>' . $movie['Genre'] . $movie['Release_Year'] . '</p>';
