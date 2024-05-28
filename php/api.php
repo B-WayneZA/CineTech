@@ -664,8 +664,7 @@ class API
    }
 
 
-   // DEBUGGED FOR SECOND TIME
-   private function deleteByTitle($title, $item) // DONE
+   private function delete($title, $item)
    {
       // Check if the item parameter is valid
       if ($item !== "film" && $item !== "show") {
