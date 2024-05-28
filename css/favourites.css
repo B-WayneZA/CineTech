@@ -18,7 +18,7 @@ body {
     overflow-y: visible;
     overflow-x: hidden;
 }
- 
+
 header {
     position: relative;
     /* Change position to fixed */
@@ -182,7 +182,7 @@ header nav .search_user {
 
 
 
-
+/*button for remove*/
 .btn-danger {
     background-color: #d9534f;
     border-color: #d43f3a;
