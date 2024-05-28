@@ -1,7 +1,4 @@
 <?php
-//header("Access-Control-Allow-Origin: http://localhost");
-//header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-//header("Access-Control-Allow-Headers: Content-Type, Authorization");
 session_start(); // Start session to store user login status
 
 $currentPage = 'movies';
@@ -15,7 +12,7 @@ $data = array(
     'type' => 'GetAllMovies',
     'limit' => 10,
     'return' => 'all'
-);
+); 
 
 // Convert data to JSON format
 $json_data = json_encode($data);
