@@ -1,7 +1,7 @@
 <?php
-//header("Access-Control-Allow-Origin: http://localhost");
-//header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-//header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 session_start(); // Start session to store user login status
 
 $currentPage = 'movies';
@@ -13,7 +13,7 @@ $movies = array();
 // Prepare the data for JSON request
 $data = array(
     'type' => 'GetAllMovies',
-    'limit' => 10,
+    'limit' => 1000,
     'return' => 'all'
 );
 
@@ -59,6 +59,57 @@ if ($responseData['status'] === 'success') {
     // Handle error response
     $error = $responseData['data'];
 }
+
+
+//search box query
+$input = json_decode(file_get_contents('php://input'), true);
+$searchQuery = $input['search-input'] ?? '';
+
+// Prepare the request body for the API call
+$searchBody = json_encode([
+    "type" => "Search",
+    "search" => $searchQuery
+]);
+
+$ch2 = curl_init();
+
+// Set the URL
+curl_setopt($ch2, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+
+// Set the request method to POST
+curl_setopt($ch2, CURLOPT_POST, 1);
+
+// Set the request data as JSON
+curl_setopt($ch2, CURLOPT_POSTFIELDS, $searchBody);
+
+// Set the Content-Type header
+curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+// Set basic authentication credentials
+curl_setopt($ch2, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch2, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%'); // Replace with your actual credentials
+
+// Return response instead of outputting it
+curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+
+// Execute the request
+$response2 = curl_exec($ch2);
+
+// Close cURL resource
+curl_close($ch2);
+
+$responseData2 = json_decode($response2, true);
+
+// Check if the request was successful
+if ($responseData2['status'] === 'success') {
+    echo $responseData2;
+    // Process the listings data and display on the page
+    $searches = $responseData2['data'];
+} else {
+    // Handle error response
+    $error = $responseData2['data'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +145,25 @@ if ($responseData['status'] === 'success') {
             <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
                 <img src="https://cinetechwatch.000webhostapp.com/img/UserPFP.jpeg" alt="">
-                <div class="search" id="search_results"></div>
+                <div class="search" id="search_results">
+                    <?php 
+                        if (isset($searches)) {
+                            foreach ($searches as $search) {
+                                $title2 = urlencode($search['name']);
+                                // individual card for each movie
+                                echo '<a href="viewMore.php?title=' . $title . '" class="card">';
+
+                                echo '<img src=" '.$search['PosterURL'] .' ">';
+                                echo   '<div class="cont">';
+                                echo '<h3>' . $search['name'] . '</h3>';
+                                echo '<p>' . $search['genre'] . '<span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>'. $search['rating'] .  '</p>';
+                                echo '</div>';
+                                echo '</a>';
+                            }
+                        }
+                    ?>
+
+                </div>
             </div>
         </nav>
         <div class="dropdown">
@@ -172,7 +241,7 @@ if ($responseData['status'] === 'success') {
                     echo '<h4>' . $movie['Title'] . '</h4>';
 
                     // content of the card
-                    echo '<p>' . $movie['Genre'] . $movie['Release_Year'] . '</p>';
+                    echo '<p>' . $movie['Genre'] ." ". $movie['Release_Year'] . '</p>';
                     echo '<h3><span>CINETECH</span><i class="fa-solid fa-bath"></i>' . $movie['IMDB_score'] . '</h3>';
                     echo '</div>';
                     echo '</div>';
