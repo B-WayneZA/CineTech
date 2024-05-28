@@ -638,6 +638,63 @@ class API
    }
 
 
+   //Alternative
+//    private function addFavourite($api, $filmID, $showID)
+// {
+//     try {
+//         // Retrieve user ID based on API key
+//         $uIDQuery = "SELECT user_id FROM users WHERE apikey=?";
+//         $uIDStmt = $GLOBALS['connection']->prepare($uIDQuery);
+//         $uIDStmt->bind_param('s', $api);
+//         $uIDStmt->execute();
+//         $uIDResult = $uIDStmt->get_result();
+
+//         if ($uIDResult->num_rows == 0) {
+//             // Handle case where API key does not correspond to any user
+//             return $this->errorResponse(time(), "User not found for API key: " . $api);
+//         }
+
+//         $userData = $uIDResult->fetch_assoc();
+//         $userID = $userData["user_id"];
+
+//         // Check if the film/show already exists in favorites
+//         $checkQuery = "SELECT * FROM favourites WHERE user_id=? AND (films_id=? OR shows_id=?)";
+//         $checkStmt = $GLOBALS['connection']->prepare($checkQuery);
+//         $checkStmt->bind_param('iii', $userID, $filmID, $showID);
+//         $checkStmt->execute();
+//         $checkResult = $checkStmt->get_result();
+
+//         if ($checkResult->num_rows > 0) {
+//             // Handle case where film/show already exists in favorites
+//             return $this->errorResponse(time(), "Film/Show already added to favorites");
+//         }
+
+//         $insertQuery = "INSERT INTO favourites (user_id, shows_id, films_id) VALUES (?, ?, ?)";
+//         $insertStmt = $GLOBALS['connection']->prepare($insertQuery);
+
+//         // Bind parameters and insert favorite into database
+//         $insertStmt->bind_param('iii', $userID, $showID, $filmID);
+
+//         if ($insertStmt->execute()) {
+//             return $this->successResponse(time(), "Favorite added successfully.");
+//         } else {
+//             // Handle SQL execution error
+//             return $this->errorResponse(time(), "Error adding favorite: " . $insertStmt->error);
+//         }
+//     } catch (Exception $e) {
+//         // Handle any exceptions thrown during SQL execution
+//         return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
+//     }
+// }
+
+
+
+
+
+
+
+
+
    private function delete($title, $item)
    {
       if ($item === "film") {

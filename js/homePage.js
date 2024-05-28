@@ -99,4 +99,23 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('light-mode');
         }
     });
-});
+
+
+      // Function to handle image click event
+      function handleImageClick(title) {
+        // Redirect to viewMore page with the movie/series title as a query parameter
+        window.location.href = "https://cinetechwatch.000webhostapp.com/html/viewMore.php";
+    }
+
+     // Event listener for all <a> tags with href="#"
+     const clickableLinks = document.querySelectorAll('a[href="#"]');
+     clickableLinks.forEach(link => {
+         link.addEventListener('click', function(event) {
+             event.preventDefault(); // Prevent default behavior of the link
+             const cardTitle = document.querySelector('h4').innerText; // Get the title from the closest card's <h4> element
+             handleImageClick(cardTitle); // Call the handleImageClick function with the title
+         });
+     });
+
+    });
+
