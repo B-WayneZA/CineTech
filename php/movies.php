@@ -13,7 +13,7 @@ $movies = array();
 // Prepare the data for JSON request
 $data = array(
     'type' => 'GetAllMovies',
-    'limit' => 10,
+    'limit' => 100,
     'return' => 'all'
 );
 
@@ -24,7 +24,7 @@ $json_data = json_encode($data);
 $ch = curl_init();
 
 // Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
 // Set the request method to POST
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -37,7 +37,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
 // Set basic authentication credentials
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%'); // Replace with your actual credentials
+curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
 
 // Return response instead of outputting it
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -69,10 +69,10 @@ if ($responseData['status'] === 'success') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/CSS/movies.css" id="light-mode">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
-    <link rel="icon" href="https://cinetechwatch.000webhostapp.com/img/4.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/movies.css" id="light-mode">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="../img/4.png" type="image/x-icon">
     <title>CineTech</title>
 </head>
 
@@ -80,31 +80,31 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
 
-        <video src="https://cinetechwatch.000webhostapp.com/video/JohnWickTrailer.mp4" autoplay muted></video>
+        <video src="../video/6Underground.MOV" autoplay muted></video>
         <nav>
             <div class="logo_ul">
-                <img src="https://cinetechwatch.000webhostapp.com/img/4.png" alt="" />
+                <img src="../img/4.png" alt="" />
                 <ul>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/html/homePage.html">Home</a>
+                        <a href="../html/homePage.html">Home</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/movies.php">Movies</a>
+                        <a href="../php/movies.php">Movies</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/series.php">Series</a>
+                        <a href="../php/series.php">Series</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/recAdded.php">Recently Added</a>
+                        <a href="../php/recAdded.php">Recently Added</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/php/favourites.php">My List</a>
+                        <a href="../php/favourites.php">My List</a>
                     </li>
                 </ul>
             </div>
             <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
-                <img src="https://cinetechwatch.000webhostapp.com/img/UserPFP.jpeg" alt="">
+                <img src="../img/UserPFP.jpeg" alt="">
                 <div class="search" id="search_results"></div>
             </div>
         </nav>
@@ -176,7 +176,7 @@ if ($responseData['status'] === 'success') {
                     echo '<a href="#" class="card">';
 
                     // image of the poster
-                    echo '<img src=' . $movie['PosterURL'] . ' alt="" class="poster">';
+                    echo '<img src="'  . $movie['PosterURL'] . '"  alt="" class="poster">';
 
                     // the rest of the section of the card 
                     echo '<div class="rest_card">';
