@@ -73,10 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['apikey'] = json_decode($login_response['data'], true)['apikey'];
 
                     if ($admin === "true") {
-                        header('Location: ../html/admin.html'); // Redirect to home page after successful login
+                        header('Location: ../php/admin.php'); // Redirect to home page after successful login
 
                     } else {
-                        header('Location: ../html/homePage.html'); // Redirect to home page after successful login
+                        header('Location: ../php/homePage.php'); // Redirect to home page after successful login
                     }
                     exit();
                 } else {
