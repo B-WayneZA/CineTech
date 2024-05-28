@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ch = curl_init();
 
         // Set the URL
-        curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+        curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
         // Set the request method to POST
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Set basic authentication credentials
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+        curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
         // Return response instead of outputting it
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -73,10 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['apikey'] = json_decode($login_response['data'], true)['apikey'];
 
                     if ($admin === "true") {
-                        header('Location: https://cinetechwatch.000webhostapp.com/html/admin.html'); // Redirect to home page after successful login
+                        header('Location: ../html/admin.html'); // Redirect to home page after successful login
 
                     } else {
-                        header('Location: https://cinetechwatch.000webhostapp.com/html/homePage.html'); // Redirect to home page after successful login
+                        header('Location: ../html/homePage.html'); // Redirect to home page after successful login
                     }
                     exit();
                 } else {
@@ -99,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>CineTech</title>
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/login-dark.css" id="dark-mode">
-    <link rel="icon" type="image/x-icon" href="https://cinetechwatch.000webhostapp.com/img/4.png">
+    <link rel="stylesheet" href="../CSS/login-dark.css" id="dark-mode">
+    <link rel="icon" type="image/x-icon" href="../img/4.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn">Login</button>
             <!-- register link -->
             <div class="register-link">
-                <p>Don't have an account? <a href="https://cinetechwatch.000webhostapp.com/html/register.php">Register</a></p>
+                <p>Don't have an account? <a href="../php/register.php">Register</a></p>
             </div>
         </form>
     </div>

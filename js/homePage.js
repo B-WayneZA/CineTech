@@ -99,55 +99,23 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('light-mode');
         }
     });
-    // section of code to fetch info for the search bar in the html format so that when a  user inputs a search 
-    // they see the details of the movie 
-    // Example event listener for search button
-    document.getElementById('search_button').addEventListener('click', function () {
-        // Get the search input value
-        const searchTerm = document.getElementById('search_input').value;
 
-        // Send a request to the API to search for movies or shows
-        fetch(`https://your-api-url.com/search?search=${searchTerm}`)
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response data
-                console.log(data);
-            })
-            .catch(error => {
-                // Handle errors
-                console.error('Error:', error);
-            });
+
+      // Function to handle image click event
+      function handleImageClick(title) {
+        // Redirect to viewMore page with the movie/series title as a query parameter
+        window.location.href = "https://cinetechwatch.000webhostapp.com/html/viewMore.php";
+    }
+
+     // Event listener for all <a> tags with href="#"
+     const clickableLinks = document.querySelectorAll('a[href="#"]');
+     clickableLinks.forEach(link => {
+         link.addEventListener('click', function(event) {
+             event.preventDefault(); // Prevent default behavior of the link
+             const cardTitle = document.querySelector('h4').innerText; // Get the title from the closest card's <h4> element
+             handleImageClick(cardTitle); // Call the handleImageClick function with the title
+         });
+     });
+
     });
 
-    // display the api data 
-    // Example of updating HTML with API data
-    // this must fetch the results from the api and display it 
-    const searchResultsContainer = document.getElementById('search_results');
-
-    // Assuming data is an array of search results from the API
-    data.forEach(result => {
-        const resultItem = document.createElement('div');
-        resultItem.textContent = result.title;
-        searchResultsContainer.appendChild(resultItem);
-    });
-
-    // section of code to get notifications of any movies or series the user recieved from another user that was shared to them
-
-    // section of the code that logsout the user from the homepage and redirects them back to the login page
-
-    // section of the code that deletes the user from the database fully, it must search for their email, exactly and deletes them
-
-    // section of code for getting the shared movie from api, this is the shared movie 
-    // Example: Send a request to the API to get shared movies
-    fetch('https://your-api-url.com/getShared?apikey=your-api-key')
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response data
-            console.log(data);
-        })
-        .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-        });
-
-});
