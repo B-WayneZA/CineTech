@@ -6,23 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="https://cinetechwatch.000webhostapp.com/css/homePage-light.css"
+      href="../css/homePage-light.css"
       id="light-mode"
     />
     <link
       rel="stylesheet"
-      href="https://cinetechwatch.000webhostapp.com/css/homePage-dark.css"
+      href="../css/homePage-dark.css"
       id="dark-mode"
     />
     <link
       rel="icon"
-      href="https://cinetechwatch.000webhostapp.com/img/4.png"
+      href="../img/4.png"
       type="image/x-icon"
     />
     <!-- the icons used in the website -->
     <link
       rel="stylesheet"
-      href="/font-awesome-4.7.0/css/font-awesome.min.css"
+      href="../font-awesome-4.7.0/css/font-awesome.min.css"
     />
     <title>CineTech</title>
   </head>
@@ -32,7 +32,7 @@
     <header>
       <!-- convert this image to a webm so it actually plays  -->
       <video
-        src="https://cinetechwatch.000webhostapp.com/video/JohnWickTrailer.mp4"
+        src="../video/JohnWickTrailer.mp4"
         autoplay
         muted
         loop="true"
@@ -40,34 +40,34 @@
       <!-- navigation bar over the video -->
       <nav>
         <div class="logo_ul">
-          <img src="https://cinetechwatch.000webhostapp.com/img/4.png" alt="" />
+          <img src="../img/4.png" alt="" />
           <ul>
             <li>
               <a
-                href="https://cinetechwatch.000webhostapp.com/html/homePage.html"
+                href="../php/homePage.php"
                 >Home</a
               >
             </li>
             <li>
-              <a href="https://cinetechwatch.000webhostapp.com/html/movies.html"
+              <a href="../php/movies.php"
                 >Movies</a
               >
             </li>
             <li>
-              <a href="https://cinetechwatch.000webhostapp.com/html/series.html"
+              <a href="../php/series.php"
                 >Series</a
               >
             </li>
             <li>
               <a
-                href="https://cinetechwatch.000webhostapp.com/html/recAdded.html"
+                href="../html/recAdded.php"
                 >Recently Added</a
               >
             </li>
 
             <li>
               <a
-                href="https://cinetechwatch.000webhostapp.com/html/favourites.html"
+                href="../html/favourites.php"
                 >My List</a
               >
             </li>
@@ -78,7 +78,7 @@
           <input type="text" placeholder="Search..." id="search_input" />
           <!-- User image -->
           <img
-            src="https://cinetechwatch.000webhostapp.com/img/UserPFP.jpeg"
+            src="../img/UserPFP.jpeg"
             alt=""
           />
           <!-- this is the div responsible for the styling of the searhc -->
@@ -87,7 +87,7 @@
             <!-- First search option -->
             <a href="#" class="card">
               <img
-                src="https://cinetechwatch.000webhostapp.com/img/JohnWick.jpeg"
+                src="../img/JohnWick.jpeg"
                 alt=""
               />
               <div class="cont">
@@ -101,7 +101,7 @@
             <!-- Second search option -->
             <a href="#" class="card">
               <img
-                src="https://cinetechwatch.000webhostapp.com/img/Dune.jpeg"
+                src="../img/Dune.jpeg"
                 alt=""
               />
               <div class="cont">
@@ -115,7 +115,7 @@
             <!-- Third search option -->
             <a href="#" class="card">
               <img
-                src="https://cinetechwatch.000webhostapp.com/img/Inception.jpeg"
+                src="../img/Inception.jpeg"
                 alt=""
               />
               <div class="cont">
@@ -129,7 +129,7 @@
             <!-- Fourth search option -->
             <a href="#" class="card">
               <img
-                src="https://cinetechwatch.000webhostapp.com/img/Sightless.jpeg"
+                src="../img/Sightless.jpeg"
                 alt=""
               />
               <div class="cont">
@@ -146,7 +146,7 @@
             <div class="user-info">
               <!-- User details go here -->
               <img
-                src="https://cinetechwatch.000webhostapp.com/img/UserPFP.jpeg"
+                src="../img/UserPFP.jpeg"
                 alt=""
               />
               <h3>Johnny Wicker</h3>
@@ -169,7 +169,7 @@
           <!-- Add a button for notifications -->
           <div class="notifications">
             <img
-              src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+              src="../img/Notifications.png"
               alt=""
             />
             <div class="notifications-popup">
@@ -182,7 +182,7 @@
               >
                 <div class="toast-header">
                   <img
-                    src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+                    src="../img/Notifications.png"
                     class="rounded me-2"
                     alt="..."
                   />
@@ -208,7 +208,7 @@
               >
                 <div class="toast-header">
                   <img
-                    src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+                    src="../img/Notifications.png"
                     class="rounded me-2"
                     alt="..."
                   />
@@ -234,7 +234,7 @@
               >
                 <div class="toast-header">
                   <img
-                    src="https://cinetechwatch.000webhostapp.com/img/Notifications.png"
+                    src="../img/Notifications.png"
                     class="rounded me-2"
                     alt="..."
                   />
@@ -331,7 +331,7 @@
 
     $ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -344,7 +344,7 @@
 
     // Set basic authentication credentials
     curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
     // Return response instead of outputting it
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -359,7 +359,7 @@
 
     if (isset($error_msg)) {
         // Handle CURL error
-        echo "CURL Error: $error_msg";
+        // echo "CURL Error: $error_msg";
     } else {
         $responseData = json_decode($response, true);
 
@@ -422,17 +422,17 @@
 
     $movies2 = array();
 
-    $data3 = array(
+    $data2 = array(
         'type' => 'GetAllSeries',
         'limit' => 50,
         'return' => 'all'
     );
 
-    $json_data2 = json_encode($data3);
+    $json_data2 = json_encode($data2);
 
     $ch2 = curl_init();
 
-    curl_setopt($ch2, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch2, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
     curl_setopt($ch2, CURLOPT_POST, 1);
@@ -445,7 +445,7 @@
 
     // Set basic authentication credentials
     curl_setopt($ch2, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch2, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+    curl_setopt($ch2, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
     // Return response instead of outputting it
     curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
@@ -532,7 +532,7 @@
 
     $ch3 = curl_init();
 
-    curl_setopt($ch3, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch3, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
     curl_setopt($ch3, CURLOPT_POST, 1);
@@ -545,7 +545,7 @@
 
     // Set basic authentication credentials
     curl_setopt($ch3, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch3, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+    curl_setopt($ch3, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
     // Return response instead of outputting it
     curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
@@ -636,7 +636,7 @@
 
     $ch4 = curl_init();
 
-    curl_setopt($ch4, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch4, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
     curl_setopt($ch4, CURLOPT_POST, 1);
@@ -649,7 +649,7 @@
 
     // Set basic authentication credentials
     curl_setopt($ch4, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch4, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+    curl_setopt($ch4, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
     // Return response instead of outputting it
     curl_setopt($ch4, CURLOPT_RETURNTRANSFER, true);
@@ -736,7 +736,7 @@
 
     $ch5 = curl_init();
 
-    curl_setopt($ch5, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch5, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
     curl_setopt($ch5, CURLOPT_POST, 1);
@@ -749,7 +749,7 @@
 
     // Set basic authentication credentials
     curl_setopt($ch5, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch5, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+    curl_setopt($ch5, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
     // Return response instead of outputting it
     curl_setopt($ch5, CURLOPT_RETURNTRANSFER, true);
@@ -828,7 +828,7 @@
         'type' => 'GetAllSeries',
         'limit' => 20,
         "search" => array(
-          "genre"=> "Romance"
+          "genre"=> "Thriller"
         ),
         'return' => 'all'
     );
@@ -837,7 +837,7 @@
 
     $ch6 = curl_init();
 
-    curl_setopt($ch6, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch6, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
     curl_setopt($ch6, CURLOPT_POST, 1);
@@ -850,7 +850,7 @@
 
     // Set basic authentication credentials
     curl_setopt($ch6, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch6, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+    curl_setopt($ch6, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
     // Return response instead of outputting it
     curl_setopt($ch6, CURLOPT_RETURNTRANSFER, true);
@@ -903,7 +903,7 @@
 
                 echo '<p>'. $movie6['Genre'].'</p>';  // assuming 'description' key exists in the array
                 // echo '<br>'; 
-                 echo '<p>'. $movie6['Seasons'].'</p>';  // assuming 'description' key exists in the array
+                echo '<p>'. $movie6['Seasons'].'</p>';  // assuming 'description' key exists in the array
                 echo '<h3>';
                 echo '<span>CineTech</span>';
                 echo '<i class="fa fa-star" aria-hidden="true"></i>'. $movie6['IMDB_score'];  // assuming 'rating' key exists in the array
@@ -938,7 +938,7 @@
 
     $ch7 = curl_init();
 
-    curl_setopt($ch7, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch7, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
     curl_setopt($ch7, CURLOPT_POST, 1);
@@ -951,7 +951,7 @@
 
     // Set basic authentication credentials
     curl_setopt($ch7, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch7, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+    curl_setopt($ch7, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
 
     // Return response instead of outputting it
     curl_setopt($ch7, CURLOPT_RETURNTRANSFER, true);
@@ -1024,7 +1024,7 @@
 
 
     <!-- this section is for the js of the page -->
-    <script src="/js/homePage.js"></script>
+    <script src="../js/homePage.js"></script>
     <!--Footer-->
   </body>
 </html>

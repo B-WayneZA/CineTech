@@ -41,7 +41,7 @@ $json_data = json_encode($data);
 $ch = curl_init();
 
 // Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
 // Set the request method to POST
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -54,7 +54,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
 // Set basic authentication credentials
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%'); // Replace with your actual credentials
+curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
 
 // Return response instead of outputting it
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -3,33 +3,30 @@ session_start();
 
 // check if user is logged in or not if not redirect
 if (!isset($_SESSION['apikey'])) {
-    header('Location:https://cinetechwatch.000webhostapp.com/html/login.php');
+    header('Location: ../php/login.php');
     exit();
 }
 
 $currentPage = 'favourites';
 
-// add/remove favorite action
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $showID = isset($_POST['show_id']) ? $_POST['show_id'] : null;
-    $filmID = isset($_POST['film_id']) ? $_POST['film_id'] : null;
-    $add = isset($_POST['add']) ? $_POST['add'] === 'true' : false;
+
 
     $data = array(
-        'type' => 'Favourite',
+        'type' => 'GetAllFavourites',
         'apikey' => $_SESSION['apikey'],
-        'add' => $add ? 'true' : 'false',
-        'show_id' => $showID,
-        'film_id' => $filmID
+
     );
 
     $json_data = json_encode($data);
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php ');
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($ch);
@@ -39,34 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $result = json_decode($response, true);
         if (isset($result['status']) && $result['status'] === 'success') {
-            $message = $add ? 'Added to favorites successfully.' : 'Removed from favorites successfully.';
+            $message = $add ? 'Gotten all favorites successfully.' : 'Removed from favorites successfully.';
         } else {
             $message = 'Failed to update favorites: ' . (isset($result['data']) ? $result['data'] : 'Unknown error');
         }
     }
 
+
     curl_close($ch);
 }
-
-// Fetch favorite items
-$apikey = $_SESSION['apikey'];
-$favoritesUrl = 'https://cinetechwatch.000webhostapp.com/php/api.php?type=GetFavorites&apikey=' . $apikey;
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $favoritesUrl);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$response = curl_exec($ch);
-
-if ($response === false) {
-    $favorites = [];
-    $message = 'Curl error: ' . curl_error($ch);
-} else {
-    $favorites = json_decode($response, true);
-}
-
-curl_close($ch);
-
-
 ?>
 
 
@@ -78,13 +56,13 @@ curl_close($ch);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/css/favourites.css" id="light-mode">
+    <link rel="stylesheet" href="../css/favourites.css" id="light-mode">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <!-- <link rel="stylesheet" href="/css/homePage-dark.css" id="dark-mode"> -->
-    <link rel="icon" href="https://cinetechwatch.000webhostapp.com/img/4.png" type="image/x-icon">
+    <link rel="icon" href="/img/4.png" type="image/x-icon">
     <!-- the icons used in the website -->
-    <link rel="stylesheet" href="https://cinetechwatch.000webhostapp.com/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
     <title>CineTech</title>
 </head>
 
@@ -94,22 +72,22 @@ curl_close($ch);
         <!-- convert this image to a webm so it actually plays  -->
         <nav>   
         <div class="logo_ul">
-                <img src="https://cinetechwatch.000webhostapp.com/img/4.png" alt="">
+                <img src="/img/4.png" alt="">
                 <ul>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/html/homePage.html">Home</a>
+                        <a href="../html/homePage.html">Home</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/html/movies.html">Movies</a>
+                        <a href="../html/movies.html">Movies</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/html/series.html">Series</a>
+                        <a href="../html/series.html">Series</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/html/recAdded.html">Recently Added</a>
+                        <a href="../html/recAdded.html">Recently Added</a>
                     </li>
                     <li>
-                        <a href="https://cinetechwatch.000webhostapp.com/html/favourites.html">My List</a>
+                        <a href="../html/favourites.html">My List</a>
                     </li>
                 </ul>
             </div>
