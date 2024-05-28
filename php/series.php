@@ -1,3 +1,71 @@
+<?php 
+
+// Start session to store user login status
+header("Access-Control-Allow-Origin: *");
+session_start();
+
+// Set current page variable for header navigation
+$currentPage = 'series';
+
+$series = array();
+
+if (isset($_SESSION['user_id'])) {
+    header('Location: https://cinetechwatch.000webhostapp.com/html/login.php'); // Redirect to login page if already logged in
+    exit();
+}
+
+$data = array(
+    
+ "type"  => "GetAllSeries",
+ "limit" => 100,
+ "return" => "all"
+);
+
+$json_data = json_encode($data);
+
+        // Create a new cURL resource
+        $ch = curl_init();
+
+        // Set the URL
+        curl_setopt($ch, CURLOPT_URL, 'https://cinetechwatch.000webhostapp.com/php/api.php');
+
+        // Set the request method to POST
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+        // Set the request data as JSON
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+        // Set the Content-Type header
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+        // Set basic authentication credentials
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, 'cinetechwatch:Cinetechwatch120%');
+        // Return response instead of outputting it
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+         // Execute the request
+         $response = curl_exec($ch);
+
+        // Close cURL resource
+       curl_close($ch);
+
+      // Decode the JSON response
+      $responseData = json_decode($response, true);
+
+// Check if the request was successful
+if ($responseData['status'] === 'success') {
+    // Optionally, you can handle the success response here
+    //update page
+   echo "Success!";
+} else {
+    // Optionally, you can handle the error response here
+    //display error message on screen
+    $error = $responseData['data'];
+    echo "$error";
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

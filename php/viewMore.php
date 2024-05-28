@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/viewMore.css" id="light-mode">
+    <!-- <link rel="stylesheet" href="/css/homePage-dark.css" id="dark-mode"> -->
+    <link rel="icon" href="/img/4.png" type="image/x-icon">
+    <!-- the icons used in the website -->
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    
+    <title>CineTech</title>
+</head>
+
+<body>
+    <!--Header-->
+    <header>
+        <!-- convert this image to a webm so it actually plays  -->
+        <!-- <video src="/video/JohnWickTrailer.mp4" autoplay muted loop="true"></video> -->
+        <nav>
+            <div class="logo_ul">
+                <img src="/img/4.png" alt="">
+                <ul>
+                    <li>
+                        <a href="/html/homePage.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="/html/movies.html">Movies</a>
+                    </li>
+                    <li>
+                        <a href="/html/series.html">Series</a>
+                    </li>
+                    <li>
+                        <a href="/html/recAdded.html">Recently Added</a>
+                    </li>
+                    <li>
+                        <a href="/html/favourites.html">My List</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="search_user">
+                <input type="text" placeholder="Search..." id="search_input">
+                <!-- User image -->
+                <img src="/img/UserPFP.jpeg" alt="">                
+                <!-- Add a button for notifications -->
+            </div>
+        </nav>
+
+    <div class = "ViewDetails">
+        <div class="content">
+            <div class = "content-image">
+                <img class="movieImg" src="/img/FallFromGrace.jpeg" alt="">
+            </div>
+        </div>
+
+        <div class = "content-details">
+            <!-- Create a div for the description as well as the other-->
+            <div class = "description">
+                <h2>Description: </h2> 
+                <h3>Grace Waters (Crystal Fox), a longtime pillar of her Virginia community, stays composed when her ex weds his mistress and her son moves away. With convincing from her best friend Sarah (Phylicia Rashad), she tries putting herself first, and a handsome stranger (Mehcad Brooks) becomes her surprise second love. Yet any woman can snap, and Grace's new husband soon ravages her life, her work and - many say - her sanity. Shuttered in a cell awaiting trial for his murder, Grace's only hope for vindication lies with Jasmine Bryant (Bresha Webb), a public defender who has never tried a cases.</h3><br>
+            </div>
+
+            <div class = "Genres">
+                <h3>Genres: Crime, Drama, Suspense, Thriller, Mystery, Crime Fictio. </h3><br>
+            </div>
+            
+           <div class = "yearRelease">
+            <h3>Year Of Release:  2020</h3><br>
+           </div>
+            
+           <div class = "movieRating">
+            <h3>Movie Rating:  </h3>
+           </div>
+                
+            
+            <div class = "userRating">
+            <h3>Ratings: </h3>
+             <div class = "rating">
+                <input type = "radio" name = "rating" id = "r1">
+                <label for=" r1"> </label>
+
+                <input type = "radio" name = "rating" id = "r2">
+                <label for=" r2"> </label>
+
+                <input type = "radio" name = "rating" id = "r3">
+                <label for=" r3"> </label>
+
+                <input type = "radio" name = "rating" id = "r4">
+                <label for=" r4"> </label>
+
+                <input type = "radio" name = "rating" id = "r5">
+                <label for=" r5"> </label>
+             </div>
+            </div>
+            
+            <div class = "actors">
+                <h3>Actors: Gabrielle Union, Mark June and Tyler Perry  </h3><br>
+            </div>
+            
+            
+              <button class = "trailer" >
+                <a href="https://www.youtube.com/watch?v=mNixVHejlc0&pp=ygUXZmFsbCBmcm9tIGdyYWNlIHRyYWlsZXI%3D">Trailer</a><br>
+              </button>
+              
+              <button class="btn">Share</button>
+              <button class = "watchList">Add to MyList</button>
+        </div>
+    </div>
+
+
+    <section>
+        <h4>People Also Like</h4>
+        <div class="cards">
+            <!-- add more of these to check scroll featur -->
+            <a href="#" class="card">
+                <img src="/img/JohnWick.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/Dune.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/EverythingEverywhereAllAtOnceMoviePoster.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/Fall.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/Howl.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/Inception.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/LalaLand.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/Sightless.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/StepItUp.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="card">
+                <img src="/img/TheGreatestShowman.jpeg" alt="" class="poster">
+                <div class="rest_card">
+                    <img src="/img/JohnWickVisual.jpeg" alt="">
+                    <div class="cont">
+                        <h4>John Wick</h4>
+                        <div class="sub">
+                            <p>Action, 2024</p>
+                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+ <!--This is to make the buttons of the stars to work -->
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const ratings = document.querySelectorAll('.rating input');
+        
+        ratings.forEach((rating) => {
+            rating.addEventListener('change', () => {
+                const selectedValue = rating.id.replace('r', '');
+                ratings.forEach((input, index) => {
+                    const label = input.nextElementSibling;
+                    if (index < selectedValue) {
+                        label.style.color = '#f9bf3b';
+                    } else {
+                        label.style.color = '#444';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+</section>
+</header>
+
+</body>
+</html>
