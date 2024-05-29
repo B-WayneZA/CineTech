@@ -161,6 +161,7 @@ if (isset($_POST['addToFavorites'])) {
     <link rel="icon" href="../img/4.png" type="image/x-icon">
     <!-- the icons used in the website -->
     <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
     <title>CineTech</title>
 </head>
 
@@ -173,7 +174,7 @@ if (isset($_POST['addToFavorites'])) {
                 <img src="../img/4.png" alt="">
                 <ul>
                     <li>
-                        <a href="../html/homePage.html">Home</a>
+                        <a href="../php/homePage.php">Home</a>
                     </li>
                     <li>
                         <a href="../php/movies.php">Movies</a>
@@ -221,27 +222,18 @@ if (isset($_POST['addToFavorites'])) {
            </div>
             
            <div class = "movieRating">
-            <h3>CineTech Rating:  <?php echo $movies['CineTech_Rating']?></h3>
+            <h3>CineTech Rating:  <?php echo $movies['CineTech_Rating']?></h3><br>
            </div>
                 
             
             <div class = "userRating">
             <h3>Ratings: </h3>
-             <div class = "rating">
-                <input type = "radio" name = "rating" id = "r1">
-                <label for=" r1"> </label>
-
-                <input type = "radio" name = "rating" id = "r2">
-                <label for=" r2"> </label>
-
-                <input type = "radio" name = "rating" id = "r3">
-                <label for=" r3"> </label>
-
-                <input type = "radio" name = "rating" id = "r4">
-                <label for=" r4"> </label>
-
-                <input type = "radio" name = "rating" id = "r5">
-                <label for=" r5"> </label>
+             <div class = "star-icon">
+               <a href = "#" class = "bi-star-fill"></a>
+               <a href = "#" class = "bi-star-fill"></a>
+               <a href = "#" class = "bi-star-fill"></a>
+               <a href = "#" class = "bi-star-fill"></a>
+               <a href = "#" class = "bi-star-fill"></a>
              </div>
             </div>
             
@@ -287,28 +279,22 @@ if (isset($_POST['addToFavorites'])) {
         <!-- <script src="../js/homePage.js"></script> -->
 
  <!--This is to make the buttons of the stars to work -->
+</section>
+</header>
+
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const ratings = document.querySelectorAll('.rating input');
-        
-        ratings.forEach((rating) => {
-            rating.addEventListener('change', () => {
-                const selectedValue = rating.id.replace('r', '');
-                ratings.forEach((input, index) => {
-                    const label = input.nextElementSibling;
-                    if (index < selectedValue) {
-                        label.style.color = '#f9bf3b';
-                    } else {
-                        label.style.color = '#444';
-                    }
+        document.addEventListener("DOMContentLoaded", () => {
+            var stars = document.querySelectorAll(".star-icon a");
+            stars.forEach((item, index1) => {
+                item.addEventListener("click", (event) => {
+                    event.preventDefault();  // Prevent default anchor behavior
+                    stars.forEach((star, index2) => {
+                        index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
+                    });
                 });
             });
         });
-    });
-</script>
-
-</section>
-</header>
+    </script>
 
 </body>
 </html>
