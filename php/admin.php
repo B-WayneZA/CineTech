@@ -48,6 +48,21 @@ function editItem($title, $itemType, $fields) {
     }
 }
 
+function deleteUserByEmail($email) {
+    $data = array(
+        "type" => "DeleteUser",
+        "email" => $email
+    );
+
+    $response = makeApiRequest($data);
+
+    if ($response['status'] === 'success') {
+        echo '<script>alert("Successfully deleted user with email: ' . $email . '");</script>';
+    } else {
+        echo '<script>alert("Failed to delete user: ' . $response['data'] . '");</script>';
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
         $title = $_POST['deleteTitle'];
@@ -60,6 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $value = $_POST['editValue'];
         $fields = array($field => $value);
         editItem($title, $itemType, $fields);
+    } elseif (isset($_POST['deleteEmail'])) {
+        $email = $_POST['deleteEmail'];
+        deleteUserByEmail($email);
     }
 }
 ?>
@@ -259,12 +277,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     <!-- this is the delete user block -->
                     <div class="delete-block-user">
-                        <h2>Delete User from Database</h2>
-                        <p>This box will remove a user from the database.</p>
-                        <form id="deleteUserForm">
-                            <input type="email" id="deleteEmail" placeholder="Email" required>
-                            <button type="submit">Delete</button>
-                        </form>
+                    <h2>Delete User from Database</h2>
+                    <p>This box will remove a user from the database.</p>
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <input type="email" id="deleteEmail" name="deleteEmail" placeholder="Email" required>
+                        <button type="submit">Delete</button>
+                    </form>
                     </div>
                 </div>
             </main>
