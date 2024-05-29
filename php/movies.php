@@ -77,7 +77,7 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
 
-        <video src="../video/6Underground.MOV" autoplay muted></video>
+        <video src="../video/6Underground.MOV" autoplay muted loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />
