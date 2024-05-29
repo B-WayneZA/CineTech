@@ -11,7 +11,8 @@ body {
     line-height: 1px;
     font-size: 35px;
 }
-
+ 
+/* ========================================================= */
 /* Grid layout adjustments */
 .grid-container {
     display: grid;
@@ -22,7 +23,8 @@ body {
         "main main";
     height: 100vh;
 }
- 
+
+/* ========================================================= */
 /* ---------- HEADER ---------- */
 .header {
     grid-area: header;
@@ -32,7 +34,7 @@ body {
     justify-content: center;
     padding: 0 30px;
     box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
-    background: url('/img/Background-dark.png');
+    background: url('../img/Background-dark.png');
     color: #fff;
 }
 
@@ -42,6 +44,7 @@ body {
     border-radius: 50%;
 }
 
+/* ========================================================= */
 /* ---------- MAIN ---------- */
 .main-container {
     grid-area: main;
@@ -121,6 +124,7 @@ body {
     justify-content: center;
 }
 
+/* ========================================================= */
 /* ---------- MEDIA QUERIES ---------- */
 
 /* Medium <= 992px */
@@ -162,6 +166,7 @@ body {
     }
 }
 
+/* ========================================================= */
 /* ---------- INPUT BOXES FOR SQL QUERIES ---------- */
 .sql-query-row {
     display: flex;

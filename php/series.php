@@ -4,7 +4,7 @@
 //header("Access-Control-Allow-Headers: Content-Type, Authorization");
 session_start(); // Start session to store user login status
 
-$currentPage = 'movies';
+$currentPage = 'movies'; 
 
 // Check if the user is not logged in, redirect to login page
 
@@ -13,7 +13,7 @@ $movies = array();
 // Prepare the data for JSON request
 $data = array(
     'type' => 'GetAllSeries',
-    'limit' => 50,
+    'limit' => 200,
     'return' => 'all'
 );
 
@@ -80,7 +80,7 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
 
-        <video src="../video/JJKaisen.mp4" autoplay loop="true"></video>
+        <video src="../video/JohnWickTrailer.mp4" autoplay loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />
@@ -102,11 +102,11 @@ if ($responseData['status'] === 'success') {
                     </li>
                 </ul>
             </div>
-            <div class="search_user">
+            <!-- <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
                 <img src="../img/UserPFP.jpeg" alt="">
                 <div class="search" id="search_results"></div>
-            </div>
+            </div> -->
         </nav>
 
         <!-- dropdown menu for the genre -->
@@ -176,7 +176,7 @@ if ($responseData['status'] === 'success') {
                     // individual card for each movie
                     $title = urlencode($movie['Name']);
                     // individual card for each movie
-                    echo '<a href="viewMore.php?title=' . $title . '" class="card">';
+                    echo '<a href="viewMore.php?name=' . $title . '" class="card">';
 
                     // image of the poster
                     echo '<img src=' . $movie['PosterURL'] . ' alt="" class="poster">';
@@ -188,7 +188,7 @@ if ($responseData['status'] === 'success') {
                     echo '<h4>' . $movie['Name'] . '</h4>';
 
                     // content of the card
-                    echo '<p>' . $movie['Genre'] . $movie['Release_Year'] . '</p>';
+                    echo '<p>' . $movie['Genre']. " " . $movie['Release_Year'] . '</p>';
                     echo '<h3><span>CINETECH</span><i class="fa fa-star" aria-hidden="true"></i>' . $movie['IMDB_score'] . '</h3>';
                     echo '</div>';
                     echo '</div>';

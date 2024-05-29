@@ -8,7 +8,7 @@ $data = array(
 
 // Convert data to JSON format
 $json_data = json_encode($data);
-
+ 
 // Create a new cURL resource
 $ch = curl_init();
 
@@ -90,11 +90,11 @@ if ($series['status'] === 'success') {
                </li>
             </ul>
          </div>
-         <div class="search_user">
+         <!-- <div class="search_user">
             <input type="text" placeholder="Search..." id="search_input">
             <img src="../img/UserPFP.jpeg" alt="">
             <div class="search" id="search_results"></div>
-         </div>
+         </div> -->
       </nav>
 
       <!-- dropdown menu for the genre -->
