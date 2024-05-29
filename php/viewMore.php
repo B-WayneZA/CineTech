@@ -1,4 +1,4 @@
-<?php
+<b?php
 session_start(); // Start session to store user login status
 
 // Function to make API request
@@ -160,8 +160,8 @@ if (isset($_POST['addToFavorites'])) {
     <link rel="stylesheet" href="../css/viewMore.css" id="light-mode">
     <link rel="icon" href="../img/4.png" type="image/x-icon">
     <!-- the icons used in the website -->
-    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="file:///E:fontawesome/css/all.css">
     <title>CineTech</title>
 </head>
 
@@ -227,13 +227,29 @@ if (isset($_POST['addToFavorites'])) {
                 
             
             <div class = "userRating">
-            <h3>Ratings: </h3>
+            <!-- <h3>Ratings: </h3> -->
              <div class = "star-icon">
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
+                <input type=" radio" name=" rate" id = "rate-5">
+                <label for = "rate-5"></label>
+                <input type=" radio" name=" rate" id = "rate-4">
+                <label for = "rate-4"></label>
+                <input type=" radio" name=" rate" id = "rate-3">
+                <label for = "rate-3"></label>
+                <input type=" radio" name=" rate" id = "rate-2">
+                <label for = "rate-2"></label>
+                <input type=" radio" name=" rate" id = "rate-1">
+                <label for = "rate-1"></label>
+                <form action = #>
+                    <header>I don't like it</header>
+                    <div class = "textarea">
+                      <textarea cols = "30" placeholder = "Describe your experience"></textarea>
+                    </div>
+                    <div class = "btn">
+                      <button type= "submit">Post</button>
+                    </div>
+
+                      
+                </form>
              </div>
             </div>
             
