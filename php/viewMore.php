@@ -47,9 +47,6 @@ function addToFavorites($apiKey, $filmId, $showId) {
      // Check if the add button is clicked
      $add = isset($_POST['addToFavorites']) ? "true" : "false";
 
-     echo '<script>console.log("addToFavorites called with API key: ' . $apiKey . '");</script>';
-     echo '<script>console.log("filmId: ' . $filmId . '");</script>';
-     echo '<script>console.log("showId: ' . $showId . '");</script>';
      
      if(isset($_GET['name']))
      {
@@ -59,7 +56,6 @@ function addToFavorites($apiKey, $filmId, $showId) {
             "add" => $add,
             "show_id" => $showId
         );
-        // echo '<script>alert("i am a show : ' . $responseData['error'] . '");</script>';
      }else
      {
         $data = array(
@@ -121,7 +117,6 @@ $responseData = makeApiRequest($data);
 if ($responseData['status'] === 'success') {
     // Process the data
     $movies = $responseData['data'][0];
-    // echo '<script>console.log("Movies data: ' . json_encode($movies) . '");</script>';
 } else {
     // Handle error response
     $error = $responseData['data'];
@@ -130,17 +125,14 @@ if ($responseData['status'] === 'success') {
 // Handle adding to favorites if form is submitted
 if (isset($_POST['addToFavorites'])) { 
 
-    //echo '<script>alert("i am clicked: ' . $responseData['error'] . '");</script>';
 
     if(isset($_GET['name']))
     {
         addToFavorites($apiKey, null, $movies["ID"]);
-       // echo '<script>alert("i am a show: ' . $responseData['error'] . '");</script>';
     }
     else
     {
         addToFavorites($apiKey, $movies["ID"], null);
-       // echo '<script>alert("i am movie: ' . $responseData['error'] . '");</script>';
     }
 
     
@@ -160,8 +152,8 @@ if (isset($_POST['addToFavorites'])) {
     <link rel="stylesheet" href="../css/viewMore.css" id="light-mode">
     <link rel="icon" href="../img/4.png" type="image/x-icon">
     <!-- the icons used in the website -->
-    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="file:///E:fontawesome/css/all.css">
     <title>CineTech</title>
 </head>
 
@@ -227,13 +219,9 @@ if (isset($_POST['addToFavorites'])) {
                 
             
             <div class = "userRating">
-            <h3>Ratings: </h3>
+            <!-- <h3>Ratings: </h3> -->
              <div class = "star-icon">
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
+                
              </div>
             </div>
             
