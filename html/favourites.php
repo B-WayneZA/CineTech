@@ -9,8 +9,6 @@ if (!isset($_SESSION['apikey'])) {
 
 $currentPage = 'favourites';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
 
     $data = array(
         'type' => 'GetAllFavourites',
@@ -44,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     curl_close($ch);
-}
+
 ?>
 
 
@@ -94,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </nav>
 </header>
 
+<div class="container">
         <!--This is code for the adding divs-->
         <?php if (isset($message)) { echo "<div class='alert alert-info'>$message</div>"; } ?>
 
