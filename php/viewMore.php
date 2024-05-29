@@ -150,11 +150,11 @@ if (isset($_POST['addToFavorites'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/viewMore.css" id="light-mode">
     <link rel="icon" href="../img/4.png" type="image/x-icon">
-    <!-- the icons used in the website -->
-    
-    <link rel="stylesheet" href="file:///E:fontawesome/css/all.css">
+
+    <!-- <link rel="stylesheet" href="file:///E:fontawesome/css/all.css"> -->
     <title>CineTech</title>
 </head>
+
 
 <body>
     <!--Header-->
@@ -213,13 +213,23 @@ if (isset($_POST['addToFavorites'])) {
             <h3>CineTech Rating:  <?php echo $movies['CineTech_Rating']?></h3><br>
            </div>
                 
-            
-            <div class = "userRating">
-            <!-- <h3>Ratings: </h3> -->
-             <div class = "star-icon">
-                
-             </div>
-            </div>
+           <div class="userRating">
+        <!-- <h3>Ratings: </h3> -->
+        <div class="star-icon">
+            <input type="radio" name="rating" id="star5" value="5">
+            <label for="star5"></label>
+            <input type="radio" name="rating" id="star4" value="4">
+            <label for="star4"></label>
+            <input type="radio" name="rating" id="star3" value="3">
+            <label for="star3"></label>
+            <input type="radio" name="rating" id="star2" value="2">
+            <label for="star2"></label>
+            <input type="radio" name="rating" id="star1" value="1">
+            <label for="star1"></label>
+        </div>
+        <div class="score"></div>
+    </div>
+    <script src="viewMore.js"></script>
             
             <div class = "actors">
                 <h3>Actors: Gabrielle Union, Mark June and Tyler Perry  </h3><br>
@@ -265,7 +275,7 @@ if (isset($_POST['addToFavorites'])) {
         </section>
     </header>
 
-    <script>
+<!-- <script>
         document.addEventListener("DOMContentLoaded", () => {
             var stars = document.querySelectorAll(".star-icon a");
             stars.forEach((item, index1) => {
