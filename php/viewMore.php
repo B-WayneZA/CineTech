@@ -2,7 +2,8 @@
 session_start(); // Start session to store user login status
 
 // Function to make API request
-function makeApiRequest($data) {
+function makeApiRequest($data)
+{
     // Create a new cURL resource
     $ch = curl_init();
 
@@ -36,7 +37,8 @@ function makeApiRequest($data) {
 }
 
 // Function to handle adding to favorites
-function addToFavorites($apiKey, $filmId, $showId) {
+function addToFavorites($apiKey, $filmId, $showId)
+{
     // Check if API key is available
     if (!$apiKey) {
         // Redirect to login page if API key is not available
@@ -44,8 +46,8 @@ function addToFavorites($apiKey, $filmId, $showId) {
         exit();
     }
 
-     // Check if the add button is clicked
-     $add = isset($_POST['addToFavorites']) ? "true" : "false";
+    // Check if the add button is clicked
+    $add = isset($_POST['addToFavorites']) ? "true" : "false";
 
      
      if(isset($_GET['name']))       //show
@@ -65,9 +67,9 @@ function addToFavorites($apiKey, $filmId, $showId) {
             "film_id" => $filmId
         );
         echo '<script>alert("i am a film: ' . $data['film_id'] . '");</script>';
-     }
+    }
     // Prepare data for adding to favorites
-  
+
 
     // Make API request
     $responseData = makeApiRequest($data);
@@ -76,11 +78,11 @@ function addToFavorites($apiKey, $filmId, $showId) {
     // Check if the request was successful
     if ($responseData['status'] === 'success') {
         // Redirect to favourites.php after successfully adding to favorites
-        header("Location: ../html/favourites.php");
+        header("Location: ../php/favourites.php");
         exit();
     } else {
         // Failed to add to favorites
-      //  echo '<script>alert("Failed to add to My List: ' . $responseData['error'] . '");</script>';
+        //  echo '<script>alert("Failed to add to My List: ' . $responseData['error'] . '");</script>';
     }
 }
 
@@ -88,7 +90,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
 $apiKey = isset($_SESSION['apikey']) ? $_SESSION['apikey'] : null;
 
 // Prepare data for JSON request
-if(isset($_GET['name'])) {
+if (isset($_GET['name'])) {
     $name = urldecode($_GET['name']);
     $data = array(
         "type" => "GetAllSeries",
@@ -123,19 +125,16 @@ if ($responseData['status'] === 'success') {
 }
 
 // Handle adding to favorites if form is submitted
-if (isset($_POST['addToFavorites'])) { 
+if (isset($_POST['addToFavorites'])) {
 
 
-    if(isset($_GET['name']))
-    {
+    if (isset($_GET['name'])) {
         addToFavorites($apiKey, null, $movies["ID"]);
     }
     else
     {
         addToFavorites($apiKey, $movies["ID"], null);
     }
-
-    
 }
 ?>
 
@@ -182,28 +181,25 @@ if (isset($_POST['addToFavorites'])) {
                     </li>
                 </ul>
             </div>
-            
-            <div class="search_user">
+            <!-- <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
-                <!-- User image -->
-                <img src="../img/UserPFP.jpeg" alt="">                
-                <!-- Add a button for notifications -->
-            </div>
+                <img src="../img/UserPFP.jpeg" alt="">
+            </div> -->
         </nav>
 
-    <div class = "ViewDetails">
-        <div class="content">
-            <div class = "content-image">
-                <img class="movieImg" src="<?php echo $movies['PosterURL']?>" alt="">
+        <div class="ViewDetails">
+            <div class="content">
+                <div class="content-image">
+                    <img class="movieImg" src="<?php echo $movies['PosterURL'] ?>" alt="">
+                </div>
             </div>
-        </div>
 
-        <div class = "content-details">
-            <!-- Create a div for the description as well as the other-->
-            <div class = "description">
-                <h2>Description: </h2> 
-                <h3><?php echo $movies['Description'] ?></h3><br>
-            </div>
+            <div class="content-details">
+                <!-- Create a div for the description as well as the other-->
+                <div class="description">
+                    <h2>Description: </h2>
+                    <h3><?php echo $movies['Description'] ?></h3><br>
+                </div>
 
             <div class = "Genres">
                 <h3>Genre: <?php echo $movies['Genre']?> </h3><br>
@@ -246,38 +242,152 @@ if (isset($_POST['addToFavorites'])) {
               
               <button class="btn">Share</button>
 
-              <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
                     <button type="submit" class="watchList" name="addToFavorites">Add to MyList</button>
                 </form>
               
         </div>
     </div>
 
+<?php
+//header("Access-Control-Allow-Origin: http://localhost");
+//header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+//header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+
+$mov = array();
+// Check if the login form is submitted
+// Prepare the data for JSON request
+
+if(isset($_GET['name'])) {
+    
+    $data = array(
+        "type" => "GetAllSeries",
+        'limit' => 20,
+        "search" => array(
+            "genre" => $movies['Genre']
+        ),
+        'return' => "all"
+    );
+} else {
+    //$title = urldecode($_GET['title']);
+    $data = array(
+        "type" => "GetAllMovies",
+        'limit' => 20,
+        "search" => array(
+            "genre" => $movies['Genre']
+        ),
+        'return' => "all"
+    );
+}
+
+// Convert data to JSON format
+$json_data = json_encode($data);
+
+// Create a new cURL resource
+$ch = curl_init();
+
+// Set the URL
+curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+// Set the request method to POST
+curl_setopt($ch, CURLOPT_POST, 1);
+
+// Set the request data as JSON
+curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+// Set the Content-Type header
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+// Set basic authentication credentials
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
+
+// Return response instead of outputting it
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Execute the request
+$response = curl_exec($ch);
+
+// Close cURL resource
+curl_close($ch);
+
+// Decode the JSON response
+$responseData = json_decode($response, true);
+
+// Check if the request was successful
+
+if ($responseData['status'] === 'success') {
+    // Process the listings data and display on the page
+    $mov = $responseData['data'];
+} else {
+    // Handle error response
+    $error = $responseData['data'];
+}
+?>
+
 
     <section>
         <h4>People Also Like</h4>
         <div class="cards">
-            <!-- add more of these to check scroll featur -->
-            <a href="#" class="card">
-                <img src="../img/JohnWick.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="../img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
-                    </div>
-                </div>
-            </a>
+        <?php 
+
+            if(isset($_GET['name'])){
+                
+                if(isset($mov))
+                {
+                    foreach($mov as $idx)
+                    {
+
+                        //$nameSeries = urlencode();
+                        echo '<a href="viewMore.php?title='.$idx['Name']. '" class="card">';
+                        echo '<img src= " ' .$idx['PosterURL']. '" alt="" class="poster">';
+                        echo '<div class="rest_card">';
+                        echo '<img src= " '.$idx['PosterURL'].'" alt="" >';
+                        echo '<div class="cont">';
+                        echo '<h4>'. $idx['Name']. '</h4>';
+                        echo '<div class = "sub">';
+                        echo '<p>'.$idx['Genre']. ' , ' . $idx['Release_Year']. '</p>';
+                        echo '<h3><span>CineTech</span>';
+                        echo '<i class="fa fa-star" aria-hidden="true"></i>'. $idx['IMDB_score'].'</h3>';  // assuming 'rating' key exists in the array
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</a>';
+                    }
+                }
+            }
+            else
+            {
+                if(isset($mov))
+                {
+                    foreach($mov as $index)
+                    {
+
+                        //$movtitle = urlencode();
+                        echo '<a href="viewMore.php?title='.$index['Title']. '" class="card">';
+                        echo '<img src= " '.$index['PosterURL'].'" alt="" class="poster">';
+                        echo '<div class="rest_card">';
+                        echo '<img src= " '.$index['PosterURL'].'" alt="" >';
+                        echo '<div class="cont">';
+                        echo '<h4>'. $index['Title']. '</h4>';
+                        echo '<div class = "sub">';
+                        echo '<p>'.$index['Genre']. ' , ' . $index['Release_Year']. '</p>';
+                        echo '<h3><span>CineTech</span>';
+                        echo '<i class="fa fa-star" aria-hidden="true"></i>'. $index['IMDB_score'].'</h3>';  // assuming 'rating' key exists in the array
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</a>';
+                    }
+                }
+            }
+                
+?>
+   
        
         </div>
-
-        <!-- <script src="../js/homePage.js"></script> -->
-
- <!--This is to make the buttons of the stars to work -->
-</section>
+    </section>
 </header>
 
 <!-- <script>
@@ -285,14 +395,45 @@ if (isset($_POST['addToFavorites'])) {
             var stars = document.querySelectorAll(".star-icon a");
             stars.forEach((item, index1) => {
                 item.addEventListener("click", (event) => {
-                    event.preventDefault();  // Prevent default anchor behavior
+                    event.preventDefault(); // Prevent default anchor behavior
                     stars.forEach((star, index2) => {
                         index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
                     });
                 });
             });
         });
-    </script> -->
+
+        //  this is the part for the popup
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("shareButton");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal and blur the main content
+        btn.onclick = function() {
+          modal.style.display = "block";
+          mainContent.classList.add("blurred");
+        }
+
+        // When the user clicks on <span> (x), close the modal and remove the blur
+        span.onclick = function() {
+          modal.style.display = "none";
+          mainContent.classList.remove("blurred");
+        }
+
+        // When the user clicks anywhere outside of the modal, close it and remove the blur
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+            mainContent.classList.remove("blurred");
+          }
+        }
+    </script>
 
 </body>
+
 </html>

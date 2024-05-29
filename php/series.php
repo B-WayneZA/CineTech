@@ -4,62 +4,123 @@
 //header("Access-Control-Allow-Headers: Content-Type, Authorization");
 session_start(); // Start session to store user login status
 
-$currentPage = 'movies';
+$currentPage = 'movies'; 
 
 // Check if the user is not logged in, redirect to login page
 
 $movies = array();
+if (isset($_POST['selected_genre'])) {
+    $selectedGenre = $_POST['selected_genre'];
+
+    // Prepare the data for JSON request
+    $data3 = array(
+        'type' => 'GetAllSeries',
+        'limit' => 100,
+        'search' => array(
+            'genre' => $selectedGenre
+        ),
+        'return' => 'all'
+    );
+
+    // Convert data to JSON format
+    $json_data = json_encode($data3);// Check if the login form is submitted
+
+    // Create a new cURL resource
+    $ch = curl_init();
+
+    // Set the URL
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+    // Set the request method to POST
+    curl_setopt($ch, CURLOPT_POST, 1);
+
+    // Set the request data as JSON
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+    // Set the Content-Type header
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+    // Set basic authentication credentials
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
+
+    // Return response instead of outputting it
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute the request
+    $response = curl_exec($ch);
+
+    // Close cURL resource
+    curl_close($ch);
+
+    // Decode the JSON response
+    $responseData = json_decode($response, true);
+
+    // Check if the request was successful
+
+    if ($responseData['status'] === 'success') {
+        // Process the listings data and display on the page
+        $movies = $responseData['data'];
+    } else {
+        // Handle error response
+        $error = $responseData['data'];
+    }
+    
+// Prepare the data for JSON request
+} else {
+    $data = array(
+        'type' => 'GetAllSeries',
+        'limit' => 100,
+        'return' => 'all'
+    );
+
+    // Convert data to JSON format
+    $json_data = json_encode($data);
+
+    // Create a new cURL resource
+    $ch = curl_init();
+
+    // Set the URL
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+    // Set the request method to POST
+    curl_setopt($ch, CURLOPT_POST, 1);
+
+    // Set the request data as JSON
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+    // Set the Content-Type header
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+    // Set basic authentication credentials
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
+
+    // Return response instead of outputting it
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute the request
+    $response = curl_exec($ch);
+
+    // Close cURL resource
+    curl_close($ch);
+
+    // Decode the JSON response
+    $responseData = json_decode($response, true);
+
+    // Check if the request was successful
+
+    if ($responseData['status'] === 'success') {
+        // Process the listings data and display on the page
+        $movies = $responseData['data'];
+    } else {
+        // Handle error response
+        $error = $responseData['data'];
+    }
+
+}
 // Check if the login form is submitted
 // Prepare the data for JSON request
-$data = array(
-    'type' => 'GetAllSeries',
-    'limit' => 200,
-    'return' => 'all'
-);
-
-// Convert data to JSON format
-$json_data = json_encode($data);
-
-// Create a new cURL resource
-$ch = curl_init();
-
-// Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
-
-// Set the request method to POST
-curl_setopt($ch, CURLOPT_POST, 1);
-
-// Set the request data as JSON
-curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-
-// Set the Content-Type header
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-// Set basic authentication credentials
-curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
-
-// Return response instead of outputting it
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute the request
-$response = curl_exec($ch);
-
-// Close cURL resource
-curl_close($ch);
-
-// Decode the JSON response
-$responseData = json_decode($response, true);
-
-// Check if the request was successful
-
-if ($responseData['status'] === 'success') {
-    // Process the listings data and display on the page
-    $movies = $responseData['data'];
-} else {
-    // Handle error response
-    $error = $responseData['data'];
-}
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +141,7 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
 
-        <video src="../video/JJKaisen.mp4" autoplay loop="true"></video>
+        <video src="../video/JohnWickTrailer.mp4" autoplay loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />
@@ -102,11 +163,11 @@ if ($responseData['status'] === 'success') {
                     </li>
                 </ul>
             </div>
-            <div class="search_user">
+            <!-- <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
                 <img src="../img/UserPFP.jpeg" alt="">
                 <div class="search" id="search_results"></div>
-            </div>
+            </div> -->
         </nav>
 
         <!-- dropdown menu for the genre -->
@@ -116,38 +177,48 @@ if ($responseData['status'] === 'success') {
                 Genre
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">Action</button></li>
-                <li><button class="dropdown-item" type="button">Adventure</button></li>
-                <li><button class="dropdown-item" type="button">Anime</button></li>
-                <li><button class="dropdown-item" type="button">Animation</button></li>
-                <li><button class="dropdown-item" type="button">Biographical</button></li>
-                <li><button class="dropdown-item" type="button">Children</button></li>
-                <li><button class="dropdown-item" type="button">Comedy</button></li>
-                <li><button class="dropdown-item" type="button">Documentation</button></li>
-                <li><button class="dropdown-item" type="button">Drama</button></li>
-                <li><button class="dropdown-item" type="button">European</button></li>
-                <li><button class="dropdown-item" type="button">Family</button></li>
-                <li><button class="dropdown-item" type="button">Fantasy</button></li>
-                <li><button class="dropdown-item" type="button">History</button></li>
-                <li><button class="dropdown-item" type="button">Horror</button></li>
-                <li><button class="dropdown-item" type="button">Music</button></li>
-                <li><button class="dropdown-item" type="button">Mystery</button></li>
-                <li><button class="dropdown-item" type="button">Political</button></li>
-                <li><button class="dropdown-item" type="button">Psychological</button></li>
-                <li><button class="dropdown-item" type="button">Reality</button></li>
-                <li><button class="dropdown-item" type="button">Romance</button></li>
-                <li><button class="dropdown-item" type="button">Satire</button></li>
-                <li><button class="dropdown-item" type="button">Sci-fi</button></li>
-                <li><button class="dropdown-item" type="button">Sport</button></li>
-                <li><button class="dropdown-item" type="button">Spy</button></li>
-                <li><button class="dropdown-item" type="button">Superhero</button></li>
-                <li><button class="dropdown-item" type="button">Supernatural</button></li>
-                <li><button class="dropdown-item" type="button">Teen</button></li>
-                <li><button class="dropdown-item" type="button">Thriller</button></li>
-                <li><button class="dropdown-item" type="button">War</button></li>
-                <li><button class="dropdown-item" type="button">Western</button></li>
+                <form class="dropdown-menu" id="genreForm" method="POST" action="" value="">
+                <input type="hidden" id="selected_genre" name="selected_genre" value="">
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('action')" value="action">Action</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('adventure')" value="adventure">Adventure</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('anime')" value="anime">Anime</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('animation')" value="animation">Animation</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('biographical')" value="biographical">Biographical</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('family')" value="family">Family</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('children')" value="children">Children</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('comedy')" value="action">Comedy</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('documentary')" value="documentary">Documentary</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('drama')" value="drama">Drama</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('european')" value="european">European</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('family')" value="family">Family</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('fantasy')" value="fantasy">Fantasy</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('history')" value="history">History</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('horror')" value="horror">Horror</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('music')" value="music">Music</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('mystery')" value="mystery">Mystery</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('political')" value="political">Political</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('psychological')" value="psychological">Psychological</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('reality')" value="reality">Reality</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('romance')" value="romance">Romance</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('satire')" value="satire">Satire</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('scifi')" value="scifi">Sci-fi</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('sport')" value="sport">Sport</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('spy')" value="spy">Spy</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('superhero')" value="superhero">Superhero</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('supernatural')" value="supernatural">Supernatural</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('teen')" value="teen">Teen</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('thriller')" value="thriller">Thriller</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('war')" value="war">War</button></li>
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('western')" value="western">Western</button></li>
+                </form>
             </ul>
         </div>
+        <script>
+        function selectGenre(genre) {
+            document.getElementById('selected_genre').value = genre;
+            document.getElementById('genreForm').submit();
+        }
+        </script>
 
         <!-- Contnent/details of video playing  -->
         <div class="content">
