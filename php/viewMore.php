@@ -363,7 +363,6 @@ if ($responseData['status'] === 'success') {
                 {
                     foreach($mov as $index)
                     {
-
                         //$movtitle = urlencode();
                         echo '<a href="viewMore.php?title='.$index['Title']. '" class="card">';
                         echo '<img src= " '.$index['PosterURL'].'" alt="" class="poster">';
@@ -384,13 +383,11 @@ if ($responseData['status'] === 'success') {
             }
                 
 ?>
-   
-       
         </div>
     </section>
 </header>
 
-<!-- <script>
+<script>
         document.addEventListener("DOMContentLoaded", () => {
             var stars = document.querySelectorAll(".star-icon a");
             stars.forEach((item, index1) => {
