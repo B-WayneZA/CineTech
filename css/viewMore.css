@@ -255,7 +255,7 @@ header .content {
     padding-left: 50px;
     margin-bottom: 50px;
     border: 2px solid rgb(153, 66, 245);
-    width: 800px;
+    width: 900px;
     height: 500px;
 }
 
@@ -415,39 +415,6 @@ header section .cards .card:hover .rest_card {
 
 /*This is code for rating stars*/
 
-@font-face {
-    font-family: ps;
-    src: url('font/Poppins-Regular.ttf');
-}
-
-.userRating {
-    padding: 20px 30px;
-    background-color: #111;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.6);
-}
-
-.userRating h3 {
-    color: #444;
-    font-weight: 300;
-}
-
-.userRating .star-icon {
-    display: flex;
-    gap: 20px;  /* Correct property for spacing between items */
-}
-
-.userRating .star-icon a {
-    transition: 0.6s;
-    color: #333;
-    font-size: 40px;
-    text-decoration: none;  /* Ensure no underline on the links */
-}
-
-.userRating .star-icon a.active {
-    color: gold;
-}
 
 /*End of ratings code */
 

@@ -1,3 +1,96 @@
+<?php
+session_start();
+
+function makeApiRequest($data) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($response, true);
+}
+
+function deleteItem($title, $itemType) {
+    $data = array(
+        "type" => "Remove",
+        "title" => $title,
+        "item" => strtolower($itemType) // Convert to lowercase to match the API expectation
+    );
+
+    $response = makeApiRequest($data);
+
+    if ($response['status'] === 'success') {
+        echo '<script>alert("Successfully deleted ' . $itemType . ': ' . $title . '");</script>';
+    } else {
+        echo '<script>alert("Failed to delete ' . $itemType . ': ' . $response['data'] . '");</script>';
+    }
+}
+
+function editItem($title, $itemType, $fields) {
+    $data = array(
+        "type" => $itemType === 'film' ? "EditMovie" : "EditShow",
+        "title" => $itemType === 'film' ? $title : null,
+        "name" => $itemType === 'show' ? $title : null,
+        "fields" => $fields
+    );
+
+    $response = makeApiRequest($data);
+
+    if ($response['status'] === 'success') {
+        echo '<script>alert("Successfully edited ' . $itemType . ': ' . $title . '");</script>';
+    } else {
+        echo '<script>alert("Failed to edit ' . $itemType . ': ' . $response['data'] . '");</script>';
+    }
+}
+
+function deleteUserByEmail($email) {
+    $data = array(
+        "type" => "DeleteUser",
+        "email" => $email
+    );
+
+    $response = makeApiRequest($data);
+
+    if ($response['status'] === 'success') {
+        echo '<script>alert("Successfully deleted user with email: ' . $email . '");</script>';
+    } else {
+        echo '<script>alert("Failed to delete user: ' . $response['data'] . '");</script>';
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
+        $title = $_POST['deleteTitle'];
+        $itemType = $_POST['deleteType'];
+        deleteItem($title, $itemType);
+    } elseif (isset($_POST['editTitle']) && isset($_POST['editType']) && isset($_POST['editField']) && isset($_POST['editValue'])) {
+        $title = $_POST['editTitle'];
+        $itemType = $_POST['editType'];
+        $field = $_POST['editField'];
+        $value = $_POST['editValue'];
+        $fields = array($field => $value);
+        editItem($title, $itemType, $fields);
+    } elseif (isset($_POST['deleteEmail'])) {
+        $email = $_POST['deleteEmail'];
+        deleteUserByEmail($email);
+    }
+}
+?>
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,21 +183,19 @@
                     <div class="delete-movie-series">
                         <h2>Delete Movie or Series</h2>
                         <p>Remove Movies/Series no longer needed in the database.</p>
-                        <form id="deleteForm">
-                            <input type="text" id="deleteTitle" placeholder="Title" required>
-                            <!-- dropdown here -->
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <input type="text" id="deleteTitle" name="deleteTitle" placeholder="Title" required>
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Movie/Series
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <input type="radio" id="deleteMovie" name="deleteType" value="Movie" checked>
+                                        <input type="radio" id="deleteMovie" name="deleteType" value="film" checked>
                                         <label for="deleteMovie">Movie</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="deleteSeries" name="deleteType" value="Series">
+                                        <input type="radio" id="deleteSeries" name="deleteType" value="show">
                                         <label for="deleteSeries">Series</label>
                                     </li>
                                 </ul>
@@ -143,57 +234,55 @@
                         </form>
                     </div>
                     
-                    <!-- this is the edit to movie/series block -->
-                    <div class="edit-movie-series">
+                     <!-- this is the edit to movie/series block -->
+                     <div class="edit-movie-series">
                         <h2>Edit Movie or Series</h2>
                         <p>This box will edit a movie or series from the database.</p>
-                        <form id="editForm">
-                            <input type="text" id="editTitle" placeholder="Title" required>
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <input type="text" id="editTitle" name="editTitle" placeholder="Title" required>
                             <!-- dropdown for what we editing here -->
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Movie/Series
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <input type="radio" id="editMovie" name="editType" value="movie" checked>
+                                        <input type="radio" id="editMovie" name="editType" value="film" checked>
                                         <label for="editMovie">Movie</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="editSeries" name="editType" value="series">
+                                        <input type="radio" id="editSeries" name="editType" value="show">
                                         <label for="editSeries">Series</label>
                                     </li>
                                 </ul>
                             </div>
                             <!-- dropdown for what part we editing here -->
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Edit Here
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><input type="radio" id="editTitle" name="editField" value="title"><label for="editTitle">Title</label></li>
-                                    <li><input type="radio" id="editDescription" name="editField" value="description"><label for="editDescription">Description</label></li>
-                                    <li><input type="radio" id="editPoster" name="editField" value="poster"><label for="editPoster">Poster</label></li>
-                                    <li><input type="radio" id="editRating" name="editField" value="rating"><label for="editRating">Rating</label></li>
-                                    <li><input type="radio" id="editGenre" name="editField" value="genre"><label for="editGenre">Genre</label></li>
-                                    <li><input type="radio" id="editReleaseYear" name="editField" value="release_year"><label for="editReleaseYear">Release Year</label></li>
+                                    <li><input type="radio" id="editTitle" name="editField" value="Title"><label for="editTitle">Title</label></li>
+                                    <li><input type="radio" id="editDescription" name="editField" value="Description"><label for="editDescription">Description</label></li>
+                                    <li><input type="radio" id="editPoster" name="editField" value="PosterURL"><label for="editPoster">Poster</label></li>
+                                    <li><input type="radio" id="editRating" name="editField" value="RatingID"><label for="editRating">Rating</label></li>
+                                    <li><input type="radio" id="editGenre" name="editField" value="Genre_ID"><label for="editGenre">Genre</label></li>
+                                    <li><input type="radio" id="editReleaseYear" name="editField" value="Release_Year"><label for="editReleaseYear">Release Year</label></li>
                                 </ul>
                             </div>
-                            <input type="text" id="editValue" placeholder="Edit" required>
+                            <input type="text" id="editValue" name="editValue" placeholder="Edit" required>
                             <button type="submit">Edit</button>
                         </form>
-                    </div>
+                     </div>
                     
                     <!-- this is the delete user block -->
                     <div class="delete-block-user">
-                        <h2>Delete User from Database</h2>
-                        <p>This box will remove a user from the database.</p>
-                        <form id="deleteUserForm">
-                            <input type="email" id="deleteEmail" placeholder="Email" required>
-                            <button type="submit">Delete</button>
-                        </form>
+                    <h2>Delete User from Database</h2>
+                    <p>This box will remove a user from the database.</p>
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <input type="email" id="deleteEmail" name="deleteEmail" placeholder="Email" required>
+                        <button type="submit">Delete</button>
+                    </form>
                     </div>
                 </div>
             </main>
@@ -207,8 +296,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
     <!-- Custom JS -->
     <script src="../js/admin.js"></script>
-
-
     
 </body>
 
