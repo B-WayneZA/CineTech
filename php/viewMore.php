@@ -48,7 +48,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
      $add = isset($_POST['addToFavorites']) ? "true" : "false";
 
      
-     if(isset($_GET['name']))
+     if(isset($_GET['name']))       //show
      {
         $data = array(
             "type" => "Favourite",
@@ -58,7 +58,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
         );
      }else
      {
-        $data = array(
+        $data = array(                      //movie
             "type" => "Favourite",
             "apikey" => $apiKey,
             "add" => $add,
