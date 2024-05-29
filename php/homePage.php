@@ -1,3 +1,69 @@
+<?php
+  session_start();
+
+    $currentPage = 'homePage';
+
+    $noti = array();
+
+
+
+  if(isset($_SESSION['apikey'])) 
+  {
+      $apikey = $_SESSION['apikey'];
+    $dataArr = array(
+        'type' => 'GetShared',
+        'apikey' => $apikey,
+        
+    );
+
+    $json_arr = json_encode($dataArr);
+
+    $ch_var = curl_init();
+
+    curl_setopt($ch_var, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+    // Set the request method to POST
+    curl_setopt($ch_var, CURLOPT_POST, 1);
+
+    // Set the request data as JSON
+    curl_setopt($ch_var, CURLOPT_POSTFIELDS, $json_arr);
+
+    // Set the Content-Type header
+    curl_setopt($ch_var, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+    // Set basic authentication credentials
+    curl_setopt($ch_var, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch_var, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
+
+    // Return response instead of outputting it
+    curl_setopt($ch_var, CURLOPT_RETURNTRANSFER, true);
+
+    $response_var = curl_exec($ch_var);
+
+    if (curl_errno($ch_var)) {
+        $error_msg_var = curl_error($ch_var);
+    }
+
+    curl_close($ch_var);
+
+    if (isset($error_msg_var)) {
+        // Handle CURL error
+        // echo "CURL Error: $error_msg";
+    } else {
+        $responseData_var = json_decode($response_var, true);
+
+        if ($responseData_var['status'] === 'success') {
+            $noti = $responseData_var['data'];
+        } else {
+            $errorText = $responseData_var['data'];
+        }
+    }
+  } 
+  else{
+    header("Location: ../php/login.php");
+    exit();
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -174,85 +240,31 @@
             />
             <div class="notifications-popup">
               <!-- Content of notifications popup goes here -->
-              <div
-                class="toast"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-              >
-                <div class="toast-header">
-                  <img
-                    src="../img/Notifications.png"
-                    class="rounded me-2"
-                    alt="..."
-                  />
-                  <strong class="me-auto">CineTech</strong>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="toast"
-                    aria-label="Close"
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="toast-body">
-                  Hello, Johnny someone sent you a movie.
-                </div>
-              </div>
-              <div
-                class="toast"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-              >
-                <div class="toast-header">
-                  <img
-                    src="../img/Notifications.png"
-                    class="rounded me-2"
-                    alt="..."
-                  />
-                  <strong class="me-auto">CineTech</strong>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="toast"
-                    aria-label="Close"
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="toast-body">
-                  Hello, Johnny someone sent you new series.
-                </div>
-              </div>
-              <div
-                class="toast"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-              >
-                <div class="toast-header">
-                  <img
-                    src="../img/Notifications.png"
-                    class="rounded me-2"
-                    alt="..."
-                  />
-                  <strong class="me-auto">CineTech</strong>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="toast"
-                    aria-label="Close"
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="toast-body">
-                  Hello, Johnny someone sent you a gift.
-                </div>
-              </div>
-            </div>
+<?php 
+            if(isset($noti))
+            {
+              foreach($noti as $movie)
+              {
+                $title = urlencode($movie['title']);
+               
+                echo '<div class = "toast" role="alert" aria-live="assertive" aria-atomic="true"> ';     //<!-- first div under notifications-->
+
+                echo '<div class="toast-header"> ';
+                echo '<img src="'. $movie['poster_url'].'" class="rounded me-2" alt="..."/>'; 
+                echo '<strong class="me-auto">CineTech</strong>';
+                echo '<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">';
+                echo '<i class="fa fa-times" aria-hidden="true"></i>';
+                echo '</button>';
+                echo '</div>';    //class="toast-header">
+                echo '<div class="toast-body">';
+                echo  $movie['sender_username']. 'sent you : '.'<a href="viewMore.php?title=' . $title .'">'.$movie['title'] . '</a>';
+                echo '</div>' ;   // closing  toast body-->
+                echo '</div>';  // closing  <!-- first div under notifications-->
+              }
+            }
+?>
+
+            </div> <!--  closing div for notifications-->
           </div>
         </div>
       </nav>
@@ -310,13 +322,6 @@
     </div>
 
 <?php
-    // Structure a request body: type, limit: 10, return
-    // Create array (index.php Lebo pa4) also line 216 for how to display on HTML
-    // Encode JSON
-    // For line 35 on Lebo's code, look at Amantle's code
-    // Place PHP tags under divs with equal signs
-    // Look at 215 to 263 Lebo index.php for guide
-
     $currentPage = 'homePage';
 
     $movies = array();
@@ -487,7 +492,7 @@
               {
                 $title2 = urlencode($movie2['Name']);
                 // individual card for each movie
-                echo '<a href="viewMore.php?title=' . $title2 . '" class="card">';
+                echo '<a href="viewMore.php?name=' . $title2 . '" class="card">';
 
                 echo '<img src="'. $movie2['PosterURL'].'" alt="" class="poster">';
 
@@ -793,10 +798,10 @@
             if(isset($movies5))
             {
               foreach($movies5 as $movie5)
-              {
+              { 
                 $title5 = urlencode($movie5['Name']);
                 // individual card for each movie
-                echo '<a href="viewMore.php?title=' . $title . '" class="card">';
+                echo '<a href="viewMore.php?name=' . $title5 . '" class="card">';
 
                 echo '<img src="'. $movie5['PosterURL'].'" alt="" class="poster">';
 
@@ -900,7 +905,7 @@
               {
                 $title6 = urlencode($movie6['Name']);
                 // individual card for each movie
-                echo '<a href="viewMore.php?title=' . $title6 . '" class="card">';
+                echo '<a href="viewMore.php?name=' . $title6 . '" class="card">';
 
                 echo '<img src="'. $movie6['PosterURL'].'" alt="" class="poster">';
 
