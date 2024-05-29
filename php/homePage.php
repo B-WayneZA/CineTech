@@ -487,7 +487,7 @@
               {
                 $title2 = urlencode($movie2['Name']);
                 // individual card for each movie
-                echo '<a href="viewMore.php?title=' . $title2 . '" class="card">';
+                echo '<a href="viewMore.php?name=' . $title2 . '" class="card">';
 
                 echo '<img src="'. $movie2['PosterURL'].'" alt="" class="poster">';
 
@@ -793,10 +793,10 @@
             if(isset($movies5))
             {
               foreach($movies5 as $movie5)
-              {
+              { 
                 $title5 = urlencode($movie5['Name']);
                 // individual card for each movie
-                echo '<a href="viewMore.php?title=' . $title . '" class="card">';
+                echo '<a href="viewMore.php?name=' . $title5 . '" class="card">';
 
                 echo '<img src="'. $movie5['PosterURL'].'" alt="" class="poster">';
 
@@ -900,7 +900,7 @@
               {
                 $title6 = urlencode($movie6['Name']);
                 // individual card for each movie
-                echo '<a href="viewMore.php?title=' . $title6 . '" class="card">';
+                echo '<a href="viewMore.php?name=' . $title6 . '" class="card">';
 
                 echo '<img src="'. $movie6['PosterURL'].'" alt="" class="poster">';
 

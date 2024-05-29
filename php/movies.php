@@ -83,7 +83,7 @@ if ($responseData['status'] === 'success') {
                 <img src="../img/4.png" alt="" />
                 <ul>
                     <li>
-                        <a href="../html/homePage.html">Home</a>
+                        <a href="../php/homePage.php">Home</a>
                     </li>
                     <li>
                         <a href="../php/movies.php">Movies</a>
