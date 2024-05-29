@@ -1,4 +1,4 @@
-<?php
+<b?php
 session_start(); // Start session to store user login status
 
 // Function to make API request
@@ -155,8 +155,8 @@ if (isset($_POST['addToFavorites'])) {
     <link rel="stylesheet" href="../css/viewMore.css" id="light-mode">
     <link rel="icon" href="../img/4.png" type="image/x-icon">
     <!-- the icons used in the website -->
-    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="file:///E:fontawesome/css/all.css">
     <title>CineTech</title>
 </head>
 
