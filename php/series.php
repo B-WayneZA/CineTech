@@ -13,7 +13,7 @@ $movies = array();
 // Prepare the data for JSON request
 $data = array(
     'type' => 'GetAllSeries',
-    'limit' => 50,
+    'limit' => 200,
     'return' => 'all'
 );
 
@@ -176,7 +176,7 @@ if ($responseData['status'] === 'success') {
                     // individual card for each movie
                     $title = urlencode($movie['Name']);
                     // individual card for each movie
-                    echo '<a href="viewMore.php?title=' . $title . '" class="card">';
+                    echo '<a href="viewMore.php?name=' . $title . '" class="card">';
 
                     // image of the poster
                     echo '<img src=' . $movie['PosterURL'] . ' alt="" class="poster">';
@@ -188,7 +188,7 @@ if ($responseData['status'] === 'success') {
                     echo '<h4>' . $movie['Name'] . '</h4>';
 
                     // content of the card
-                    echo '<p>' . $movie['Genre'] . $movie['Release_Year'] . '</p>';
+                    echo '<p>' . $movie['Genre']. " " . $movie['Release_Year'] . '</p>';
                     echo '<h3><span>CINETECH</span><i class="fa fa-star" aria-hidden="true"></i>' . $movie['IMDB_score'] . '</h3>';
                     echo '</div>';
                     echo '</div>';

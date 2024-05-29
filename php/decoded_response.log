@@ -1,10 +1,6 @@
 Array
 (
     [status] => success
-    [timestamp] => 1716946818
-    [data] => Array
-        (
-            [apiKey] => b18b65f511598f33e701c32570ddf1a3
-        )
-
+    [timestamp] => 1716947100
+    [data] => {"apikey":"b18b65f511598f33e701c32570ddf1a3"}
 )
