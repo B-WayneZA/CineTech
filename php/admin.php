@@ -1,51 +1,48 @@
 <?php
-// Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the deleteTitle and deleteType are set
-    if (isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
-        // Construct the request body
-        $requestData = array(
-            "type" => "Remove",
-            "item" => $_POST['deleteType'] === "Movie" ? "film" : "show", // Convert deleteType to item
-            "title" => $_POST['deleteTitle']
-        );
+session_start();
 
-        // Convert the request data to JSON
-        $jsonData = json_encode($requestData);
+function makeApiRequest($data) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($response, true);
+}
 
-        // Set API endpoint URL
-        $apiUrl = "https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php";
+function deleteItem($title, $itemType) {
+    $data = array(
+        "type" => "Remove",
+        "title" => $title,
+        "item" => strtolower($itemType) // Convert to lowercase to match the API expectation
+    );
 
-        // Initialize cURL session
-        $curl = curl_init($apiUrl);
+    $response = makeApiRequest($data);
 
-        // Set cURL options
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST"); // Set request method to POST
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonData); // Set request body
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Return response as string
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($jsonData)
-        ));
-
-        // Execute cURL request
-        $response = curl_exec($curl);
-
-        // Check for cURL errors
-        if (curl_errno($curl)) {
-            echo json_encode(array("status" => "error", "message" => 'Error: ' . curl_error($curl)));
-        } else {
-            // Output response
-            echo $response;
-        }
-
-        // Close cURL session
-        curl_close($curl);
+    if ($response['status'] === 'success') {
+        echo '<script>alert("Successfully deleted ' . $itemType . ': ' . $title . '");</script>';
     } else {
-        echo json_encode(array("status" => "error", "message" => "Please provide both title and type for deleting."));
+        echo '<script>alert("Failed to delete ' . $itemType . ': ' . $response['data'] . '");</script>';
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
+    $title = $_POST['deleteTitle'];
+    $itemType = $_POST['deleteType'];
+    deleteItem($title, $itemType);
+}
 ?>
+
+
+
+
+
+
 
 
 
@@ -142,21 +139,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="delete-movie-series">
                         <h2>Delete Movie or Series</h2>
                         <p>Remove Movies/Series no longer needed in the database.</p>
-                        <form id="deleteForm">
-                            <input type="text" id="deleteTitle" placeholder="Title" required>
-                            <!-- dropdown here -->
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <input type="text" id="deleteTitle" name="deleteTitle" placeholder="Title" required>
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Movie/Series
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <input type="radio" id="deleteMovie" name="deleteType" value="Movie" checked>
+                                        <input type="radio" id="deleteMovie" name="deleteType" value="film" checked>
                                         <label for="deleteMovie">Movie</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="deleteSeries" name="deleteType" value="Series">
+                                        <input type="radio" id="deleteSeries" name="deleteType" value="show">
                                         <label for="deleteSeries">Series</label>
                                     </li>
                                 </ul>
