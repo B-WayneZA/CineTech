@@ -31,10 +31,36 @@ function deleteItem($title, $itemType) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
-    $title = $_POST['deleteTitle'];
-    $itemType = $_POST['deleteType'];
-    deleteItem($title, $itemType);
+function editItem($title, $itemType, $fields) {
+    $data = array(
+        "type" => $itemType === 'film' ? "EditMovie" : "EditShow",
+        "title" => $itemType === 'film' ? $title : null,
+        "name" => $itemType === 'show' ? $title : null,
+        "fields" => $fields
+    );
+
+    $response = makeApiRequest($data);
+
+    if ($response['status'] === 'success') {
+        echo '<script>alert("Successfully edited ' . $itemType . ': ' . $title . '");</script>';
+    } else {
+        echo '<script>alert("Failed to edit ' . $itemType . ': ' . $response['data'] . '");</script>';
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
+        $title = $_POST['deleteTitle'];
+        $itemType = $_POST['deleteType'];
+        deleteItem($title, $itemType);
+    } elseif (isset($_POST['editTitle']) && isset($_POST['editType']) && isset($_POST['editField']) && isset($_POST['editValue'])) {
+        $title = $_POST['editTitle'];
+        $itemType = $_POST['editType'];
+        $field = $_POST['editField'];
+        $value = $_POST['editValue'];
+        $fields = array($field => $value);
+        editItem($title, $itemType, $fields);
+    }
 }
 ?>
 
@@ -190,48 +216,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteTitle']) && iss
                         </form>
                     </div>
                     
-                    <!-- this is the edit to movie/series block -->
-                    <div class="edit-movie-series">
+                     <!-- this is the edit to movie/series block -->
+                     <div class="edit-movie-series">
                         <h2>Edit Movie or Series</h2>
                         <p>This box will edit a movie or series from the database.</p>
-                        <form id="editForm">
-                            <input type="text" id="editTitle" placeholder="Title" required>
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <input type="text" id="editTitle" name="editTitle" placeholder="Title" required>
                             <!-- dropdown for what we editing here -->
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Movie/Series
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <input type="radio" id="editMovie" name="editType" value="movie" checked>
+                                        <input type="radio" id="editMovie" name="editType" value="film" checked>
                                         <label for="editMovie">Movie</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="editSeries" name="editType" value="series">
+                                        <input type="radio" id="editSeries" name="editType" value="show">
                                         <label for="editSeries">Series</label>
                                     </li>
                                 </ul>
                             </div>
                             <!-- dropdown for what part we editing here -->
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Edit Here
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><input type="radio" id="editTitle" name="editField" value="title"><label for="editTitle">Title</label></li>
-                                    <li><input type="radio" id="editDescription" name="editField" value="description"><label for="editDescription">Description</label></li>
-                                    <li><input type="radio" id="editPoster" name="editField" value="poster"><label for="editPoster">Poster</label></li>
-                                    <li><input type="radio" id="editRating" name="editField" value="rating"><label for="editRating">Rating</label></li>
-                                    <li><input type="radio" id="editGenre" name="editField" value="genre"><label for="editGenre">Genre</label></li>
-                                    <li><input type="radio" id="editReleaseYear" name="editField" value="release_year"><label for="editReleaseYear">Release Year</label></li>
+                                    <li><input type="radio" id="editTitle" name="editField" value="Title"><label for="editTitle">Title</label></li>
+                                    <li><input type="radio" id="editDescription" name="editField" value="Description"><label for="editDescription">Description</label></li>
+                                    <li><input type="radio" id="editPoster" name="editField" value="PosterURL"><label for="editPoster">Poster</label></li>
+                                    <li><input type="radio" id="editRating" name="editField" value="RatingID"><label for="editRating">Rating</label></li>
+                                    <li><input type="radio" id="editGenre" name="editField" value="Genre_ID"><label for="editGenre">Genre</label></li>
+                                    <li><input type="radio" id="editReleaseYear" name="editField" value="Release_Year"><label for="editReleaseYear">Release Year</label></li>
                                 </ul>
                             </div>
-                            <input type="text" id="editValue" placeholder="Edit" required>
+                            <input type="text" id="editValue" name="editValue" placeholder="Edit" required>
                             <button type="submit">Edit</button>
                         </form>
-                    </div>
+                     </div>
                     
                     <!-- this is the delete user block -->
                     <div class="delete-block-user">
@@ -254,8 +278,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteTitle']) && iss
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
     <!-- Custom JS -->
     <script src="../js/admin.js"></script>
-
-
     
 </body>
 
