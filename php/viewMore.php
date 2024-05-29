@@ -1,4 +1,4 @@
-<b?php
+<?php
 session_start(); // Start session to store user login status
 
 // Function to make API request
@@ -47,9 +47,6 @@ function addToFavorites($apiKey, $filmId, $showId) {
      // Check if the add button is clicked
      $add = isset($_POST['addToFavorites']) ? "true" : "false";
 
-     echo '<script>console.log("addToFavorites called with API key: ' . $apiKey . '");</script>';
-     echo '<script>console.log("filmId: ' . $filmId . '");</script>';
-     echo '<script>console.log("showId: ' . $showId . '");</script>';
      
      if(isset($_GET['name']))
      {
@@ -59,7 +56,6 @@ function addToFavorites($apiKey, $filmId, $showId) {
             "add" => $add,
             "show_id" => $showId
         );
-        // echo '<script>alert("i am a show : ' . $responseData['error'] . '");</script>';
      }else
      {
         $data = array(
@@ -121,7 +117,6 @@ $responseData = makeApiRequest($data);
 if ($responseData['status'] === 'success') {
     // Process the data
     $movies = $responseData['data'][0];
-    // echo '<script>console.log("Movies data: ' . json_encode($movies) . '");</script>';
 } else {
     // Handle error response
     $error = $responseData['data'];
@@ -130,17 +125,14 @@ if ($responseData['status'] === 'success') {
 // Handle adding to favorites if form is submitted
 if (isset($_POST['addToFavorites'])) { 
 
-    //echo '<script>alert("i am clicked: ' . $responseData['error'] . '");</script>';
 
     if(isset($_GET['name']))
     {
         addToFavorites($apiKey, null, $movies["ID"]);
-       // echo '<script>alert("i am a show: ' . $responseData['error'] . '");</script>';
     }
     else
     {
         addToFavorites($apiKey, $movies["ID"], null);
-       // echo '<script>alert("i am movie: ' . $responseData['error'] . '");</script>';
     }
 
     
