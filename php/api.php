@@ -217,6 +217,8 @@ class API
 
       $cookie_name = $apiKey;
       setcookie($cookie_name, "", time() - 3600, "/");
+      header("Location: ../html/launch.html"); // Redirect to login page
+      exit();
    }
 
 
