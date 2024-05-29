@@ -267,10 +267,10 @@
                 if(isset($user)) {
                   echo "<h3>".$user['username']."</h3>";
                   echo "<p>Email: ".$user['email']."</p>";
+                } else {
+                  echo "<h3>User not logged in :( </h3>";
                 }
               ?>
-              <h3>Johnny Wicker</h3>
-              <p>Email: mr.johnnyWick@gmail.com</p>
 
             </div>
             <div class="user-actions">
