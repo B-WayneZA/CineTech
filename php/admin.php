@@ -67,6 +67,36 @@ function deleteUserByEmail($email)
     }
 }
 
+
+function addSeries($title, $genreID, $ratingID, $country, $description, $runtime, $year, $seasons, $postURL, $videoURL, $screenURL)
+{
+    $data = array(
+        "type" => "AddSeries",
+        "title" => $title,
+        "genreID" => $genreID,
+        "ratingID" => $ratingID,
+        "country" => $country,
+        "description" => $description,
+        "runtime" => $runtime,
+        "year" => $year,
+        "seasons" => $seasons,
+        "PostURL" => $postURL,
+        "VideoURL" => $videoURL,
+        "ScreenURL" => $screenURL
+    );
+
+    $response = makeApiRequest($data);
+
+    if ($response === null) {
+        echo '<script>alert("Failed to add show: No response from API");</script>';
+    } elseif ($response['status'] === 'success') {
+        echo '<script>alert("Successfully added show: ' . $title . '");</script>';
+    } else {
+        echo '<script>alert("Failed to add show: ' . $response['data'] . '");</script>';
+    }
+}
+
+
 function addMovie($title, $genreID, $ratingID, $country, $description, $runtime, $year, $postURL, $videoURL, $screenURL)
 {
     $data = array(
@@ -93,31 +123,6 @@ function addMovie($title, $genreID, $ratingID, $country, $description, $runtime,
 }
 
 
-function addSeries($title, $genreID, $ratingID, $country, $description, $runtime, $year, $seasons, $postURL, $videoURL, $screenURL)
-{
-    $data = array(
-        "type" => "AddSeries",
-        "title" => $title,
-        "genreID" => $genreID,
-        "ratingID" => $ratingID,
-        "country" => $country,
-        "description" => $description,
-        "runtime" => $runtime,
-        "year" => $year,
-        "seasons" => $seasons,
-        "PostURL" => $postURL,
-        "VideoURL" => $videoURL,
-        "ScreenURL" => $screenURL
-    );
-
-    $response = makeApiRequest($data);
-
-    if ($response['status'] === 'success') {
-        echo '<script>alert("Successfully added series: ' . $title . '");</script>';
-    } else {
-        echo '<script>alert("Failed to add series: ' . $response['data'] . '");</script>';
-    }
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
@@ -134,6 +139,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (isset($_POST['deleteEmail'])) {
         $email = $_POST['deleteEmail'];
         deleteUserByEmail($email);
+    } elseif (
+        isset($_POST['addName']) &&
+        isset($_POST['addGenreID']) &&
+        isset($_POST['addRating']) &&
+        isset($_POST['addCountry']) &&
+        isset($_POST['addDescription']) &&
+        isset($_POST['addRuntime']) &&
+        isset($_POST['addYear']) &&
+        isset($_POST['addSeasons']) &&
+        isset($_POST['addPostUrl']) &&
+        isset($_POST['addVideoUrl']) &&
+        isset($_POST['addScreenUrl'])
+    ) {
+        $title = $_POST['addName'];
+        $genreID = $_POST['addGenreID'];
+        $ratingID = $_POST['addRating'];
+        $country = $_POST['addCountry'];
+        $description = $_POST['addDescription'];
+        $runtime = $_POST['addRuntime'];
+        $year = $_POST['addYear'];
+        $seasons = $_POST['addSeasons'];
+        $postURL = $_POST['addPostUrl'];
+        $videoURL = $_POST['addVideoUrl'];
+        $screenURL = $_POST['addScreenUrl'];
+
+        addSeries($title, $genreID, $ratingID, $country, $description, $runtime, $year, $seasons, $postURL, $videoURL, $screenURL);
     } elseif (
         isset($_POST['addTitle']) &&
         isset($_POST['addGenreID']) &&
@@ -158,34 +189,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $screenURL = $_POST['addScreenUrl'];
 
         addMovie($title, $genreID, $ratingID, $country, $description, $runtime, $year, $postURL, $videoURL, $screenURL);
-    } elseif (
-        isset($_POST['addTitle']) &&
-        isset($_POST['addGenreID']) &&
-        isset($_POST['addRating']) &&
-        isset($_POST['addCountry']) &&
-        isset($_POST['addDescription']) &&
-        isset($_POST['addRuntime']) &&
-        isset($_POST['addYear']) &&
-        isset($_POST['addSeasons']) &&
-        isset($_POST['addPostUrl']) &&
-        isset($_POST['addVideoUrl']) &&
-        isset($_POST['addScreenUrl'])
-    ) {
-        $title = $_POST['addTitle'];
-        $genreID = $_POST['addGenreID'];
-        $ratingID = $_POST['addRating'];
-        $country = $_POST['addCountry'];
-        $description = $_POST['addDescription'];
-        $runtime = $_POST['addRuntime'];
-        $year = $_POST['addYear'];
-        $seasons = $_POST['addSeasons'];
-        $postURL = $_POST['addPostUrl'];
-        $videoURL = $_POST['addVideoUrl'];
-        $screenURL = $_POST['addScreenUrl'];
-
-        addSeries($title, $genreID, $ratingID, $country, $description, $runtime, $year, $seasons, $postURL, $videoURL, $screenURL);
     }
 }
+
+
 ?>
 
 
@@ -313,7 +320,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h2>Add Series</h2>
                         <p>This box will add a movie or series to the database.</p>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <input type="text" id="addTitle" name="addTitle" placeholder="Title" required>
+                            <input type="text" id="addName" name="addTitle" placeholder="Title" required>
                             <input type="text" id="addGenreID" name="addGenreID" placeholder="Genre ID" required>
                             <input type="text" id="addCountry" name="addCountry" placeholder="Country" required>
                             <input type="text" id="addRating" name="addRating" placeholder="Rating" required>

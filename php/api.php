@@ -1243,31 +1243,43 @@ class API
                echo $this->errorResponse(time(), "Could not access favourites");
             }
 
-         } elseif (isset($requestData['type']) && $requestData['type'] === "AddMovies") { // =========================== CHECKED
+         } elseif (isset($requestData['type']) && $requestData['type'] === "AddMovies") {
             if (
-                isset($requestData['title']) && 
-                isset($requestData['genreID']) && 
-                isset($requestData['ratingID']) && 
+                isset($requestData['title']) &&
+                isset($requestData['genreID']) &&
+                isset($requestData['ratingID']) &&
                 isset($requestData['country']) &&
-                isset($requestData['description']) && 
-                isset($requestData['runtime']) && 
+                isset($requestData['description']) &&
+                isset($requestData['runtime']) &&
                 isset($requestData['year']) &&
-                isset($requestData['PostURL']) && 
-                isset($requestData['VideoURL']) && 
+                isset($requestData['PostURL']) &&
+                isset($requestData['VideoURL']) &&
                 isset($requestData['ScreenURL'])
             ) {
-                echo $this->addMovie(
-                    $requestData['title'], 
-                    $requestData['genreID'], 
-                    $requestData['ratingID'], 
-                    $requestData['country'], 
-                    $requestData['description'], 
-                    $requestData['runtime'], 
-                    $requestData['year'], 
-                    $requestData['PostURL'], 
-                    $requestData['VideoURL'], 
-                    $requestData['ScreenURL']
-                );
+                // Check if the ratingID exists in the Rating table
+                $ratingID = intval($requestData['ratingID']);
+                $ratingExistsQuery = "SELECT COUNT(*) AS count FROM Rating WHERE Rating_ID = ?";
+                $ratingExistsStmt = $GLOBALS['connection']->prepare($ratingExistsQuery);
+                $ratingExistsStmt->bind_param('i', $ratingID);
+                $ratingExistsStmt->execute();
+                $ratingExistsResult = $ratingExistsStmt->get_result()->fetch_assoc();
+        
+                if ($ratingExistsResult['count'] > 0) {
+                    echo $this->addMovie(
+                        $requestData['title'],
+                        $requestData['genreID'],
+                        $requestData['ratingID'],
+                        $requestData['country'],
+                        $requestData['description'],
+                        $requestData['runtime'],
+                        $requestData['year'],
+                        $requestData['PostURL'],
+                        $requestData['VideoURL'],
+                        $requestData['ScreenURL']
+                    );
+                } else {
+                    echo $this->errorResponse(time(), "Invalid rating ID.");
+                }
             } else {
                 echo $this->errorResponse(time(), "Missing values for adding movie.");
             }
@@ -1277,33 +1289,45 @@ class API
             } else {
                 echo $this->errorResponse(time(), "Missing title or item type for deleting entity.");
             }
-         } elseif (isset($requestData['type']) && $requestData['type'] === "AddSeries") { // =========================== CHECKED
+         } elseif (isset($requestData['type']) && $requestData['type'] === "AddSeries") {
             if (
-                isset($requestData['title']) && 
-                isset($requestData['genreID']) && 
-                isset($requestData['ratingID']) && 
+                isset($requestData['title']) &&
+                isset($requestData['genreID']) &&
+                isset($requestData['ratingID']) &&
                 isset($requestData['country']) &&
-                isset($requestData['description']) && 
-                isset($requestData['runtime']) && 
-                isset($requestData['year']) && 
+                isset($requestData['description']) &&
+                isset($requestData['runtime']) &&
+                isset($requestData['year']) &&
                 isset($requestData['seasons']) &&
-                isset($requestData['PostURL']) && 
-                isset($requestData['VideoURL']) && 
+                isset($requestData['PostURL']) &&
+                isset($requestData['VideoURL']) &&
                 isset($requestData['ScreenURL'])
             ) {
-                echo $this->addSeries(
-                    $requestData['title'], 
-                    $requestData['genreID'], 
-                    $requestData['ratingID'], 
-                    $requestData['country'], 
-                    $requestData['description'], 
-                    $requestData['runtime'], 
-                    $requestData['year'], 
-                    $requestData['seasons'], 
-                    $requestData['PostURL'], 
-                    $requestData['VideoURL'], 
-                    $requestData['ScreenURL']
-                );
+                // Check if the ratingID exists in the Rating table
+                $ratingID = intval($requestData['ratingID']);
+                $ratingExistsQuery = "SELECT COUNT(*) AS count FROM Rating WHERE Rating_ID = ?";
+                $ratingExistsStmt = $GLOBALS['connection']->prepare($ratingExistsQuery);
+                $ratingExistsStmt->bind_param('i', $ratingID);
+                $ratingExistsStmt->execute();
+                $ratingExistsResult = $ratingExistsStmt->get_result()->fetch_assoc();
+        
+                if ($ratingExistsResult['count'] > 0) {
+                    echo $this->addSeries(
+                        $requestData['title'],
+                        $requestData['genreID'],
+                        $requestData['ratingID'],
+                        $requestData['country'],
+                        $requestData['description'],
+                        $requestData['runtime'],
+                        $requestData['year'],
+                        $requestData['seasons'],
+                        $requestData['PostURL'],
+                        $requestData['VideoURL'],
+                        $requestData['ScreenURL']
+                    );
+                } else {
+                    echo $this->errorResponse(time(), "Invalid rating ID.");
+                }
             } else {
                 echo $this->errorResponse(time(), "Missing values for adding series.");
             }
