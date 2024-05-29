@@ -1,82 +1,150 @@
 <?php
-if(isset($_GET['name'])) {
-   $name = urldecode($_GET['name']);
-   $data = array(
-      "type" => "GetAllSeries",
-      "limit" => 1,
-      "search" => array(
-          "Name" => $name
-      ),
-      "return" => "all"
-  );
-} else {
-   $title = urldecode($_GET['title']);
-   $data = array(
-      "type" => "GetAllMovies",
-      "limit" => 1,
-      "search" => array(
-         "Title" => $title
-      ),
-      "return" => "all"
-   );
-}
-
-//header("Access-Control-Allow-Origin: http://localhost");
-//header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-//header("Access-Control-Allow-Headers: Content-Type, Authorization");
 session_start(); // Start session to store user login status
 
-$currentPage = 'view';
+// Function to make API request
+function makeApiRequest($data) {
+    // Create a new cURL resource
+    $ch = curl_init();
+
+    // Set the URL
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+    // Set the request method to POST
+    curl_setopt($ch, CURLOPT_POST, 1);
+
+    // Set the request data as JSON
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    // Set the Content-Type header
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+    // Set basic authentication credentials
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
+
+    // Return response instead of outputting it
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute the request
+    $response = curl_exec($ch);
+
+    // Close cURL resource
+    curl_close($ch);
+
+    // Decode the JSON response
+    return json_decode($response, true);
+}
+
+// Function to handle adding to favorites
+function addToFavorites($apiKey, $filmId, $showId) {
+    // Check if API key is available
+    if (!$apiKey) {
+        // Redirect to login page if API key is not available
+        header("Location:../php/login.php");
+        exit();
+    }
+
+     // Check if the add button is clicked
+     $add = isset($_POST['addToFavorites']) ? "true" : "false";
+
+     echo '<script>console.log("addToFavorites called with API key: ' . $apiKey . '");</script>';
+     echo '<script>console.log("filmId: ' . $filmId . '");</script>';
+     echo '<script>console.log("showId: ' . $showId . '");</script>';
+     
+     if(isset($_GET['name']))
+     {
+        $data = array(
+            "type" => "Favourite",
+            "apikey" => $apiKey,
+            "add" => $add,
+            "show_id" => $showId
+        );
+        echo '<script>alert("i am a show : ' . $responseData['error'] . '");</script>';
+     }else
+     {
+        $data = array(
+            "type" => "Favourite",
+            "apikey" => $apiKey,
+            "add" => $add,
+            "film_id" => $filmId
+        );
+        echo '<script>alert("i am a film: ' . $data['film_id'] . '");</script>';
+     }
+    // Prepare data for adding to favorites
+  
+
+    // Make API request
+    $responseData = makeApiRequest($data);
+    var_dump($responseData); // Add this line
+
+    // Check if the request was successful
+    if ($responseData['status'] === 'success') {
+        // Redirect to favourites.php after successfully adding to favorites
+        header("Location: ../html/favourites.php");
+        exit();
+    } else {
+        // Failed to add to favorites
+      //  echo '<script>alert("Failed to add to My List: ' . $responseData['error'] . '");</script>';
+    }
+}
 
 // Check if the user is not logged in, redirect to login page
+$apiKey = isset($_SESSION['apikey']) ? $_SESSION['apikey'] : null;
 
-$movies = array();
-// Check if the login form is submitted
-// Prepare the data for JSON request
+// Prepare data for JSON request
+if(isset($_GET['name'])) {
+    $name = urldecode($_GET['name']);
+    $data = array(
+        "type" => "GetAllSeries",
+        "limit" => 1,
+        "search" => array(
+            "Name" => $name
+        ),
+        "return" => "all"
+    );
+} else {
+    $title = urldecode($_GET['title']);
+    $data = array(
+        "type" => "GetAllMovies",
+        "limit" => 1,
+        "search" => array(
+            "Title" => $title
+        ),
+        "return" => "all"
+    );
+}
 
-// Convert data to JSON format
-$json_data = json_encode($data);
+// Make API request
+$responseData = makeApiRequest($data);
 
-// Create a new cURL resource
-$ch = curl_init();
-
-// Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
-
-// Set the request method to POST
-curl_setopt($ch, CURLOPT_POST, 1);
-
-// Set the request data as JSON
-curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-
-// Set the Content-Type header
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-// Set basic authentication credentials
-curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
-
-// Return response instead of outputting it
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute the request
-$response = curl_exec($ch);
-
-// Close cURL resource
-curl_close($ch);
-
-// Decode the JSON response
-$responseData = json_decode($response, true);
 // Check if the request was successful
 if ($responseData['status'] === 'success') {
-    // Process the listings data and display on the page
+    // Process the data
     $movies = $responseData['data'][0];
-
+    echo '<script>console.log("Movies data: ' . json_encode($movies) . '");</script>';
 } else {
     // Handle error response
     $error = $responseData['data'];
 }
 
+// Handle adding to favorites if form is submitted
+if (isset($_POST['addToFavorites'])) { 
+
+    //echo '<script>alert("i am clicked: ' . $responseData['error'] . '");</script>';
+
+    if(isset($_GET['name']))
+    {
+        addToFavorites($apiKey, null, $movies["ID"]);
+       // echo '<script>alert("i am a show: ' . $responseData['error'] . '");</script>';
+    }
+    else
+    {
+        addToFavorites($apiKey, $movies["ID"], null);
+       // echo '<script>alert("i am movie: ' . $responseData['error'] . '");</script>';
+    }
+
+    
+}
 ?>
 
 
@@ -179,7 +247,11 @@ if ($responseData['status'] === 'success') {
               </button>
               
               <button class="btn">Share</button>
-              <button class = "watchList">Add to MyList</button>
+
+              <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
+                    <button type="submit" class="watchList" name="addToFavorites">Add to MyList</button>
+                </form>
+              
         </div>
     </div>
 
