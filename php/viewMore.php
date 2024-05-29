@@ -59,7 +59,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
             "add" => $add,
             "show_id" => $showId
         );
-        echo '<script>alert("i am a show : ' . $responseData['error'] . '");</script>';
+        // echo '<script>alert("i am a show : ' . $responseData['error'] . '");</script>';
      }else
      {
         $data = array(
@@ -121,7 +121,7 @@ $responseData = makeApiRequest($data);
 if ($responseData['status'] === 'success') {
     // Process the data
     $movies = $responseData['data'][0];
-    echo '<script>console.log("Movies data: ' . json_encode($movies) . '");</script>';
+    // echo '<script>console.log("Movies data: ' . json_encode($movies) . '");</script>';
 } else {
     // Handle error response
     $error = $responseData['data'];
