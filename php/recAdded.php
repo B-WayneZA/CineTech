@@ -68,7 +68,7 @@ if ($series['status'] === 'success') {
    <!--Header-->
    <header>
       <!-- convert this image to a webm so it actually plays  -->
-      <video src="../video/GrandTour.mp4" autoplay muted loop="true"></video>
+      <video src="../video/GrandTour.mp4" autoplay loop="true"></video>
       <nav>
          <div class="logo_ul">
             <img src="../img/4.png" alt="">

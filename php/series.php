@@ -80,7 +80,7 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
 
-        <video src="../video/JJKaisen.mp4" autoplay muted loop="true"></video>
+        <video src="../video/JJKaisen.mp4" autoplay loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />
