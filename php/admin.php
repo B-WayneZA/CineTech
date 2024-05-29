@@ -86,6 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -172,33 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- this is the part that deals with input fields -->
                 <div class="sql-query-row">
-                    <!-- this the delete movie block -->
+                    <!-- this the delete movie/series block -->
                     <div class="delete-movie-series">
-                        <h2>Delete Movie</h2>
-                        <p>Remove Movies/Series no longer needed in the database.</p>
-                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <input type="text" id="deleteTitle" name="deleteTitle" placeholder="Title" required>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Movie/Series
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <input type="radio" id="deleteMovie" name="deleteType" value="film" checked>
-                                        <label for="deleteMovie">Movie</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" id="deleteSeries" name="deleteType" value="show">
-                                        <label for="deleteSeries">Series</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button type="submit">Delete</button>
-                        </form>
-                    </div>
-                    <!-- this the delete series block -->
-                    <div class="delete-movie-series">
-                        <h2>Delete Series</h2>
+                        <h2>Delete Movie or Series</h2>
                         <p>Remove Movies/Series no longer needed in the database.</p>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <input type="text" id="deleteTitle" name="deleteTitle" placeholder="Title" required>
@@ -221,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </form>
                     </div>
                     <!-- this is the add to movie block -->
-                    <div class="add-movie-series">
+                    <div class="add-movie">
                         <h2>Add Movie</h2>
                         <p>This box will add a movie or series to the database.</p>
                         <form id="addForm">
@@ -239,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </form>
                     </div>
                     <!-- this is the add to series block -->
-                    <div class="add-movie-series">
+                    <div class="add-series">
                         <h2>Add Series</h2>
                         <p>This box will add a movie or series to the database.</p>
                         <form id="addForm">
@@ -250,18 +232,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <textarea id="addDescription" placeholder="Description" required></textarea>
                             <input type="number" id="addRuntime" placeholder="Runtime" min="0" max="10" required>
                             <input type="number" id="addYear" placeholder="Year" required>
+                            <input type="number" id="addSeasons" placeholder="Seasons" required>
                             <input type="url" id="addPostUrl" placeholder="Post URL" required>
                             <input type="url" id="addVideoUrl" placeholder="Video URL" required>
                             <input type="url" id="addScreenUrl" placeholder="Screen URL" required>
                             <button type="submit">Add</button>
                         </form>
                     </div>
-                    <!-- this is the edit to movie block -->
+                    <!-- this is the edit to movie/series block -->
                     <div class="edit-movie-series">
-                        <h2>Edit Movie</h2>
+                        <h2>Edit Movie or Series</h2>
                         <p>This box will edit a movie or series from the database.</p>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <input type="text" id="editTitle" name="editTitle" placeholder="Title" required>
+                            <!-- dropdown for what we editing here -->
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Movie/Series
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <input type="radio" id="editMovie" name="editType" value="film" checked>
+                                        <label for="editMovie">Movie</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="editSeries" name="editType" value="show">
+                                        <label for="editSeries">Series</label>
+                                    </li>
+                                </ul>
+                            </div>
                             <!-- dropdown for what part we editing here -->
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -279,31 +278,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" id="editValue" name="editValue" placeholder="Edit" required>
                             <button type="submit">Edit</button>
                         </form>
-                    </div>
-                    <!-- this is the edit to series block -->
-                    <div class="edit-movie-series">
-                        <h2>Edit Series</h2>
-                        <p>This box will edit a movie or series from the database.</p>
-                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <input type="text" id="editTitle" name="editTitle" placeholder="Title" required>
-                            <!-- dropdown for what part we editing here -->
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Edit Here
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><input type="radio" id="editTitle" name="editField" value="Title"><label for="editTitle">Title</label></li>
-                                    <li><input type="radio" id="editDescription" name="editField" value="Description"><label for="editDescription">Description</label></li>
-                                    <li><input type="radio" id="editPoster" name="editField" value="PosterURL"><label for="editPoster">Poster</label></li>
-                                    <li><input type="radio" id="editRating" name="editField" value="RatingID"><label for="editRating">Rating</label></li>
-                                    <li><input type="radio" id="editGenre" name="editField" value="Genre_ID"><label for="editGenre">Genre</label></li>
-                                    <li><input type="radio" id="editReleaseYear" name="editField" value="Release_Year"><label for="editReleaseYear">Release Year</label></li>
-                                </ul>
-                            </div>
-                            <input type="text" id="editValue" name="editValue" placeholder="Edit" required>
-                            <button type="submit">Edit</button>
-                        </form>
-                    </div>
+                     </div>
                     <!-- this is the delete user block -->
                     <div class="delete-block-user">
                         <h2>Delete User from Database</h2>
