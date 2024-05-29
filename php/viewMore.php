@@ -2,7 +2,8 @@
 session_start(); // Start session to store user login status
 
 // Function to make API request
-function makeApiRequest($data) {
+function makeApiRequest($data)
+{
     // Create a new cURL resource
     $ch = curl_init();
 
@@ -36,7 +37,8 @@ function makeApiRequest($data) {
 }
 
 // Function to handle adding to favorites
-function addToFavorites($apiKey, $filmId, $showId) {
+function addToFavorites($apiKey, $filmId, $showId)
+{
     // Check if API key is available
     if (!$apiKey) {
         // Redirect to login page if API key is not available
@@ -44,15 +46,14 @@ function addToFavorites($apiKey, $filmId, $showId) {
         exit();
     }
 
-     // Check if the add button is clicked
-     $add = isset($_POST['addToFavorites']) ? "true" : "false";
+    // Check if the add button is clicked
+    $add = isset($_POST['addToFavorites']) ? "true" : "false";
 
-     echo '<script>console.log("addToFavorites called with API key: ' . $apiKey . '");</script>';
-     echo '<script>console.log("filmId: ' . $filmId . '");</script>';
-     echo '<script>console.log("showId: ' . $showId . '");</script>';
-     
-     if(isset($_GET['name']))
-     {
+    echo '<script>console.log("addToFavorites called with API key: ' . $apiKey . '");</script>';
+    echo '<script>console.log("filmId: ' . $filmId . '");</script>';
+    echo '<script>console.log("showId: ' . $showId . '");</script>';
+
+    if (isset($_GET['name'])) {
         $data = array(
             "type" => "Favourite",
             "apikey" => $apiKey,
@@ -60,8 +61,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
             "show_id" => $showId
         );
         // echo '<script>alert("i am a show : ' . $responseData['error'] . '");</script>';
-     }else
-     {
+    } else {
         $data = array(
             "type" => "Favourite",
             "apikey" => $apiKey,
@@ -69,9 +69,9 @@ function addToFavorites($apiKey, $filmId, $showId) {
             "film_id" => $filmId
         );
         echo '<script>alert("i am a film: ' . $data['film_id'] . '");</script>';
-     }
+    }
     // Prepare data for adding to favorites
-  
+
 
     // Make API request
     $responseData = makeApiRequest($data);
@@ -84,7 +84,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
         exit();
     } else {
         // Failed to add to favorites
-      //  echo '<script>alert("Failed to add to My List: ' . $responseData['error'] . '");</script>';
+        //  echo '<script>alert("Failed to add to My List: ' . $responseData['error'] . '");</script>';
     }
 }
 
@@ -92,7 +92,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
 $apiKey = isset($_SESSION['apikey']) ? $_SESSION['apikey'] : null;
 
 // Prepare data for JSON request
-if(isset($_GET['name'])) {
+if (isset($_GET['name'])) {
     $name = urldecode($_GET['name']);
     $data = array(
         "type" => "GetAllSeries",
@@ -128,22 +128,17 @@ if ($responseData['status'] === 'success') {
 }
 
 // Handle adding to favorites if form is submitted
-if (isset($_POST['addToFavorites'])) { 
+if (isset($_POST['addToFavorites'])) {
 
     //echo '<script>alert("i am clicked: ' . $responseData['error'] . '");</script>';
 
-    if(isset($_GET['name']))
-    {
+    if (isset($_GET['name'])) {
         addToFavorites($apiKey, null, $movies["ID"]);
-       // echo '<script>alert("i am a show: ' . $responseData['error'] . '");</script>';
-    }
-    else
-    {
+        // echo '<script>alert("i am a show: ' . $responseData['error'] . '");</script>';
+    } else {
         addToFavorites($apiKey, $movies["ID"], null);
-       // echo '<script>alert("i am movie: ' . $responseData['error'] . '");</script>';
+        // echo '<script>alert("i am movie: ' . $responseData['error'] . '");</script>';
     }
-
-    
 }
 ?>
 
@@ -190,111 +185,149 @@ if (isset($_POST['addToFavorites'])) {
                     </li>
                 </ul>
             </div>
-            
-            <div class="search_user">
+            <!-- <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
-                <!-- User image -->
-                <img src="../img/UserPFP.jpeg" alt="">                
-                <!-- Add a button for notifications -->
-            </div>
+                <img src="../img/UserPFP.jpeg" alt="">
+            </div> -->
         </nav>
 
-    <div class = "ViewDetails">
-        <div class="content">
-            <div class = "content-image">
-                <img class="movieImg" src="<?php echo $movies['PosterURL']?>" alt="">
-            </div>
-        </div>
-
-        <div class = "content-details">
-            <!-- Create a div for the description as well as the other-->
-            <div class = "description">
-                <h2>Description: </h2> 
-                <h3><?php echo $movies['Description'] ?></h3><br>
+        <div class="ViewDetails">
+            <div class="content">
+                <div class="content-image">
+                    <img class="movieImg" src="<?php echo $movies['PosterURL'] ?>" alt="">
+                </div>
             </div>
 
-            <div class = "Genres">
-                <h3>Genre: <?php echo $movies['Genre']?> </h3><br>
-            </div>
-            
-           <div class = "yearRelease">
-            <h3>Year Of Release:  <?php echo $movies['Release_Year']?></h3><br>
-           </div>
-            
-           <div class = "movieRating">
-            <h3>CineTech Rating:  <?php echo $movies['CineTech_Rating']?></h3><br>
-           </div>
-                
-            
-            <div class = "userRating">
-            <h3>Ratings: </h3>
-             <div class = "star-icon">
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-               <a href = "#" class = "bi-star-fill"></a>
-             </div>
-            </div>
-            
-            <div class = "actors">
-                <h3>Actors: Gabrielle Union, Mark June and Tyler Perry  </h3><br>
-            </div>
-            
-            
-              <button class = "trailer" >
-                <a href=" <?php echo ' ' ?> " >Trailer</a><br>
-              </button>
-              
-              <button class="btn">Share</button>
+            <div class="content-details">
+                <!-- Create a div for the description as well as the other-->
+                <div class="description">
+                    <h2>Description: </h2>
+                    <h3><?php echo $movies['Description'] ?></h3><br>
+                </div>
 
-              <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
-                    <button type="submit" class="watchList" name="addToFavorites">Add to MyList</button>
-                </form>
-              
-        </div>
-    </div>
+                <div class="Genres">
+                    <h3>Genre: <?php echo $movies['Genre'] ?> </h3><br>
+                </div>
 
+                <div class="yearRelease">
+                    <h3>Year Of Release: <?php echo $movies['Release_Year'] ?></h3><br>
+                </div>
 
-    <section>
-        <h4>People Also Like</h4>
-        <div class="cards">
-            <!-- add more of these to check scroll featur -->
-            <a href="#" class="card">
-                <img src="../img/JohnWick.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="../img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
-                        </div>
+                <div class="movieRating">
+                    <h3>CineTech Rating: <?php echo $movies['CineTech_Rating'] ?></h3><br>
+                </div>
+
+                <div class="userRating">
+                    <h3>Ratings: </h3>
+                    <div class="star-icon">
+                        <a href="#" class="bi-star-fill"></a>
+                        <a href="#" class="bi-star-fill"></a>
+                        <a href="#" class="bi-star-fill"></a>
+                        <a href="#" class="bi-star-fill"></a>
+                        <a href="#" class="bi-star-fill"></a>
                     </div>
                 </div>
-            </a>
-       
+
+                <div class="actors">
+                    <h3>Actors: Gabrielle Union, Mark June and Tyler Perry </h3><br>
+                </div>
+
+                <button class="trailer">
+                    <a href=" <?php echo ' ' ?> ">Trailer</a><br>
+                </button>
+
+                <button class="btn" id="shareButton">Share</button>
+
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Send to User:</p>
+                        <input type="text" id="username" placeholder="Enter username">
+                        <button class="btn" id="shareButton2">Share</button>
+                    </div>
+
+                </div>
+
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
+                    <button type="submit" class="watchList" name="addToFavorites">Add to MyList</button>
+                </form>
+
+            </div>
         </div>
 
-        <!-- <script src="../js/homePage.js"></script> -->
+        <section>
+            <h4>People Also Like</h4>
+            <div class="cards">
+                <!-- add more of these to check scroll featur -->
+                <a href="#" class="card">
+                    <img src="../img/JohnWick.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="../img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
+                        </div>
+                    </div>
+                </a>
 
- <!--This is to make the buttons of the stars to work -->
-</section>
-</header>
+            </div>
 
-<script>
+            <!-- <script src="../js/homePage.js"></script> -->
+
+            <!--This is to make the buttons of the stars to work -->
+        </section>
+    </header>
+
+    <script>
         document.addEventListener("DOMContentLoaded", () => {
             var stars = document.querySelectorAll(".star-icon a");
             stars.forEach((item, index1) => {
                 item.addEventListener("click", (event) => {
-                    event.preventDefault();  // Prevent default anchor behavior
+                    event.preventDefault(); // Prevent default anchor behavior
                     stars.forEach((star, index2) => {
                         index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
                     });
                 });
             });
         });
+
+        //  this is the part for the popup
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("shareButton");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal and blur the main content
+        btn.onclick = function() {
+          modal.style.display = "block";
+          mainContent.classList.add("blurred");
+        }
+
+        // When the user clicks on <span> (x), close the modal and remove the blur
+        span.onclick = function() {
+          modal.style.display = "none";
+          mainContent.classList.remove("blurred");
+        }
+
+        // When the user clicks anywhere outside of the modal, close it and remove the blur
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+            mainContent.classList.remove("blurred");
+          }
+        }
     </script>
 
 </body>
+
 </html>
