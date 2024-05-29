@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $login_data = json_decode($login_response['data'], true);
                 if (json_last_error() === JSON_ERROR_NONE) {
                     $_SESSION['apikey'] = $login_data['apikey'];
-                    $_SESSION['username'] = $login_data['username'];
+                    $_SESSION['email'] = $login_data['email'];
 
                     if ($admin === "true") {
                         header('Location: ../php/admin.php'); // Redirect to home page after successful login
