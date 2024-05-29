@@ -213,6 +213,9 @@
               />
               <h3>Johnny Wicker</h3>
               <p>Email: mr.johnnyWick@gmail.com</p>
+              <?php 
+                  echo "<p>" . $_SESSION['apikey']  . "</p>";
+              ?>
             </div>
             <div class="user-actions">
               <!-- Additional user actions -->
