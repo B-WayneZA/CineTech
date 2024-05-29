@@ -77,13 +77,13 @@ if ($responseData['status'] === 'success') {
     <!--Header-->
     <header>
 
-        <video src="../video/6Underground.MOV" autoplay muted></video>
+        <video src="../video/6Underground.MOV" autoplay loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />
                 <ul>
                     <li>
-                        <a href="../html/homePage.html">Home</a>
+                        <a href="../php/homePage.php">Home</a>
                     </li>
                     <li>
                         <a href="../php/movies.php">Movies</a>
@@ -148,13 +148,13 @@ if ($responseData['status'] === 'success') {
 
         <!-- Contnent/details of video playing  -->
         <div class="content">
-            <h1 id="title">John Wick 2014</h1>
-            <p>John Wick, a retired hitman, is forced to return to his old ways after a group of Russian gangsters steal his car and kill a puppy gifted to him by his late wife.</p>
+            <h1 id="title">6 Underground</h1>
+            <p>Six individuals from all around the globe, each the very best at what they do, have been chosen not only for their skill, but for a unique desire to delete their pasts to change the future.</p>
             <div class="details">
                 <h6>A CineTech Original</h6>
-                <h5 id="gen">Action, Crime, Thriller</h5>
-                <h4>2014</h4>
-                <h3 id="rate"><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>7.4</h3>
+                <h5 id="gen">Action, Thriller</h5>
+                <h4>2019</h4>
+                <h3 id="rate"><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>6.1</h3>
             </div>
             <div class="btns">
                 <a href="#" id="play">Watch <i class="fa fa-play" aria-hidden="true"></i></a>
@@ -184,8 +184,8 @@ if ($responseData['status'] === 'success') {
                     echo '<h4>' . $movie['Title'] . '</h4>';
 
                     // content of the card
-                    echo '<p>' . $movie['Genre'] . $movie['Release_Year'] . '</p>';
-                    echo '<h3><span>CINETECH</span><i class="fa-solid fa-bath"></i>' . $movie['IMDB_score'] . '</h3>';
+                    echo '<p>' . $movie['Genre']." ". $movie['Release_Year'] . '</p>';
+                    echo '<h3><span>CINETECH</span>'.'<i class="fa fa-star" aria-hidden="true"></i>'. " " . $movie['IMDB_score'] . '</h3>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
