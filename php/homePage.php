@@ -23,7 +23,7 @@
     curl_setopt($ch_var, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
     // Set the request method to POST
-    curl_setopt($ch_var, CURLOPT_POST, 1);
+    curl_setopt($ch_var, CURLOPT_POST, 1); 
 
     // Set the request data as JSON
     curl_setopt($ch_var, CURLOPT_POSTFIELDS, $json_arr);
@@ -53,6 +53,7 @@
         $responseData_var = json_decode($response_var, true);
 
         if ($responseData_var['status'] === 'success') {
+            // echo 'successful...' ;
             $noti = $responseData_var['data'];
         } else {
             $errorText = $responseData_var['data'];
@@ -74,11 +75,6 @@
       rel="stylesheet"
       href="../css/homePage-light.css"
       id="light-mode"
-    />
-    <link
-      rel="stylesheet"
-      href="../css/homePage-dark.css"
-      id="dark-mode"
     />
     <link
       rel="icon"
@@ -220,18 +216,18 @@
             </div>
             <div class="user-actions">
               <!-- Additional user actions -->
-              <button id="change-password-btn">Change Password</button>
-              <button id="change-username-btn">Change Username</button>
+              <!-- <button id="change-password-btn">Change Password</button>
+              <button id="change-username-btn">Change Username</button> -->
               <!-- Logout and delete buttons -->
               <button id="logout-btn">Logout</button>
               <button id="delete-btn">Delete Account</button>
               <!-- Toggle between light and dark mode -->
-              <label class="switch">
+              <!-- <label class="switch">
                 <input type="checkbox" id="mode-switch" />
                 <span class="slider round"></span>
-              </label>
+              </label> -->
             </div>
-          </div>
+          </div> 
           <!-- Add a button for notifications -->
           <div class="notifications">
             <img
@@ -251,13 +247,13 @@
 
                 echo '<div class="toast-header"> ';
                 echo '<img src="'. $movie['poster_url'].'" class="rounded me-2" alt="..."/>'; 
-                echo '<strong class="me-auto">CineTech</strong>';
+                // echo '<strong class="me-auto">CineTech</strong>';
                 echo '<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">';
                 echo '<i class="fa fa-times" aria-hidden="true"></i>';
                 echo '</button>';
                 echo '</div>';    //class="toast-header">
                 echo '<div class="toast-body">';
-                echo  $movie['sender_username']. 'sent you : '.'<a href="viewMore.php?title=' . $title .'">'.$movie['title'] . '</a>';
+                echo  $movie['sender_username']. ' sent you : '.'<a href="viewMore.php?title=' . $title .'">'.$movie['title'] . '</a>';
                 echo '</div>' ;   // closing  toast body-->
                 echo '</div>';  // closing  <!-- first div under notifications-->
               }
@@ -268,6 +264,7 @@
           </div>
         </div>
       </nav>
+
       <!-- container for the information about the current video playing -->
       <div class="content">
         <h1 id="title">John Wick: Chapter 4</h1>

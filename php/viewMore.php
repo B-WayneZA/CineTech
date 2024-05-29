@@ -2,7 +2,8 @@
 session_start(); // Start session to store user login status
 
 // Function to make API request
-function makeApiRequest($data) {
+function makeApiRequest($data)
+{
     // Create a new cURL resource
     $ch = curl_init();
 
@@ -36,7 +37,8 @@ function makeApiRequest($data) {
 }
 
 // Function to handle adding to favorites
-function addToFavorites($apiKey, $filmId, $showId) {
+function addToFavorites($apiKey, $filmId, $showId)
+{
     // Check if API key is available
     if (!$apiKey) {
         // Redirect to login page if API key is not available
@@ -44,11 +46,11 @@ function addToFavorites($apiKey, $filmId, $showId) {
         exit();
     }
 
-     // Check if the add button is clicked
-     $add = isset($_POST['addToFavorites']) ? "true" : "false";
+    // Check if the add button is clicked
+    $add = isset($_POST['addToFavorites']) ? "true" : "false";
 
      
-     if(isset($_GET['name']))
+     if(isset($_GET['name']))       //show
      {
         $data = array(
             "type" => "Favourite",
@@ -58,16 +60,16 @@ function addToFavorites($apiKey, $filmId, $showId) {
         );
      }else
      {
-        $data = array(
+        $data = array(                      //movie
             "type" => "Favourite",
             "apikey" => $apiKey,
             "add" => $add,
             "film_id" => $filmId
         );
         echo '<script>alert("i am a film: ' . $data['film_id'] . '");</script>';
-     }
+    }
     // Prepare data for adding to favorites
-  
+
 
     // Make API request
     $responseData = makeApiRequest($data);
@@ -80,7 +82,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
         exit();
     } else {
         // Failed to add to favorites
-      //  echo '<script>alert("Failed to add to My List: ' . $responseData['error'] . '");</script>';
+        //  echo '<script>alert("Failed to add to My List: ' . $responseData['error'] . '");</script>';
     }
 }
 
@@ -88,7 +90,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
 $apiKey = isset($_SESSION['apikey']) ? $_SESSION['apikey'] : null;
 
 // Prepare data for JSON request
-if(isset($_GET['name'])) {
+if (isset($_GET['name'])) {
     $name = urldecode($_GET['name']);
     $data = array(
         "type" => "GetAllSeries",
@@ -123,19 +125,16 @@ if ($responseData['status'] === 'success') {
 }
 
 // Handle adding to favorites if form is submitted
-if (isset($_POST['addToFavorites'])) { 
+if (isset($_POST['addToFavorites'])) {
 
 
-    if(isset($_GET['name']))
-    {
+    if (isset($_GET['name'])) {
         addToFavorites($apiKey, null, $movies["ID"]);
     }
     else
     {
         addToFavorites($apiKey, $movies["ID"], null);
     }
-
-    
 }
 ?>
 
@@ -182,28 +181,25 @@ if (isset($_POST['addToFavorites'])) {
                     </li>
                 </ul>
             </div>
-            
-            <div class="search_user">
+            <!-- <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
-                <!-- User image -->
-                <img src="../img/UserPFP.jpeg" alt="">                
-                <!-- Add a button for notifications -->
-            </div>
+                <img src="../img/UserPFP.jpeg" alt="">
+            </div> -->
         </nav>
 
-    <div class = "ViewDetails">
-        <div class="content">
-            <div class = "content-image">
-                <img class="movieImg" src="<?php echo $movies['PosterURL']?>" alt="">
+        <div class="ViewDetails">
+            <div class="content">
+                <div class="content-image">
+                    <img class="movieImg" src="<?php echo $movies['PosterURL'] ?>" alt="">
+                </div>
             </div>
-        </div>
 
-        <div class = "content-details">
-            <!-- Create a div for the description as well as the other-->
-            <div class = "description">
-                <h2>Description: </h2> 
-                <h3><?php echo $movies['Description'] ?></h3><br>
-            </div>
+            <div class="content-details">
+                <!-- Create a div for the description as well as the other-->
+                <div class="description">
+                    <h2>Description: </h2>
+                    <h3><?php echo $movies['Description'] ?></h3><br>
+                </div>
 
             <div class = "Genres">
                 <h3>Genre: <?php echo $movies['Genre']?> </h3><br>
@@ -221,22 +217,7 @@ if (isset($_POST['addToFavorites'])) {
             <div class = "userRating">
             <!-- <h3>Ratings: </h3> -->
              <div class = "star-icon">
-                <input type=" radio" name=" rate" id = "rate-5">
-                <label for = "rate-5"></label>
-                <input type=" radio" name=" rate" id = "rate-4">
-                <label for = "rate-4"></label>
-                <input type=" radio" name=" rate" id = "rate-3">
-                <label for = "rate-3"></label>
-                <input type=" radio" name=" rate" id = "rate-2">
-                <label for = "rate-2"></label>
-                <input type=" radio" name=" rate" id = "rate-1">
-                <label for = "rate-1"></label>
-                <form action = #>
-                    <header>I don't like it</header>
-                    
-
-                      
-                </form>
+                
              </div>
             </div>
             
@@ -251,53 +232,83 @@ if (isset($_POST['addToFavorites'])) {
               
               <button class="btn">Share</button>
 
-              <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
                     <button type="submit" class="watchList" name="addToFavorites">Add to MyList</button>
                 </form>
-              
+
+            </div>
         </div>
-    </div>
 
-
-    <section>
-        <h4>People Also Like</h4>
-        <div class="cards">
-            <!-- add more of these to check scroll featur -->
-            <a href="#" class="card">
-                <img src="../img/JohnWick.jpeg" alt="" class="poster">
-                <div class="rest_card">
-                    <img src="../img/JohnWickVisual.jpeg" alt="">
-                    <div class="cont">
-                        <h4>John Wick</h4>
-                        <div class="sub">
-                            <p>Action, 2024</p>
-                            <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+        <section>
+            <h4>People Also Like</h4>
+            <div class="cards">
+                <!-- add more of these to check scroll featur -->
+                <a href="#" class="card">
+                    <img src="../img/JohnWick.jpeg" alt="" class="poster">
+                    <div class="rest_card">
+                        <img src="../img/JohnWickVisual.jpeg" alt="">
+                        <div class="cont">
+                            <h4>John Wick</h4>
+                            <div class="sub">
+                                <p>Action, 2024</p>
+                                <h3><span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>9.6</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-       
-        </div>
+                </a>
 
-        <!-- <script src="../js/homePage.js"></script> -->
+            </div>
 
- <!--This is to make the buttons of the stars to work -->
-</section>
-</header>
+            <!-- <script src="../js/homePage.js"></script> -->
 
-<script>
+            <!--This is to make the buttons of the stars to work -->
+        </section>
+    </header>
+
+    <script>
         document.addEventListener("DOMContentLoaded", () => {
             var stars = document.querySelectorAll(".star-icon a");
             stars.forEach((item, index1) => {
                 item.addEventListener("click", (event) => {
-                    event.preventDefault();  // Prevent default anchor behavior
+                    event.preventDefault(); // Prevent default anchor behavior
                     stars.forEach((star, index2) => {
                         index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
                     });
                 });
             });
         });
+
+        //  this is the part for the popup
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("shareButton");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal and blur the main content
+        btn.onclick = function() {
+          modal.style.display = "block";
+          mainContent.classList.add("blurred");
+        }
+
+        // When the user clicks on <span> (x), close the modal and remove the blur
+        span.onclick = function() {
+          modal.style.display = "none";
+          mainContent.classList.remove("blurred");
+        }
+
+        // When the user clicks anywhere outside of the modal, close it and remove the blur
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+            mainContent.classList.remove("blurred");
+          }
+        }
     </script>
 
 </body>
+
 </html>

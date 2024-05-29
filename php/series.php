@@ -4,7 +4,7 @@
 //header("Access-Control-Allow-Headers: Content-Type, Authorization");
 session_start(); // Start session to store user login status
 
-$currentPage = 'movies';
+$currentPage = 'movies'; 
 
 // Check if the user is not logged in, redirect to login page
 
@@ -141,7 +141,7 @@ if (isset($_POST['selected_genre'])) {
     <!--Header-->
     <header>
 
-        <video src="../video/JJKaisen.mp4" autoplay loop="true"></video>
+        <video src="../video/JohnWickTrailer.mp4" autoplay loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />
@@ -163,11 +163,11 @@ if (isset($_POST['selected_genre'])) {
                     </li>
                 </ul>
             </div>
-            <div class="search_user">
+            <!-- <div class="search_user">
                 <input type="text" placeholder="Search..." id="search_input">
                 <img src="../img/UserPFP.jpeg" alt="">
                 <div class="search" id="search_results"></div>
-            </div>
+            </div> -->
         </nav>
 
         <!-- dropdown menu for the genre -->
