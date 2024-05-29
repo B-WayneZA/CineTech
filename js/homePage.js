@@ -7,11 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const userPanel = document.querySelector('.user-panel');
     const notificationsPopup = document.querySelector('.notifications-popup');
 
-    // Function to toggle the visibility of the user panel
+       // Check if the elements exist before adding event listeners
+       if (userIcon && notificationsIcon) {
+        // Rest of your code for adding event listeners
+         // Function to toggle the visibility of the user panel
     userIcon.addEventListener('click', function (event) {
         event.stopPropagation(); // Prevent the click event from bubbling up to the window
         userPanel.classList.toggle('show');
     });
+    } else {
+        console.error('One or more elements not found.');
+    }
+
+   
 
     // Function to toggle the visibility of the notifications popup
     notificationsIcon.addEventListener('click', function (event) {
