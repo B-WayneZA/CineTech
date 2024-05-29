@@ -241,12 +241,7 @@ if (isset($_POST['addToFavorites'])) {
                 <label for = "rate-1"></label>
                 <form action = #>
                     <header>I don't like it</header>
-                    <div class = "textarea">
-                      <textarea cols = "30" placeholder = "Describe your experience"></textarea>
-                    </div>
-                    <div class = "btn">
-                      <button type= "submit">Post</button>
-                    </div>
+                    
 
                       
                 </form>
