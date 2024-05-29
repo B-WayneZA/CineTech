@@ -255,7 +255,7 @@ header .content {
     padding-left: 50px;
     margin-bottom: 50px;
     border: 2px solid rgb(153, 66, 245);
-    width: 800px;
+    width: 900px;
     height: 500px;
 }
 
@@ -430,7 +430,7 @@ header section .cards .card:hover .rest_card {
 
 .userRating h3 {
     color: #444;
-    font-weight: 300;
+    font-weight: 30;
 }
 
 .userRating .star-icon {
