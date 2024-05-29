@@ -475,10 +475,10 @@ class API
             'movie' AS type
          FROM Shared_movies sm
          JOIN users u ON sm.Sender_ID = u.user_id
-         JOIN Films fm ON sm.FIlm_shared = fm.Films_ID
+         JOIN Films fm ON sm.Film_shared = fm.Films_ID
          JOIN Genre g ON fm.Genre_ID = g.Genre_ID
          JOIN Rating r ON fm.Rating_ID = r.Rating_ID
-         WHERE sm.Receiver_id = ?
+         WHERE sm.Receiver_ID = ?
       ";
 
       $sharedMoviesStmt = $GLOBALS['connection']->prepare($sharedMoviesQuery);
@@ -487,10 +487,9 @@ class API
       $sharedMoviesResult = $sharedMoviesStmt->get_result();
 
       $sharedContent = [];
-      if ($sharedMoviesResult->num_rows > 0) {
-         $sharedContent[] = $sharedMoviesResult->fetch_assoc();
-      }
-
+      while ($row = $sharedMoviesResult->fetch_assoc()) {
+         $sharedContent[] = $row;
+     }
       // Query to get shared shows
       $sharedShowsQuery = "
             SELECT 
@@ -630,7 +629,7 @@ class API
                // Fetch each favorite and extract listing information from the films and shows tables
                $Query = "
                   SELECT 
-                     f.Films_ID as id, 'film' as type, f.Title, f.Country, f.Description, f.Release_Year 
+                     f.Films_ID as id, 'film' as type, f.Title, f.PosterURL, f.Country, f.Description, f.Release_Year 
                   FROM 
                      favourites v 
                   JOIN 
@@ -639,7 +638,7 @@ class API
                      v.user_id = ?
                   UNION
                   SELECT 
-                     s.Show_id as id, 'show' as type, s.Name as Title, s.Country, NULL as Description, s.Release_Year 
+                     s.Show_id as id, 'show' as type, s.Name as Title, s.PosterURL,s.Country, NULL as Description, s.Release_Year 
                   FROM 
                      favourites v 
                   JOIN 
@@ -856,7 +855,6 @@ class API
       $query = "INSERT INTO Shared_movies (Receiver_ID, Sender_ID, Film_shared) VALUES (?,?,?)";
       $stmt = $GLOBALS['connection']->prepare($query);
       $stmt->bind_param("iii", $receiverID, $userID, $filmID);
-      $stmt->execute();
 
       if ($stmt->execute()) {
          return $this->successResponse(time(), "Movie shared successfully");
