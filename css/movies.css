@@ -24,6 +24,7 @@ header {
     left: 0; /* Position at the left of the viewport */
     width: 100%;
     height: 100vh;
+    background-color: #000;
 }
 
 header::before {
@@ -37,10 +38,10 @@ header::before {
 
 header::after {
     content: '';
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, transparent, #000);
+    background: #000;
     z-index: -1;
 }
 
@@ -185,7 +186,6 @@ header nav .search_user .search .card {
     /* display: none; */
 }
 
-
 /* remove this specific css to make the search bar info visible */
 /* header nav .search_user .search .card {
     position: relative;
@@ -251,6 +251,7 @@ header .content {
     margin-top: 100px;
     padding-left: 50px;
     margin-bottom: 50px;
+    background: #000;
 }
 
 header .content h1 {
@@ -329,28 +330,29 @@ header .content .btns a {
 /* ================This is the css for how the cards are displayed and look/work================ */
 .cards {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 2px;
-    margin-top: 30px; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 30px;
     background-color: black;
     overflow-y: visible;
+    overflow-x: hidden;
 }
 
 .card {
-    position: relative; /* Added to position the overlay */
+    position: relative;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    height: 350px; /* Adjust the height as needed */
-    width: 100%;
-    transition: transform 0.3s ease; /* Added for smooth transition */
+    height: 350px;
+    transition: transform 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    z-index: 10;
 }
 
 .poster {
@@ -359,57 +361,51 @@ header .content .btns a {
     object-fit: cover;
 }
 
-.overlay {
+.rest_card {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(28, 17, 53, 0.8);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-.card:hover .overlay {
+.card:hover .rest_card {
     opacity: 1;
-}
-
-.overlay-content {
-    text-align: center;
-    color: black;
+    
 }
 
 .cont {
-    display: none;
-}
-
-.card:hover .cont {
-    display: flex;
-    flex-direction: column;
+    font-size: 18px;
+    text-align: center;
+    color: white;
 }
 
 .cont h4 {
     margin: 0 0 10px 0;
-    background-color: black;
-    color: white;
+    /* font-family: 'Poppins', sans-serif; */
 }
 
 .sub {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    gap: 5px;
 }
 
-.sub p {
+.sub p, .sub h3 {
     margin: 0;
+    /* font-family: 'Poppins', sans-serif; */
 }
 
 .sub h3 {
-    margin: 0;
-    font-size: 1.2em;
+    font-size: 12px;
     display: flex;
     align-items: center;
 }
@@ -418,11 +414,6 @@ header .content .btns a {
     margin-right: 5px;
 }
 
-.rest_card {
-    background-color: black;
-    color: white;
-    opacity: 0.8;
-}
 
 /* ================================================================== */
 /* ================This is the css for dropdown display and styling================ */

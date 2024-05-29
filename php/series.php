@@ -70,7 +70,7 @@ if ($responseData['status'] === 'success') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/series.css" id="light-mode">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="../img/4.png" type="image/x-icon">
     <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
     <title>CineTech</title>
@@ -189,7 +189,7 @@ if ($responseData['status'] === 'success') {
 
                     // content of the card
                     echo '<p>' . $movie['Genre'] . $movie['Release_Year'] . '</p>';
-                    echo '<h3><span>CINETECH</span><i class="fa-solid fa-bath"></i>' . $movie['IMDB_score'] . '</h3>';
+                    echo '<h3><span>CINETECH</span><i class="fa fa-star" aria-hidden="true"></i>' . $movie['IMDB_score'] . '</h3>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
