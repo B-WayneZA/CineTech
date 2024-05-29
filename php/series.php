@@ -13,7 +13,7 @@ $movies = array();
 // Prepare the data for JSON request
 $data = array(
     'type' => 'GetAllSeries',
-    'limit' => 50,
+    'limit' => 100,
     'return' => 'all'
 );
 
