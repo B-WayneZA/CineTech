@@ -221,22 +221,7 @@ if (isset($_POST['addToFavorites'])) {
             <div class = "userRating">
             <!-- <h3>Ratings: </h3> -->
              <div class = "star-icon">
-                <input type=" radio" name=" rate" id = "rate-5">
-                <label for = "rate-5"></label>
-                <input type=" radio" name=" rate" id = "rate-4">
-                <label for = "rate-4"></label>
-                <input type=" radio" name=" rate" id = "rate-3">
-                <label for = "rate-3"></label>
-                <input type=" radio" name=" rate" id = "rate-2">
-                <label for = "rate-2"></label>
-                <input type=" radio" name=" rate" id = "rate-1">
-                <label for = "rate-1"></label>
-                <form action = #>
-                    <header>I don't like it</header>
-                    
-
-                      
-                </form>
+                
              </div>
             </div>
             
