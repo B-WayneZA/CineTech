@@ -59,6 +59,58 @@
             $errorText = $responseData_var['data'];
         }
     }
+
+
+    $userInfo = array(
+      'type' => "GetUser",
+      'apikey' => $apikey
+    );
+
+    $userData = json_encode($userInfo);
+    
+
+    $ch_var2 = curl_init();
+
+    curl_setopt($ch_var2, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+    // Set the request method to POST
+    curl_setopt($ch_var2, CURLOPT_POST, 1); 
+
+    // Set the request data as JSON
+    curl_setopt($ch_var2, CURLOPT_POSTFIELDS, $userData);
+
+    // Set the Content-Type header
+    curl_setopt($ch_var2, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+    // Set basic authentication credentials
+    curl_setopt($ch_var2, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch_var2, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
+
+    // Return response instead of outputting it
+    curl_setopt($ch_var2, CURLOPT_RETURNTRANSFER, true);
+
+    $response_user = curl_exec($ch_var2);
+
+    if (curl_errno($ch_var2)) {
+        $error_msg_var2 = curl_error($ch_var2);
+    }
+
+    curl_close($ch_var2);
+
+    if (isset($error_msg_var2)) {
+        // Handle CURL error
+        // echo "CURL Error: $error_msg";
+    } else {
+        $responseData_user = json_decode($response_user, true);
+
+        if ($responseData_user['status'] === 'success') {
+            // echo 'successful...' ;
+            $user = $responseData_user['data'][0];
+        } else {
+            $errorText2 = $responseData_user['data'];
+        }
+    }
+
   } 
   else{
     header("Location: ../php/login.php");
@@ -211,11 +263,15 @@
                 src="../img/UserPFP.jpeg"
                 alt=""
               />
-              <h3>Johnny Wicker</h3>
-              <p>Email: mr.johnnyWick@gmail.com</p>
               <?php 
-                  echo "<p>" . $_SESSION['apikey']  . "</p>";
+                if(isset($user)) {
+                  echo "<h3>".$user['username']."</h3>";
+                  echo "<p>Email: ".$user['email']."</p>";
+                } else {
+                  echo "<h3>User not logged in :( </h3>";
+                }
               ?>
+
             </div>
             <div class="user-actions">
               <!-- Additional user actions -->

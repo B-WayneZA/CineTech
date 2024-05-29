@@ -1107,7 +1107,22 @@ class API
          return $this->errorResponse(time(), "An error occurred: " . $e->getMessage());
       }
    }
- 
+   
+   private function getUserInfo($apikey) {
+      $query = "SELECT user_id, username, email FROM users WHERE apikey =?";
+
+      $smt = $GLOBALS['connection']->prepare($query);
+      $smt->bind_param('s', $apikey);
+      $smt->execute();
+      $result = $smt->get_result();
+
+      $sharedContent = [];
+      while ($row = $result->fetch_assoc()) {
+         $sharedContent[] = $row;
+      }
+
+      return $this->successResponse(time(), $sharedContent);
+   }
 
 
    // Unified helper function for determining the bind type based on the field
@@ -1238,6 +1253,12 @@ class API
                }
             } else {
                echo $this->errorResponse("Failed to logout", time());
+            }
+         } else if(isset($requestData['type']) && $requestData['type'] === "GetUser") {
+            if(isset($requestData['apikey'])) {
+               echo $this->getUserInfo($requestData['apikey']);
+            } else {
+               echo $this->errorResponse(time(), "Missing apikey");
             }
          } elseif (isset($requestData['type']) && $requestData['type'] === "GetAllMovies") { //========================
             if (isset($requestData['return'])) {
