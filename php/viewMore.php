@@ -80,7 +80,7 @@ function addToFavorites($apiKey, $filmId, $showId) {
     // Check if the request was successful
     if ($responseData['status'] === 'success') {
         // Redirect to favourites.php after successfully adding to favorites
-        header("Location: ../html/favourites.php");
+        header("Location: ../php/favourites.php");
         exit();
     } else {
         // Failed to add to favorites
