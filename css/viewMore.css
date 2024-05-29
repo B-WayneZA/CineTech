@@ -14,13 +14,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow-y:visible;
+    overflow-y: visible;
     overflow-x: hidden;
     /* overflow: hidden; */
 }
 
 header {
-    position: relative; /* Change position to fixed */
+    position: relative;
+    /* Change position to fixed */
     width: 100%;
     height: 100vh;
     /* border: 1px solid #fff; */
@@ -99,7 +100,7 @@ header nav .logo_ul ul li a {
 
 header nav .logo_ul ul li a:hover {
     color: rgba(102, 92, 240, 0.7);
-} 
+}
 
 /* adjust the size the user  */
 header nav .search_user {
@@ -107,14 +108,15 @@ header nav .search_user {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 50px; /* Increase the height */
+    height: 50px;
+    /* Increase the height */
 }
 
 /* adjust the size the user  */
 header nav .search_user input {
     padding: 10px 40px;
     border-radius: 30px;
-    border: 1px solid #6a3ce7 ;
+    border: 1px solid #6a3ce7;
     outline: none;
     background: rgb(255, 255, 255, .3);
     color: #fff;
@@ -234,7 +236,7 @@ header .content {
     height: 500px;
 }
 
- /* .content img{
+/* .content img{
     width: 200%;
     height: 200%;
     border-radius: 50%;
@@ -242,12 +244,12 @@ header .content {
     left: -100%;
     top: -100%;
 } */
-.movieImg{
+.movieImg {
     width: 100%;
     height: 100%;
 }
 
-.content-details{
+.content-details {
     position: relative;
     color: #fff;
     margin-top: 50px;
@@ -259,13 +261,13 @@ header .content {
     height: 500px;
 }
 
-.ViewDetails{
+.ViewDetails {
     display: grid;
     grid-template-columns: 80px 200px;
 }
 
 .recommended section {
-    position:absolute;
+    position: absolute;
     width: 100%;
     height: auto;
     padding: 0px 50px;
@@ -287,7 +289,7 @@ header section {
     margin-top: 50px;
 }
 
-header section .cards{
+header section .cards {
     position: relative;
     width: 100%;
     height: 200px;
@@ -299,21 +301,21 @@ header section .cards{
     scroll-behavior: smooth;
 }
 
-header section .cards::-webkit-scrollbar{
+header section .cards::-webkit-scrollbar {
     width: 3px;
     background: rgb(255, 255, 255, .3);
     border-radius: 5px;
     visibility: hidden;
 }
 
-header section .cards::-webkit-scrollbar-thumb{
+header section .cards::-webkit-scrollbar-thumb {
     width: 3px;
     background: rgba(102, 82, 214, 0.4);
     border-radius: 5px;
     visibility: visible;
 }
 
-header section .cards .card{
+header section .cards .card {
     position: relative;
     min-width: 130px;
     height: 180px;
@@ -324,7 +326,7 @@ header section .cards .card{
     transition: .3s linear;
 }
 
-header section .cards .card .poster{
+header section .cards .card .poster {
     width: 100%;
     height: 100%;
     border-radius: 8px;
@@ -395,7 +397,7 @@ header section .cards .card .rest_card .cont .sub h3 {
     align-items: center;
 }
 
-header section .cards .card .rest_card .cont .sub h3 span{
+header section .cards .card .rest_card .cont .sub h3 span {
     background: yellow;
     color: #000;
     padding: 0px 3px;
@@ -404,7 +406,7 @@ header section .cards .card .rest_card .cont .sub h3 span{
     border-radius: 2px;
 }
 
-header section .cards .card .rest_card .cont .sub h3 i{
+header section .cards .card .rest_card .cont .sub h3 i {
     margin-right: 3px;
 }
 
@@ -415,61 +417,246 @@ header section .cards .card:hover .rest_card {
 
 /*This is code for rating stars*/
 
+.userRating{
+    width: 400px;
+    background: #111;
+    padding: 20px 30px;
+    border:1px solid #444;
+    border-radius: 5px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+}
+
+.userRating .star-icon input{
+    display:none;
+}
+
+.star-icon label{
+    font-size: 40px;
+    color:#444;
+    padding: 10px;
+    float: right;
+    transition: all 0.2s ease;
+
+}
+
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover ~label{
+    color:#fd4;
+}
+
+input:checked ~ label{
+    color: #fd4;
+}
+
+input#rate-5:checked ~ label{
+    color: #fd4;
+    text-shadow: 0 0 20px #952;
+}
+
+form header{
+    width: 100%;
+    font-size: 25px;
+    color: #fe7;
+    font-weight: 500;
+    margin: 5px 0 20px 0;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+
+
+form .textarea{
+    height: 100px;
+    width: 100%;
+    overflow:hidden;
+}
+
+.userRating h3 {
+    color: #444;
+    font-weight: 30;
+}
+
+.userRating .star-icon {
+    display: flex;
+    gap: 20px;
+    /* Correct property for spacing between items */
+}
+
+.userRating .star-icon a {
+    transition: 0.6s;
+    color: #333;
+    font-size: 40px;
+    text-decoration: none;
+    /* Ensure no underline on the links */
+}
+
+.userRating .star-icon a.active {
+    color: gold;
+}
 
 /*End of ratings code */
 
 /*buttons code */
 button.trailer {
     background: linear-gradient(90deg, #5b42f3, #a800eb);
-    border: none; /* Remove border */
-    color: white; /* White text */
-    padding: 15px 25px; /* Padding */
-    text-align: center; /* Center the text */
-    text-decoration: none; /* Remove underline from text */
-    display: inline-block; /* Make it inline-block */
-    font-size: 16px; /* Increase font size */
-    margin: 3px 1px; /* Small margin */
-    cursor: pointer; /* Pointer cursor on hover */
-    border-radius: 8px; /* Rounded corners */
+    border: none;
+    /* Remove border */
+    color: white;
+    /* White text */
+    padding: 15px 25px;
+    /* Padding */
+    text-align: center;
+    /* Center the text */
+    text-decoration: none;
+    /* Remove underline from text */
+    display: inline-block;
+    /* Make it inline-block */
+    font-size: 16px;
+    /* Increase font size */
+    margin: 3px 1px;
+    /* Small margin */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    border-radius: 8px;
+    /* Rounded corners */
     margin-bottom: 25px;
 }
 
 /* Link Style */
 button.trailer a {
-    color: white; /* White text */
-    text-decoration: none; /* Remove underline */
+    color: white;
+    /* White text */
+    text-decoration: none;
+    /* Remove underline */
 }
 
 /* Link Hover Effect */
 button.trailer a:hover {
-    text-decoration: underline; /* Underline on hover */
+    text-decoration: underline;
+    /* Underline on hover */
 }
 
 
 button.btn {
     background: linear-gradient(90deg, #5b42f3, #a800eb);
-    border: none; /* Remove border */
-    color: white; /* White text */
-    padding: 15px 25px; /* Padding */
-    text-align: center; /* Center the text */
-    text-decoration: none; /* Remove underline from text */
-    display: inline-block; /* Make it inline-block */
-    font-size: 16px; /* Increase font size */
-    margin: 4px 2px; /* Small margin */
-    cursor: pointer; /* Pointer cursor on hover */
-    border-radius: 8px; /* Rounded corners */
+    border: none;
+    /* Remove border */
+    color: white;
+    /* White text */
+    padding: 15px 25px;
+    /* Padding */
+    text-align: center;
+    /* Center the text */
+    text-decoration: none;
+    /* Remove underline from text */
+    display: inline-block;
+    /* Make it inline-block */
+    font-size: 16px;
+    /* Increase font size */
+    margin: 4px 2px;
+    /* Small margin */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    border-radius: 8px;
+    /* Rounded corners */
 }
 
 button.watchList {
     background: linear-gradient(90deg, #5b42f3, #a800eb);
-    border: none; /* Remove border */
-    color: white; /* White text */
-    padding: 15px 25px; /* Padding */
-    text-align: center; /* Center the text */
-    text-decoration: none; /* Remove underline from text */
-    display: inline-block; /* Make it inline-block */
-    font-size: 16px; /* Increase font size */
-    margin: 4px 2px; /* Small margin */
-    cursor: pointer; /* Pointer cursor on hover */
-    border-radius: 8px; /* Rounded corners */
+    border: none;
+    /* Remove border */
+    color: white;
+    /* White text */
+    padding: 15px 25px;
+    /* Padding */
+    text-align: center;
+    /* Center the text */
+    text-decoration: none;
+    /* Remove underline from text */
+    display: inline-block;
+    /* Make it inline-block */
+    font-size: 16px;
+    /* Increase font size */
+    margin: 4px 2px;
+    /* Small margin */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    border-radius: 8px;
+    /* Rounded corners */
+}
+
+/* ================================================================= */
+/*  this is the css for the share button popup */
+/* The Modal (background) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    border-radius: 20px;
+
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefebb;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 3px solid #6521b3;
+    width: 50%;
+    /* Could be more or less, depending on screen size */
+    border-radius: 20px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    filter: blur(.4);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    border-radius: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Add these styles to your existing CSS */
+
+.modal-content p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #000;
+    font-weight: 600;
+}
+
+.modal-content input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 3px solid #7628b6;
+    border-radius: 4px;
+    box-sizing: border-box;
 }

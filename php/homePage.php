@@ -216,18 +216,18 @@
             </div>
             <div class="user-actions">
               <!-- Additional user actions -->
-              <button id="change-password-btn">Change Password</button>
-              <button id="change-username-btn">Change Username</button>
+              <!-- <button id="change-password-btn">Change Password</button>
+              <button id="change-username-btn">Change Username</button> -->
               <!-- Logout and delete buttons -->
               <button id="logout-btn">Logout</button>
               <button id="delete-btn">Delete Account</button>
               <!-- Toggle between light and dark mode -->
-              <label class="switch">
+              <!-- <label class="switch">
                 <input type="checkbox" id="mode-switch" />
                 <span class="slider round"></span>
-              </label>
+              </label> -->
             </div>
-          </div>
+          </div> 
           <!-- Add a button for notifications -->
           <div class="notifications">
             <img

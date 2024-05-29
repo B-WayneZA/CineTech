@@ -1,4 +1,5 @@
 <?php
+
 $data = array(
    'type' => 'GetAllSeries',
    'limit' => '100',
@@ -8,7 +9,7 @@ $data = array(
 
 // Convert data to JSON format
 $json_data = json_encode($data);
-
+ 
 // Create a new cURL resource
 $ch = curl_init();
 
@@ -90,53 +91,17 @@ if ($series['status'] === 'success') {
                </li>
             </ul>
          </div>
-         <div class="search_user">
+         <!-- <div class="search_user">
             <input type="text" placeholder="Search..." id="search_input">
             <img src="../img/UserPFP.jpeg" alt="">
             <div class="search" id="search_results"></div>
-         </div>
+         </div> -->
       </nav>
 
       <!-- dropdown menu for the genre -->
       <div class="dropdown">
          <h1>Recently Added</h1>
-         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Genre
-         </button>
-         <ul class="dropdown-menu">
-            <li><button class="dropdown-item" type="button">Action</button></li>
-            <li><button class="dropdown-item" type="button">Adventure</button></li>
-            <li><button class="dropdown-item" type="button">Anime</button></li>
-            <li><button class="dropdown-item" type="button">Animation</button></li>
-            <li><button class="dropdown-item" type="button">Biographical</button></li>
-            <li><button class="dropdown-item" type="button">Children</button></li>
-            <li><button class="dropdown-item" type="button">Comedy</button></li>
-            <li><button class="dropdown-item" type="button">Documentation</button></li>
-            <li><button class="dropdown-item" type="button">Drama</button></li>
-            <li><button class="dropdown-item" type="button">European</button></li>
-            <li><button class="dropdown-item" type="button">Family</button></li>
-            <li><button class="dropdown-item" type="button">Fantasy</button></li>
-            <li><button class="dropdown-item" type="button">History</button></li>
-            <li><button class="dropdown-item" type="button">Horror</button></li>
-            <li><button class="dropdown-item" type="button">Music</button></li>
-            <li><button class="dropdown-item" type="button">Mystery</button></li>
-            <li><button class="dropdown-item" type="button">Political</button></li>
-            <li><button class="dropdown-item" type="button">Psychological</button></li>
-            <li><button class="dropdown-item" type="button">Reality</button></li>
-            <li><button class="dropdown-item" type="button">Romance</button></li>
-            <li><button class="dropdown-item" type="button">Satire</button></li>
-            <li><button class="dropdown-item" type="button">Sci-fi</button></li>
-            <li><button class="dropdown-item" type="button">Sport</button></li>
-            <li><button class="dropdown-item" type="button">Spy</button></li>
-            <li><button class="dropdown-item" type="button">Superhero</button></li>
-            <li><button class="dropdown-item" type="button">Supernatural</button></li>
-            <li><button class="dropdown-item" type="button">Teen</button></li>
-            <li><button class="dropdown-item" type="button">Thriller</button></li>
-            <li><button class="dropdown-item" type="button">War</button></li>
-            <li><button class="dropdown-item" type="button">Western</button></li>
-         </ul>
-      </div>
-
+    </div>
 
       <div class="content">
          <h1 id="title">The Grand Tour</h1>
