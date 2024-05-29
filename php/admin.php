@@ -1,3 +1,55 @@
+<?php
+// Check if the form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the deleteTitle and deleteType are set
+    if (isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
+        // Construct the request body
+        $requestData = array(
+            "type" => "Remove",
+            "item" => $_POST['deleteType'] === "Movie" ? "film" : "show", // Convert deleteType to item
+            "title" => $_POST['deleteTitle']
+        );
+
+        // Convert the request data to JSON
+        $jsonData = json_encode($requestData);
+
+        // Set API endpoint URL
+        $apiUrl = "https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php";
+
+        // Initialize cURL session
+        $curl = curl_init($apiUrl);
+
+        // Set cURL options
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST"); // Set request method to POST
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonData); // Set request body
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Return response as string
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ));
+
+        // Execute cURL request
+        $response = curl_exec($curl);
+
+        // Check for cURL errors
+        if (curl_errno($curl)) {
+            echo json_encode(array("status" => "error", "message" => 'Error: ' . curl_error($curl)));
+        } else {
+            // Output response
+            echo $response;
+        }
+
+        // Close cURL session
+        curl_close($curl);
+    } else {
+        echo json_encode(array("status" => "error", "message" => "Please provide both title and type for deleting."));
+    }
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
