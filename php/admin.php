@@ -178,21 +178,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <p>Remove Movies/Series no longer needed in the database.</p>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <input type="text" id="deleteTitle" name="deleteTitle" placeholder="Title" required>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Movie/Series
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <input type="radio" id="deleteMovie" name="deleteType" value="film" checked>
-                                        <label for="deleteMovie">Movie</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" id="deleteSeries" name="deleteType" value="show">
-                                        <label for="deleteSeries">Series</label>
-                                    </li>
-                                </ul>
-                            </div>
                             <button type="submit">Delete</button>
                         </form>
                     </div>
@@ -202,21 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <p>Remove Movies/Series no longer needed in the database.</p>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <input type="text" id="deleteTitle" name="deleteTitle" placeholder="Title" required>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Movie/Series
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <input type="radio" id="deleteMovie" name="deleteType" value="film" checked>
-                                        <label for="deleteMovie">Movie</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" id="deleteSeries" name="deleteType" value="show">
-                                        <label for="deleteSeries">Series</label>
-                                    </li>
-                                </ul>
-                            </div>
                             <button type="submit">Delete</button>
                         </form>
                     </div>
