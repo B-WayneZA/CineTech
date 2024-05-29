@@ -258,6 +258,11 @@ areaChart.render();
 // -----------------  Added code to add functionality using the api --------------------------
 
 
+// Basic Authentication credentials
+const username = 'u23535246';
+const password = 'Toponepercent120';
+const credentials = btoa(`${username}:${password}`);
+
 // Delete Movie or Series Form Submission
 document.getElementById('deleteForm').addEventListener('submit', function(event) {
   event.preventDefault(); // Prevent default form submission
@@ -266,10 +271,11 @@ document.getElementById('deleteForm').addEventListener('submit', function(event)
   const type = document.querySelector('input[name="deleteType"]:checked').value; // Get selected type (Movie/Series)
 
   // AJAX request to delete movie or series
-  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
+  fetch('https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + credentials
     },
     body: JSON.stringify({
       type: 'Remove',
@@ -292,9 +298,6 @@ document.getElementById('deleteForm').addEventListener('submit', function(event)
   });
 });
 
-
-
-
 // Delete User Form Submission
 document.getElementById('deleteUserForm').addEventListener('submit', function(event) {
   event.preventDefault(); // Prevent default form submission
@@ -302,10 +305,11 @@ document.getElementById('deleteUserForm').addEventListener('submit', function(ev
   const email = document.getElementById('deleteEmail').value; // Get email input value
 
   // AJAX request to delete user
-  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
+  fetch('https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + credentials
     },
     body: JSON.stringify({
       type: 'DeleteUser',
@@ -327,9 +331,6 @@ document.getElementById('deleteUserForm').addEventListener('submit', function(ev
   });
 });
 
-
-
-
 // Add Movie or Series Form Submission
 document.getElementById('addForm').addEventListener('submit', function(event) {
   event.preventDefault(); // Prevent default form submission
@@ -343,10 +344,11 @@ document.getElementById('addForm').addEventListener('submit', function(event) {
   const type = document.querySelector('input[name="addType"]:checked').value; // Get selected type (Movie/Series)
 
   // AJAX request to add movie or series
-  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
+  fetch('https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + credentials
     },
     body: JSON.stringify({
       type: (type === 'Movie') ? 'AddMovie' : 'AddSeries', // Determine whether it's a movie or series
@@ -373,9 +375,6 @@ document.getElementById('addForm').addEventListener('submit', function(event) {
   });
 });
 
-
-
-
 // Edit Movie or Series Form Submission
 document.getElementById('editForm').addEventListener('submit', function(event) {
   event.preventDefault(); // Prevent default form submission
@@ -391,10 +390,11 @@ document.getElementById('editForm').addEventListener('submit', function(event) {
   fields[editField] = editValue;
 
   // AJAX request to edit movie or series
-  fetch('https://cinetechwatch.000webhostapp.com/php/api.php', {
+  fetch('https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + credentials
     },
     body: JSON.stringify({
       type: type === 'movie' ? 'EditMovie' : 'EditShow',
@@ -416,3 +416,4 @@ document.getElementById('editForm').addEventListener('submit', function(event) {
     alert('An error occurred. Please try again.'); // Show generic error message
   });
 });
+

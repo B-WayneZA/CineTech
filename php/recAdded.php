@@ -13,7 +13,7 @@ $json_data = json_encode($data);
 $ch = curl_init();
 
 // Set the URL
-curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php ');
+curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
 // Set the request method to POST
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -38,7 +38,6 @@ curl_close($ch);
 // Decode the JSON response
 $series = json_decode($response, true);
 // Check if the login was successful
-echo $response;
 if ($series['status'] === 'success') {
    $shows = $series['data'];
 } else {
@@ -61,7 +60,7 @@ if ($series['status'] === 'success') {
    <!-- <link rel="stylesheet" href="/css/movies.css" id="light-mode"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
 
-   <link rel="stylesheet" href="../css/homePage-dark.css" id="dark-mode">
+   <link rel="stylesheet" href="../css/recAdded.css" id="dark-mode">
    <!-- <link rel="icon" href="https://cinetechwatch.000webhostapp.com/img/4.png" type="image/x-icon"> -->
    <!-- the icons used in the website -->
    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
@@ -96,7 +95,7 @@ if ($series['status'] === 'success') {
          </div>
          <div class="search_user">
             <input type="text" placeholder="Search..." id="search_input">
-            <!-- <img src="/img/UserPFP.jpeg" alt=""> -->
+            <img src="../img/UserPFP.jpeg" alt="">
             <div class="search">
                <!-- add more of these to test search feature -->
                <a href="#" class="card">
@@ -132,7 +131,7 @@ if ($series['status'] === 'success') {
                foreach($shows as $show) {
                   $title = urlencode($show['Name']);
                   // individual card for each movie
-                  echo '<a href="viewMore.php?title=' . $title . '" class="card">';
+                  echo '<a href="viewMore.php?name=' . $title . '" class="card">';
                   echo '<img src=" '.$show['PosterURL'] .'" alt="">';
 
                   echo '<div class="rest_card">';
