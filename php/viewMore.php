@@ -1,4 +1,4 @@
-<b?php
+<?php
 session_start(); // Start session to store user login status
 
 // Function to make API request
@@ -49,20 +49,18 @@ function addToFavorites($apiKey, $filmId, $showId)
     // Check if the add button is clicked
     $add = isset($_POST['addToFavorites']) ? "true" : "false";
 
-    echo '<script>console.log("addToFavorites called with API key: ' . $apiKey . '");</script>';
-    echo '<script>console.log("filmId: ' . $filmId . '");</script>';
-    echo '<script>console.log("showId: ' . $showId . '");</script>';
-
-    if (isset($_GET['name'])) {
+     
+     if(isset($_GET['name']))       //show
+     {
         $data = array(
             "type" => "Favourite",
             "apikey" => $apiKey,
             "add" => $add,
             "show_id" => $showId
         );
-        // echo '<script>alert("i am a show : ' . $responseData['error'] . '");</script>';
-    } else {
-        $data = array(
+     }else
+     {
+        $data = array(                      //movie
             "type" => "Favourite",
             "apikey" => $apiKey,
             "add" => $add,
@@ -121,7 +119,6 @@ $responseData = makeApiRequest($data);
 if ($responseData['status'] === 'success') {
     // Process the data
     $movies = $responseData['data'][0];
-    // echo '<script>console.log("Movies data: ' . json_encode($movies) . '");</script>';
 } else {
     // Handle error response
     $error = $responseData['data'];
@@ -130,14 +127,13 @@ if ($responseData['status'] === 'success') {
 // Handle adding to favorites if form is submitted
 if (isset($_POST['addToFavorites'])) {
 
-    //echo '<script>alert("i am clicked: ' . $responseData['error'] . '");</script>';
 
     if (isset($_GET['name'])) {
         addToFavorites($apiKey, null, $movies["ID"]);
-        // echo '<script>alert("i am a show: ' . $responseData['error'] . '");</script>';
-    } else {
+    }
+    else
+    {
         addToFavorites($apiKey, $movies["ID"], null);
-        // echo '<script>alert("i am movie: ' . $responseData['error'] . '");</script>';
     }
 }
 ?>
@@ -205,51 +201,36 @@ if (isset($_POST['addToFavorites'])) {
                     <h3><?php echo $movies['Description'] ?></h3><br>
                 </div>
 
-                <div class="Genres">
-                    <h3>Genre: <?php echo $movies['Genre'] ?> </h3><br>
-                </div>
-
-                <div class="yearRelease">
-                    <h3>Year Of Release: <?php echo $movies['Release_Year'] ?></h3><br>
-                </div>
-
-                <div class="movieRating">
-                    <h3>CineTech Rating: <?php echo $movies['CineTech_Rating'] ?></h3><br>
-                </div>
-
-                <div class="userRating">
-                    <h3>Ratings: </h3>
-                    <div class="star-icon">
-                        <a href="#" class="bi-star-fill"></a>
-                        <a href="#" class="bi-star-fill"></a>
-                        <a href="#" class="bi-star-fill"></a>
-                        <a href="#" class="bi-star-fill"></a>
-                        <a href="#" class="bi-star-fill"></a>
-                    </div>
-                </div>
-
-                <div class="actors">
-                    <h3>Actors: Gabrielle Union, Mark June and Tyler Perry </h3><br>
-                </div>
-
-                <button class="trailer">
-                    <a href=" <?php echo ' ' ?> ">Trailer</a><br>
-                </button>
-
-                <button class="btn" id="shareButton">Share</button>
-
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
-
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <p>Send to User:</p>
-                        <input type="text" id="username" placeholder="Enter username">
-                        <button class="btn" id="shareButton2">Share</button>
-                    </div>
-
-                </div>
+            <div class = "Genres">
+                <h3>Genre: <?php echo $movies['Genre']?> </h3><br>
+            </div>
+            
+           <div class = "yearRelease">
+            <h3>Year Of Release:  <?php echo $movies['Release_Year']?></h3><br>
+           </div>
+            
+           <div class = "movieRating">
+            <h3>CineTech Rating:  <?php echo $movies['CineTech_Rating']?></h3><br>
+           </div>
+                
+            
+            <div class = "userRating">
+            <!-- <h3>Ratings: </h3> -->
+             <div class = "star-icon">
+                
+             </div>
+            </div>
+            
+            <div class = "actors">
+                <h3>Actors: Gabrielle Union, Mark June and Tyler Perry  </h3><br>
+            </div>
+            
+            
+              <button class = "trailer" >
+                <a href=" <?php echo ' ' ?> " >Trailer</a><br>
+              </button>
+              
+              <button class="btn">Share</button>
 
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
                     <button type="submit" class="watchList" name="addToFavorites">Add to MyList</button>

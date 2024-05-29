@@ -13,7 +13,19 @@ $data = array(
     'limit' => 100,
     'return' => 'all'
 ); 
- 
+
+$input = json_decode(file_get_contents('php://input'), true);
+$genre = $input['genre'] ?? '';
+
+$data2 =  array(
+    'type' => 'GetAllMovies',
+    'limit' => 100,
+    'search' => array(
+        'genre' => $genre
+    ),
+    'return' => 'all'
+); 
+
 // Convert data to JSON format
 $json_data = json_encode($data);
 
@@ -113,7 +125,8 @@ if ($responseData['status'] === 'success') {
                 Genre
             </button>
             <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">Action</button></li>
+                <form id="genreForm" method="POST" action="" value="">
+                <li><button class="dropdown-item" type="button" onclick="selectGenre('Action')">Action</button></li>
                 <li><button class="dropdown-item" type="button">Adventure</button></li>
                 <li><button class="dropdown-item" type="button">Anime</button></li>
                 <li><button class="dropdown-item" type="button">Animation</button></li>
@@ -143,8 +156,15 @@ if ($responseData['status'] === 'success') {
                 <li><button class="dropdown-item" type="button">Thriller</button></li>
                 <li><button class="dropdown-item" type="button">War</button></li>
                 <li><button class="dropdown-item" type="button">Western</button></li>
+                </form>
             </ul>
         </div>
+        <script>
+        function selectGenre(genre) {
+            document.getElementById('selected_genre').value = genre;
+            document.getElementById('genreForm').submit();
+        }
+        </script>
 
         <!-- Contnent/details of video playing  -->
         <div class="content">
