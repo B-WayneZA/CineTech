@@ -301,8 +301,11 @@
               <!-- <button id="change-password-btn">Change Password</button>
               <button id="change-username-btn">Change Username</button> -->
               <!-- Logout and delete buttons -->
-              <button id="logout-btn">Logout</button>
-              <button id="delete-btn">Delete Account</button>
+              <form action="../php/logout.php" method="post">
+              <button type="submit" id="logout-btn">Logout</button>
+              </form>
+
+              <button onclick="window.location.href='../php/deleteAccount.php'" id="delete-btn">Delete Account</button>
               <!-- Toggle between light and dark mode -->
               <!-- <label class="switch">
                 <input type="checkbox" id="mode-switch" />

@@ -114,12 +114,8 @@ if (isset($_POST['selected_genre'])) {
         // Handle error response
         $error = $responseData['data'];
     }
-
-    
 }
-
-
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +135,7 @@ if (isset($_POST['selected_genre'])) {
     <!--Header-->
     <header>
 
-        <video src="../video/6Underground.MOV" autoplay loop="true"></video>
+        <video src="../video/6Underground.MOV" autoplay muted loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />
