@@ -8,7 +8,7 @@ $data = array(
 
 
 // Convert data to JSON format
-$json_data = json_encode($data);
+$json_data = json_encode($data); 
  
 // Create a new cURL resource
 $ch = curl_init();

@@ -141,7 +141,7 @@ if (isset($_POST['selected_genre'])) {
     <!--Header-->
     <header>
 
-        <video src="../video/JohnWickTrailer.mp4" autoplay loop="true"></video>
+        <video src="../video/JJKaisen.mp4" autoplay loop="true"></video>
         <nav>
             <div class="logo_ul">
                 <img src="../img/4.png" alt="" />

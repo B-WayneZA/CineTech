@@ -4,7 +4,7 @@
 /* Variables */
 :root {
   --bg: #281549;
-  --text: #7288a2;
+  --text: #7288a2; 
   --white: #eceff5;
   --lightgray: #e5e5e5; 
   --blue: #df5eff;
@@ -31,7 +31,7 @@ body {
   height: 60vh;
   overflow-y: visible;
   padding: 20px;
-  background: url('/img/Background-dark.png');
+  background: url('../img/Background-dark.png');
   width: 100%;
   max-width: 100%;
 }
@@ -61,19 +61,23 @@ header {
 nav {
   display: flex;
   /* Use flexbox to arrange buttons horizontally */
+  flex-direction: row;
   justify-content: center;
   /* Center buttons horizontally */
   margin-top: 20px;
   /* Add margin for spacing */
+  align-items: center;
 }
 
 a {
   text-decoration: none;
   color: #f4f5fa;
   font-weight: bold;
-  padding: 10px 20px;
+  padding: 10px 50px;
   border: 3px solid white;
-  border-radius: 15px;
+  border-radius: 15px; 
+  justify-content: center;
+  margin: 0 10px;
 }
 
 .welcomeSaying {
