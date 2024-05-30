@@ -189,7 +189,63 @@
         </div>
         <!-- these are the div associated with the user icon, notification and search bar -->
         <div class="search_user">
-          <input type="text" placeholder="Search..." id="search_input" />
+
+          <?php 
+
+          function makeApiRequest($data)
+          {
+              // Create a new cURL resource
+              $ch = curl_init();
+
+              // Set the URL
+              curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+              // Set the request method to POST
+              curl_setopt($ch, CURLOPT_POST, 1);
+
+              // Set the request data as JSON
+              curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+              // Set the Content-Type header
+              curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+              // Set basic authentication credentials
+              curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+              curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
+
+              // Return response instead of outputting it
+              curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+              // Execute the request
+              $response = curl_exec($ch);
+
+              // Close cURL resource
+              curl_close($ch);
+
+              // Decode the JSON response
+              return json_decode($response, true);
+            }
+
+            if(isset($_POST['Search'])) {
+              $searches = array(
+                'type' => "Search",
+                'search' => 'search'
+              );
+
+              $searchData = makeApiRequest($searches);
+              var_dump($searchData);
+
+              if($searchData['status'] === 'success') {
+                $searchResults = $searchData['data'];
+              }
+            }
+          
+          ?>
+            <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
+              <input type="text" placeholder="Search..." id="search_input" />
+                  <button type="submit" class="search" name="Search">Search</button>
+              </form>
+            
           <!-- User image -->
           <img
             src="../img/UserPFP.jpeg"
@@ -199,60 +255,27 @@
           <div class="search">
             <!-- add more of these to test search feature -->
             <!-- First search option -->
-            <a href="#" class="card">
-              <img
-                src="../img/JohnWick.jpeg"
-                alt=""
-              />
-              <div class="cont">
-                <h3>John Wick</h3>
-                <p>
-                  Action, 2014, <span>CineTech</span
-                  ><i class="fa fa-star" aria-hidden="true"></i>7.4
-                </p>
-              </div>
-            </a>
-            <!-- Second search option -->
-            <a href="#" class="card">
-              <img
-                src="../img/Dune.jpeg"
-                alt=""
-              />
-              <div class="cont">
-                <h3>Dune</h3>
-                <p>
-                  Action, 2024, <span>CineTech</span
-                  ><i class="fa fa-star" aria-hidden="true"></i>6.9
-                </p>
-              </div>
-            </a>
-            <!-- Third search option -->
-            <a href="#" class="card">
-              <img
-                src="../img/Inception.jpeg"
-                alt=""
-              />
-              <div class="cont">
-                <h3>Inception</h3>
-                <p>
-                  Action, Sci-Fi 2012, <span>CineTech</span
-                  ><i class="fa fa-star" aria-hidden="true"></i>7.4
-                </p>
-              </div>
-            </a>
-            <!-- Fourth search option -->
-            <a href="#" class="card">
-              <img
-                src="../img/Sightless.jpeg"
-                alt=""
-              />
-              <div class="cont">
-                <h3>Sightless</h3>
-                <p>
-                  Action, Thriller 2017, <span>CineTech</span
-                  ><i class="fa fa-star" aria-hidden="true"></i>7.4
-                </p>
-              </div>
+            <?php 
+              if(isset($searchResults)) {
+                foreach($searchResults as $res) {
+                  if($res['type'] === 'film') {
+                    $titleRes = urlencode($res['name']);
+                    echo '<a href="viewMore.php?title=' .  $titleRes . '" class="card">';
+                  } else {
+                    echo '<a href="viewMore.php?name=' .  $titleRes . '">';
+                  }
+
+                  echo '<img src="'. $res['PosterURL'].'" alt="" class="poster">';
+                  echo '<div class="cont">';
+                  echo '<h3>'. $res['name'].'</h3>';
+                  echo '<p>'.$res['genre'] ." ". $res['Release_Year'] . '<span>CineTech</span><i class="fa fa-star" aria-hidden="true"></i>'. $res['rating'] .'</p>';
+                  
+                  echo '</div>';
+                  echo '</a>';
+                }
+              }
+            
+            ?>
             </a>
           </div>
           <!-- User panel -->
