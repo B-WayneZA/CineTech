@@ -282,7 +282,7 @@
               <button type="submit" id="logout-btn">Logout</button>
               </form>
 
-              <button id="delete-btn">Delete Account</button>
+              <button onclick="window.location.href='../php/deleteAccount.php'" id="delete-btn">Delete Account</button>
               <!-- Toggle between light and dark mode -->
               <!-- <label class="switch">
                 <input type="checkbox" id="mode-switch" />
