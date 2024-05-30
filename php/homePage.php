@@ -13,7 +13,6 @@
     $dataArr = array(
         'type' => 'GetShared',
         'apikey' => $apikey,
-        
     );
 
     $json_arr = json_encode($dataArr);
@@ -189,7 +188,64 @@
         </div>
         <!-- these are the div associated with the user icon, notification and search bar -->
         <div class="search_user">
-          <input type="text" placeholder="Search..." id="search_input" />
+
+          <?php 
+
+          function makeApiRequest($data)
+          {
+              // Create a new cURL resource
+              $ch = curl_init();
+
+              // Set the URL
+              curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+
+              // Set the request method to POST
+              curl_setopt($ch, CURLOPT_POST, 1);
+
+              // Set the request data as JSON
+              curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+              // Set the Content-Type header
+              curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+              // Set basic authentication credentials
+              curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+              curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120'); // Replace with your actual credentials
+
+              // Return response instead of outputting it
+              curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+              // Execute the request
+              $response = curl_exec($ch);
+
+              // Close cURL resource
+              curl_close($ch);
+
+              // Decode the JSON response
+              return json_decode($response, true);
+            }
+
+            if(isset($_POST['Search'])) {
+              $searchTerm = $_POST['search_input'];
+              $searches = array(
+                'type' => "Search",
+                'search' => $searchTerm
+              );
+
+              $searchData = makeApiRequest($searches);
+              var_dump($searchData);
+
+              if($searchData['status'] === 'success') {
+                $searchResults = $searchData['data'];
+              }
+            }
+          
+          ?>
+            <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
+              <input class="search_user" type="text" placeholder="Search..." id="search_input" />
+                  <button type="submit" class="search" name="Search">Search</button>
+              </form>
+            
           <!-- User image -->
           <img
             src="../img/UserPFP.jpeg"
