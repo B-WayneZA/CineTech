@@ -4,7 +4,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-}
+} 
  
 body {
     width: 100%;
@@ -248,10 +248,10 @@ header nav .search_user .search .card .cont span {
 header .content {
     position: relative;
     color: #fff;
-    margin-top: 100px;
+    /* margin-top: 100px; */
     padding-left: 50px;
     margin-bottom: 50px;
-    background: #000;
+    background: #00000000;
 }
 
 header .content h1 {

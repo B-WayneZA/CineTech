@@ -16,7 +16,7 @@ body {
     overflow-y: visible;
     overflow-x: hidden;
     background: #11091f;
-}
+} 
 
 header {
     position: absolute; /* Change position to fixed */
@@ -24,7 +24,7 @@ header {
     left: 0; /* Position at the left of the viewport */
     width: 100%;
     height: 100vh;
-    background-color: #000;
+    /* background-color: #000; */
 }
 
 header::before {
@@ -41,7 +41,7 @@ header::after {
     position: relative;
     width: 100%;
     height: 100%;
-    background: #000;
+    /* background: #000; */
     z-index: -1;
 }
 
@@ -237,10 +237,10 @@ header nav .search_user .search .card .cont span {
 header .content {
     position: relative;
     color: #fff;
-    margin-top: 100px;
+    /* margin-top: 100px; */
     padding-left: 50px;
     margin-bottom: 50px;
-    background: #000;
+    background: #912c2c00;
 }
 
 header .content h1 {
