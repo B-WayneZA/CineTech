@@ -237,37 +237,41 @@ if (isset($_POST['addToFavorites'])) {
                     <a href=" <?php echo ' ' ?> ">Trailer</a><br>
                 </button>
                 <?php
+                if(isset($_POST['search_user'])) {
                     $userN = $_POST['search_user'];
 
                     if (isset($_GET['name'])) {
-                        $shareData = array(
-                            "type" => "ShareFilm",
-                            "apikey" => $apiKey,
-                            "username" => $userN,
-                            "id" => $movies['ID']
-                        );
-                    } else {
                         $shareData = array(
                             "type" => "ShareSeries",
                             "apikey" => $apiKey,
                             "username" => $userN,
                             "id" => $movies['ID']
                         );
+                    } else {
+                        $shareData = array(
+                            "type" => "ShareFilm",
+                            "apikey" => $apiKey,
+                            "username" => $userN,
+                            "id" => $movies['ID']
+                        );
                     }
 
-                    $shareReq = makeApiRequest($Sharedata);
-                    var_dump($shareReq); // Add this line
+                    $shareReq = makeApiRequest($shareData);
+                    var_dump($shareReq['data']); // Add this line
                 
                     // Check if the request was successful
                     if ($shareReq['status'] === 'success') {
-                        echo 'Success!';
+                        echo '<script>alert("Movie shared with: "+'.$userN .') </script>';
                     } else {
                         echo 'Error: ' . $shareReq['message'];
                     }
+                }
+                    
     
                 
                 ?>
                 <form method="post" id="shareForm" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
+                    <input name="search_user" type="hidden" id="shareUserHidden">
                     <button type="button" class="btn" id="shareButton">Share</button>
                 </form>
 
@@ -278,7 +282,7 @@ if (isset($_POST['addToFavorites'])) {
                         <h2>Share to User</h2>
 
                         <input name="search_user" type="text" id="shareUser" placeholder="Enter username">
-                        <button id="shareSubmit">Share</button>
+                        <button id="shareSubmit">Send</button>
                     </div>
                 </div>
 
@@ -379,7 +383,7 @@ if (isset($_POST['addToFavorites'])) {
                         foreach ($mov as $idx) {
 
                             //$nameSeries = urlencode();
-                            echo '<a href="viewMore.php?title=' . $idx['Name'] . '" class="card">';
+                            echo '<a href="viewMore.php?name=' . $idx['Name'] . '" class="card">';
                             echo '<img src= " ' . $idx['PosterURL'] . '" alt="" class="poster">';
                             echo '<div class="rest_card">';
                             echo '<img src= " ' . $idx['PosterURL'] . '" alt="" >';
@@ -455,8 +459,11 @@ if (isset($_POST['addToFavorites'])) {
             var shareSubmit = document.getElementById("shareSubmit");
             shareSubmit.onclick = function() {
                 var shareUser = document.getElementById("shareUser").value;
-                alert("Share to User: " + shareUser);
+                // alert("Share to User: " + shareUser);
+                document.getElementById("shareUserHidden").value = shareUser;
+
                 // Here you can add your logic to handle the share action
+                document.getElementById("shareForm").submit();
                 modal.style.display = "none";
             }
         });

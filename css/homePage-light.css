@@ -871,3 +871,53 @@ input:checked + .slider:before {
     height: 20px;
     border: 2px solid #df5eff;
 }
+
+/* ============================================================ */
+/* search button */
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling the form */
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+/* Styling the input field */
+.search_user {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    font-size: 16px;
+}
+
+/* Styling the button */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #5b42f3;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: Add some margin between the form and other elements */
+form.search-form {
+    margin-bottom: 20px;
+}

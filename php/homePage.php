@@ -227,6 +227,7 @@
             }
 
             if(isset($_POST['Search'])) {
+              echo '<script>alert("Button clicked")</script>';
               $searchTerm = $_POST['search_input'];
               $searches = array(
                 'type' => "Search",
@@ -234,7 +235,7 @@
               );
 
               $searchData = makeApiRequest($searches);
-              var_dump($searchData);
+             // var_dump($searchData);
 
               if($searchData['status'] === 'success') {
                 $searchResults = $searchData['data'];
@@ -244,7 +245,7 @@
           ?>
             <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
               <input class="search_user" type="text" placeholder="Search..." id="search_input" />
-                  <button type="submit" class="search" name="Search">Search</button>
+                  <button type="button" class="btn" name="Search">Search</button>
               </form>
             
           <!-- User image -->
@@ -277,7 +278,7 @@
               }
             
             ?>
-            </a>
+
           </div>
           <!-- User panel -->
           <div class="user-panel">
