@@ -38,8 +38,6 @@ function getFavourites($apikey) {
 }
 
 
-
-
 // Function to remove a favourite
 function removeFavourite($apikey, $filmId, $showId) {
 
@@ -95,8 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove'])) {
 }
 
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -159,9 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove'])) {
                         <p class="release-year"><?php echo htmlspecialchars($data['Release_Year']); ?></p>
 
                         <form method="POST" action="">
-                        
-
-                         
+  
                         <?php 
                         if($data['type'] === 'film')
                         {
@@ -174,8 +168,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove'])) {
 
                         ?>
 
-                        <button type="submit" name="remove" class="btn btn-danger">Remove</button>
-
+                        <!-- <button type="submit" name="remove" class="btn btn-danger">Remove</button> -->
+                        <button  class="remove" type="submit">Remove</button>
                    </form>
                     </div>
                 </div>

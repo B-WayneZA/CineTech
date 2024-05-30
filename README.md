@@ -36,11 +36,8 @@ The web application is built using PHP, HTML5, CSS, and JavaScript, leveraging t
 ### Movies and TV Series:
 * Admins  should be able to add, edit, and delete movies and TV series from the database.
 * Each title should have associated metadata such as title, description, release date, genre, rating, etc.
-### Actors, Directors, Genres:
-* The application should provide functionality to manage actors, directors, genres.
-* Admins should be able to add, edit, and delete entries for each entity, as well as associate them with movies and TV series.
 ### Sorting and Filtering:
-* Users should have the ability to sort and filter content based on various criteria such as genre, rating, release date, etc.
+* Users should have the ability to sort and filter content based on various criteria such as genre and release date.
 * The application should provide intuitive UI elements for users to customize their search and discovery experience.
 ### Database Operations:
 * The application should facilitate database operations such as inserting, updating, extending, and deleting records as necessary.
@@ -52,7 +49,7 @@ The web application is built using PHP, HTML5, CSS, and JavaScript, leveraging t
 # Data Sources
 ## Public Datasets: 
 Utilize publicly available datasets containing information about movies, TV series, actors, directors, genres, and production studios. Websites like IMDb, The Movie Database (TMDb), and Open Movie Database (OMDb) offer APIs or downloadable datasets that can be used for this purpose.
-## Scraping Techniques: 
-Implement web scraping techniques to extract data from online sources such as movie review websites, entertainment blogs, or streaming platforms.
 ## Manual Entry: 
 Supplement automated data retrieval methods with manual entry for specific details or entries not readily available in existing datasets. This can include adding custom metadata, descriptions, or user-generated content.
+
+

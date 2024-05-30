@@ -3,6 +3,9 @@
 $data = array(
    'type' => 'GetAllSeries',
    'limit' => '100',
+   'search' => array(
+      'year' => '2005'
+   ),
    'return' => 'all'
 );
 

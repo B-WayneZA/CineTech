@@ -273,7 +273,8 @@ class API
                   r.IMDB_score AS rating, 
                   g.Genre AS genre, 
                   m.PosterURL, 
-                  m.Release_Year
+                  m.Release_Year,
+                  'film' as type
               FROM Films m
               JOIN Rating r ON m.Rating_ID = r.Rating_ID
               JOIN Genre g ON m.Genre_ID = g.Genre_ID
@@ -284,7 +285,8 @@ class API
                   r.IMDB_score AS rating, 
                   g.Genre AS genre, 
                   s.PosterURL, 
-                  s.Release_Year
+                  s.Release_Year,
+                  'show' as type
               FROM Shows s
               JOIN Rating r ON s.RatingID = r.Rating_ID
               JOIN Genre g ON s.Genre_ID = g.Genre_ID
