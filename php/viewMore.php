@@ -229,7 +229,7 @@ if (isset($_POST['addToFavorites'])) {
                 <script src="viewMore.js"></script>
 
                 <div class="actors">
-                    <h3>Actors: Gabrielle Union, Mark June and Tyler Perry </h3><br>
+                    <h3> </h3><br>
                 </div>
 
 
