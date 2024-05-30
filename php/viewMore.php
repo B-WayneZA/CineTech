@@ -6,7 +6,7 @@ function makeApiRequest($data)
 {
     // Create a new cURL resource
     $ch = curl_init();
-
+ 
     // Set the URL
     curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 
@@ -212,6 +212,7 @@ if (isset($_POST['addToFavorites'])) {
 
                 <div class="userRating">
                     <!-- <h3>Ratings: </h3> -->
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
                     <div class="star-icon">
                         <input type="radio" name="rating" id="star5" value="5">
                         <label for="star5"></label>
@@ -225,7 +226,76 @@ if (isset($_POST['addToFavorites'])) {
                         <label for="star1"></label>
                     </div>
                     <div class="score"></div>
+                    <button type="submit" class="btn"  name="submitRating">Submit Rating</button>
+                </form>
                 </div>
+
+                <?php
+            // Check if the form is submitted
+            if (isset($_POST['submitRating']) && isset($_POST['rating'])) {
+                // Get the selected rating
+                $rating = $_POST['rating'];
+
+                // Add logic here to get $filmId and $showId depending on your implementation
+                if (isset($_GET['name'])) {
+                    // For series, you might get the show ID from the URL parameter
+                    $showId = isset($_GET['id']) ? $_GET['id'] : null;
+                    $filmId = null;
+                } else {
+                    // For movies, you might get the film ID from the API response or another source
+                    $showId = null;
+                    $filmId = isset($movies['ID']) ? $movies['ID'] : null;
+                }
+
+                // Call the function to add the rating
+                if (isset($_GET['name'])) {
+                    addToRating($apiKey, null, $movies["ID"], $rating);
+                } else {
+                    addToRating($apiKey, $movies["ID"], null, $rating);
+                }
+            }
+
+            // Function to handle adding the rating
+            function addToRating($apiKey, $filmId, $showId, $rating)
+            {
+               
+                // Prepare data for adding rating
+                if (isset($_GET['name'])) {
+                    $data = array(
+                        "type" => "AddRating",
+                        "apikey" => $apiKey,
+                        "item" => "series",
+                        "ID" => $showId,
+                        "rating" => $rating
+                    );
+                    
+                } else {
+                    $data = array(
+                        "type" => "AddRating",
+                        "apikey" => $apiKey,
+                        "item" => "movie",
+                        "ID" => $filmId,
+                        "rating" => $rating
+                    );
+                }
+
+                // Make API request
+                $responseData = makeApiRequest($data);
+
+                // Check if the request was successful
+                if ($responseData['status'] === 'success') {
+                    
+                } else {
+                    // Handle error response
+                    echo '<script>alert("Failed to add rating: ' . $responseData['error'] . '");</script>';
+                }
+            }
+
+        ?>
+
+
+
+
                 <script src="viewMore.js"></script>
 
                 <div class="actors">
