@@ -1,6 +1,6 @@
 Array
 (
-    [status] => success
-    [timestamp] => 1717064801
-    [data] => {"apikey":"0bcbe7ba6519c53e7182bb674491b849"}
+    [status] => error
+    [timestamp] => Email does not exist.
+    [data] => 1717067988
 )
