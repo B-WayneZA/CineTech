@@ -6,44 +6,98 @@ if (!isset($_SESSION['apikey'])) {
     exit();
 }
 
-
 $currentPage = 'delete account';
 
-function delete($apikey)
+$error = '';
+$success = '';
+
+function getUserEmail($apikey)
 {
-$Data = array(
-    'type' => 'DeleteUser',
-    'apikey' => $_SESSION['apikey']
-);
+    $userInfo = array(
+        'type' => 'GetUser',
+        'apikey' => $apikey
+    );
 
-$json_data = json_encode($Data);
+    $userData = json_encode($userInfo);
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $userData);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-$response = curl_exec($ch);
-curl_close($ch);
+    $response = curl_exec($ch);
 
-if ($response === false) {
-    return 'Curl error: ' . curl_error($ch);
-} else {
+    if (curl_errno($ch)) {
+        $error_msg = curl_error($ch);
+        curl_close($ch);
+        return array('status' => 'error', 'message' => 'Curl error: ' . $error_msg);
+    }
+
+    curl_close($ch);
+
+    $responseData = json_decode($response, true);
+    if ($responseData['status'] === 'success') {
+        return array('status' => 'success', 'email' => $responseData['data'][0]['email']);
+    } else {
+        return array('status' => 'error', 'message' => $responseData['data']);
+    }
+}
+
+function deleteUser($email)
+{
+    $data = array(
+        'type' => 'DeleteUser',
+        'email' => $email
+    );
+
+    $json_data = json_encode($data);
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_USERPWD, 'u23535246:Toponepercent120');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        return array('status' => 'error', 'message' => 'Curl error: ' . curl_error($ch));
+    }
+
+    curl_close($ch);
     return json_decode($response, true);
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm-delete'])) {
+    // Get the user's email
+    $userEmailResponse = getUserEmail($_SESSION['apikey']);
+
+    if ($userEmailResponse['status'] === 'success') {
+        $email = $userEmailResponse['email'];
+
+        // Perform the delete operation
+        $deleteResponse = deleteUser($email);
+
+        if ($deleteResponse && isset($deleteResponse['status']) && $deleteResponse['status'] === 'success') {
+            session_unset();
+            session_destroy();
+            $success = 'Account successfully deleted. Redirecting to launch page...';
+            header("refresh:2;url=../html/launch.html"); // Redirect after 2 seconds
+            exit();
+        } else {
+            $error = 'Failed to delete account. Response: ' . json_encode($deleteResponse);
+        }
+    } else {
+        $error = 'Failed to fetch user email. Response: ' . json_encode($userEmailResponse);
+    }
 }
-
-session_unset();
-session_destroy();
-header("Location: ../html/launch.html");
-exit();
-
-
 ?>
 
 <!DOCTYPE html>
@@ -102,39 +156,33 @@ exit();
             color: white;
             text-decoration: none;
             margin-top: 20px;
-            display: inline-block; /* Display as block element */
+            display: inline-block;
         }
 
-       
-        .container {
-            max-width: 600px;
-            text-align: center;
-        }
-
-        .container .par
-        {
+        .container .par {
             background-color: white;
-            color : black;
-        
+            color: black;
         }
-
-
-    
-
     </style>
 </head>
 <body>
 <div class="container">
     <h1><b>Delete Account</b></h1>
-   
+    <h3>Are you sure you want to delete your account?</h3>
+    
+    <?php if ($error): ?>
+        <p style="color: red;"><?php echo $error; ?></p>
+    <?php elseif ($success): ?>
+        <p style="color: green;"><?php echo $success; ?></p>
+    <?php endif; ?>
 
-    <p class="par" >Are you sure you want to delete your account?</p>
     <form action="../php/deleteAccount.php" method="post">
         <button type="submit" name="confirm-delete">Yes, Delete My Account</button>
     </form>
-    <br>
-    <a href="../php/homePage.php" class="hello">Cancel</a>
-    </div>
 
+    <p>or</p>
+
+    <a href="../php/homePage.php" class="hello">Cancel</a>
+</div>
 </body>
 </html>

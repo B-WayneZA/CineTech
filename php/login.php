@@ -133,7 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- admin or not checkbox -->
             <div class="remember-forgot">
                 <label><input type="checkbox" name="admin" value="true">Admin</label>
-                <a href="#">Forgot password?</a>
             </div>
             <button type="submit" class="btn">Login</button>
             <!-- register link -->
