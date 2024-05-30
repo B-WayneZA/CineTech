@@ -49,7 +49,5 @@ The web application is built using PHP, HTML5, CSS, and JavaScript, leveraging t
 # Data Sources
 ## Public Datasets: 
 Utilize publicly available datasets containing information about movies, TV series, actors, directors, genres, and production studios. Websites like IMDb, The Movie Database (TMDb), and Open Movie Database (OMDb) offer APIs or downloadable datasets that can be used for this purpose.
-## Scraping Techniques: 
-Implement web scraping techniques to extract data from online sources such as movie review websites, entertainment blogs, or streaming platforms.
 ## Manual Entry: 
 Supplement automated data retrieval methods with manual entry for specific details or entries not readily available in existing datasets. This can include adding custom metadata, descriptions, or user-generated content.
