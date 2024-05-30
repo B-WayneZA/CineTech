@@ -6,7 +6,7 @@ function makeApiRequest($data)
 {
     // Create a new cURL resource
     $ch = curl_init();
-
+ 
     // Set the URL
     curl_setopt($ch, CURLOPT_URL, 'https://wheatley.cs.up.ac.za/u23535246/CINETECH/api.php');
 

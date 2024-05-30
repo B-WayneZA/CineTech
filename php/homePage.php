@@ -13,7 +13,6 @@
     $dataArr = array(
         'type' => 'GetShared',
         'apikey' => $apikey,
-        
     );
 
     $json_arr = json_encode($dataArr);
