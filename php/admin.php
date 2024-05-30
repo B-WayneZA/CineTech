@@ -67,7 +67,6 @@ function deleteUserByEmail($email)
     }
 }
 
-
 function addSeries($title, $genreID, $ratingID, $country, $description, $runtime, $year, $seasons, $postURL, $videoURL, $screenURL)
 {
     $data = array(
@@ -87,15 +86,12 @@ function addSeries($title, $genreID, $ratingID, $country, $description, $runtime
 
     $response = makeApiRequest($data);
 
-    if ($response === null) {
-        echo '<script>alert("Failed to add show: No response from API");</script>';
-    } elseif ($response['status'] === 'success') {
+    if ($response['status'] === 'success') {
         echo '<script>alert("Successfully added show: ' . $title . '");</script>';
     } else {
         echo '<script>alert("Failed to add show: ' . $response['data'] . '");</script>';
     }
 }
-
 
 function addMovie($title, $genreID, $ratingID, $country, $description, $runtime, $year, $postURL, $videoURL, $screenURL)
 {
@@ -122,8 +118,6 @@ function addMovie($title, $genreID, $ratingID, $country, $description, $runtime,
     }
 }
 
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['deleteTitle']) && isset($_POST['deleteType'])) {
         $title = $_POST['deleteTitle'];
@@ -140,29 +134,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['deleteEmail'];
         deleteUserByEmail($email);
     } elseif (
-        isset($_POST['addName']) &&
-        isset($_POST['addGenreID']) &&
-        isset($_POST['addRating']) &&
-        isset($_POST['addCountry']) &&
-        isset($_POST['addDescription']) &&
-        isset($_POST['addRuntime']) &&
-        isset($_POST['addYear']) &&
-        isset($_POST['addSeasons']) &&
-        isset($_POST['addPostUrl']) &&
-        isset($_POST['addVideoUrl']) &&
-        isset($_POST['addScreenUrl'])
+        isset($_POST['addSeriesName']) &&
+        isset($_POST['addSeriesGenreID']) &&
+        isset($_POST['addSeriesRating']) &&
+        isset($_POST['addSeriesCountry']) &&
+        isset($_POST['addSeriesDescription']) &&
+        isset($_POST['addSeriesRuntime']) &&
+        isset($_POST['addSeriesYear']) &&
+        isset($_POST['addSeriesSeasons']) &&
+        isset($_POST['addSeriesPostUrl']) &&
+        isset($_POST['addSeriesVideoUrl']) &&
+        isset($_POST['addSeriesScreenUrl'])
+
     ) {
-        $title = $_POST['addName'];
-        $genreID = $_POST['addGenreID'];
-        $ratingID = $_POST['addRating'];
-        $country = $_POST['addCountry'];
-        $description = $_POST['addDescription'];
-        $runtime = $_POST['addRuntime'];
-        $year = $_POST['addYear'];
-        $seasons = $_POST['addSeasons'];
-        $postURL = $_POST['addPostUrl'];
-        $videoURL = $_POST['addVideoUrl'];
-        $screenURL = $_POST['addScreenUrl'];
+        $title = $_POST['addSeriesName'];
+        $genreID = $_POST['addSeriesGenreID'];
+        $ratingID = $_POST['addSeriesRating'];
+        $country = $_POST['addSeriesCountry'];
+        $description = $_POST['addSeriesDescription'];
+        $runtime = $_POST['addSeriesRuntime'];
+        $year = $_POST['addSeriesYear'];
+        $seasons = $_POST['addSeriesSeasons'];
+        $postURL = $_POST['addSeriesPostUrl'];
+        $videoURL = $_POST['addSeriesVideoUrl'];
+        $screenURL = $_POST['addSeriesScreenUrl'];
 
         addSeries($title, $genreID, $ratingID, $country, $description, $runtime, $year, $seasons, $postURL, $videoURL, $screenURL);
     } elseif (
@@ -294,6 +289,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <p>Remove Movies/Series no longer needed in the database.</p>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <input type="text" id="deleteTitle" name="deleteTitle" placeholder="Title" required>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Movie/Series
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <input type="radio" id="deleteMovie" name="deleteType" value="film" checked>
+                                        <label for="deleteMovie">Movie</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="deleteSeries" name="deleteType" value="show">
+                                        <label for="deleteSeries">Series</label>
+                                    </li>
+                                </ul>
+                            </div>
                             <button type="submit">Delete</button>
                         </form>
                     </div>
@@ -319,18 +329,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="add-series">
                         <h2>Add Series</h2>
                         <p>This box will add a movie or series to the database.</p>
+                        <!-- Add Series Form -->
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <input type="text" id="addName" name="addTitle" placeholder="Title" required>
-                            <input type="text" id="addGenreID" name="addGenreID" placeholder="Genre ID" required>
-                            <input type="text" id="addCountry" name="addCountry" placeholder="Country" required>
-                            <input type="text" id="addRating" name="addRating" placeholder="Rating" required>
-                            <textarea id="addDescription" name="addDescription" placeholder="Description" required></textarea>
-                            <input type="number" id="addRuntime" name="addRuntime" placeholder="Runtime" min="0" max="1000" required>
-                            <input type="number" id="addYear" name="addYear" placeholder="Year" required>
-                            <input type="number" id="addSeasons" name="addSeasons" placeholder="Seasons" required>
-                            <input type="url" id="addPostUrl" name="addPostUrl" placeholder="Post URL" required>
-                            <input type="url" id="addVideoUrl" name="addVideoUrl" placeholder="Video URL" required>
-                            <input type="url" id="addScreenUrl" name="addScreenUrl" placeholder="Screen URL" required>
+                            <input type="text" id="addSeriesName" name="addSeriesName" placeholder="Title" required>
+                            <input type="text" id="addSeriesGenreID" name="addSeriesGenreID" placeholder="Genre ID" required>
+                            <input type="text" id="addSeriesCountry" name="addSeriesCountry" placeholder="Country" required>
+                            <input type="text" id="addSeriesRating" name="addSeriesRating" placeholder="Rating" required>
+                            <textarea id="addSeriesDescription" name="addSeriesDescription" placeholder="Description" required></textarea>
+                            <input type="number" id="addSeriesRuntime" name="addSeriesRuntime" placeholder="Runtime" min="0" max="1000" required>
+                            <input type="number" id="addSeriesYear" name="addSeriesYear" placeholder="Year" required>
+                            <input type="number" id="addSeriesSeasons" name="addSeriesSeasons" placeholder="Seasons" required>
+                            <input type="url" id="addSeriesPostUrl" name="addSeriesPostUrl" placeholder="Post URL" required>
+                            <input type="url" id="addSeriesVideoUrl" name="addSeriesVideoUrl" placeholder="Video URL" required>
+                            <input type="url" id="addSeriesScreenUrl" name="addSeriesScreenUrl" placeholder="Screen URL" required>
                             <button type="submit">Add</button>
                         </form>
                     </div>
