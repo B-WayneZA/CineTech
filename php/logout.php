@@ -1,13 +1,15 @@
 =<?php
   session_start();
-  session_unset(); // Unset all session variables
-  session_destroy(); // Destroy the session
+  // Unset all session variables
+  session_unset(); 
+  // Destroy the session
+  session_destroy(); 
 
   // Prevent caching
-  header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-  header("Pragma: no-cache"); // HTTP 1.0
-  header("Expires: 0"); // Proxies
+  header("Cache-Control: no-cache, no-store, must-revalidate"); 
+  header("Pragma: no-cache"); 
+  header("Expires: 0"); 
 
-  header("Location: ../html/launch.html"); // Redirect to login page
+  header("Location: ../html/launch.html");
   exit();
 ?>
