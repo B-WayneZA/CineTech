@@ -236,8 +236,38 @@ if (isset($_POST['addToFavorites'])) {
                 <button class="trailer">
                     <a href=" <?php echo ' ' ?> ">Trailer</a><br>
                 </button>
+                <?php
+                    $userN = $_POST['search_user'];
 
-                <form id="shareForm" action="">
+                    if (isset($_GET['name'])) {
+                        $shareData = array(
+                            "type" => "ShareFilm",
+                            "apikey" => $apiKey,
+                            "username" => $userN,
+                            "id" => $movies['ID']
+                        );
+                    } else {
+                        $shareData = array(
+                            "type" => "ShareSeries",
+                            "apikey" => $apiKey,
+                            "username" => $userN,
+                            "id" => $movies['ID']
+                        );
+                    }
+
+                    $shareReq = makeApiRequest($Sharedata);
+                    var_dump($shareReq); // Add this line
+                
+                    // Check if the request was successful
+                    if ($shareReq['status'] === 'success') {
+                        echo 'Success!';
+                    } else {
+                        echo 'Error: ' . $shareReq['message'];
+                    }
+    
+                
+                ?>
+                <form method="post" id="shareForm" action="<?php echo $_SERVER['PHP_SELF'] . '?' . http_build_query($_GET); ?>">
                     <button type="button" class="btn" id="shareButton">Share</button>
                 </form>
 
@@ -246,7 +276,8 @@ if (isset($_POST['addToFavorites'])) {
                         <span class="close">&times;</span>
                         <!-- Add your modal content here -->
                         <h2>Share to User</h2>
-                        <input type="text" id="shareUser" placeholder="Enter username">
+
+                        <input name="search_user" type="text" id="shareUser" placeholder="Enter username">
                         <button id="shareSubmit">Share</button>
                     </div>
                 </div>

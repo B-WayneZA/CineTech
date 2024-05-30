@@ -56,3 +56,5 @@ Utilize publicly available datasets containing information about movies, TV seri
 Implement web scraping techniques to extract data from online sources such as movie review websites, entertainment blogs, or streaming platforms.
 ## Manual Entry: 
 Supplement automated data retrieval methods with manual entry for specific details or entries not readily available in existing datasets. This can include adding custom metadata, descriptions, or user-generated content.
+
+
